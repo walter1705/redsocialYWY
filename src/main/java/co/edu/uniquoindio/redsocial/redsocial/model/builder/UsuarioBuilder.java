@@ -3,10 +3,10 @@ package co.edu.uniquoindio.redsocial.redsocial.model.builder;
 import co.edu.uniquoindio.redsocial.redsocial.model.Usuario;
 
 public class UsuarioBuilder {
-    protected String user, password;
+    protected String username, password;
 
-    public UsuarioBuilder user(String user) {
-        this.user = user;
+    public UsuarioBuilder username(String usernane) {
+        this.username = username;
         return this;
     }
 
@@ -16,6 +16,6 @@ public class UsuarioBuilder {
     }
 
     public Usuario build() {
-        return new Usuario(user, password);
+        return new Usuario(username, password);
     }
 }

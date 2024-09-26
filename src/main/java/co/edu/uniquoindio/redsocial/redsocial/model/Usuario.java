@@ -3,19 +3,19 @@ package co.edu.uniquoindio.redsocial.redsocial.model;
 import co.edu.uniquoindio.redsocial.redsocial.model.builder.UsuarioBuilder;
 
 public class Usuario {
-    private String user, password;
+    private String username, password;
 
     public Usuario(String user, String password) {
-        this.user = user;
+        this.username = user;
         this.password = password;
     }
 
-    public String getUser() {
-        return user;
+    public String getUsername() {
+        return username;
     }
 
-    public void setUser(String user) {
-        this.user = user;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getPassword() {
