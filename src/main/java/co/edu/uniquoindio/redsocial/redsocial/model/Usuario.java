@@ -1,5 +1,7 @@
 package co.edu.uniquoindio.redsocial.redsocial.model;
 
+import co.edu.uniquoindio.redsocial.redsocial.model.builder.UsuarioBuilder;
+
 public class Usuario {
     private String user, password;
 
@@ -22,5 +24,9 @@ public class Usuario {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public static UsuarioBuilder builder() {
+        return new UsuarioBuilder();
     }
 }

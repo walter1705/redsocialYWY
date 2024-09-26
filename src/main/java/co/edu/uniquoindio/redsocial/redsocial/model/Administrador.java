@@ -1,5 +1,7 @@
 package co.edu.uniquoindio.redsocial.redsocial.model;
 
+import co.edu.uniquoindio.redsocial.redsocial.model.builder.AdministradorBuilder;
+
 public class Administrador {
     private String id, nombre, apellido, email, direccion;
     private Usuario usuarioAsociado;
@@ -60,5 +62,9 @@ public class Administrador {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public static AdministradorBuilder builder() {
+        return new AdministradorBuilder();
     }
 }

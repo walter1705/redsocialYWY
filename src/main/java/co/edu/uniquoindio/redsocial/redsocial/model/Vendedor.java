@@ -1,5 +1,7 @@
 package co.edu.uniquoindio.redsocial.redsocial.model;
 
+import co.edu.uniquoindio.redsocial.redsocial.model.builder.VendedorBuilder;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -77,5 +79,9 @@ public class Vendedor {
 
     public void setDireccion(String direccion) {
         this.direccion = direccion;
+    }
+
+    public static VendedorBuilder builder() {
+        return new VendedorBuilder();
     }
 }
