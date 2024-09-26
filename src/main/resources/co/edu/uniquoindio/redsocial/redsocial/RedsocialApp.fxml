@@ -4,7 +4,6 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.layout.AnchorPane?>
 
-
 <AnchorPane prefHeight="561.0" prefWidth="765.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquoindio.redsocial.redsocial.viewController.RedsocialAppController">
    <children>
       <TabPane layoutX="5.0" layoutY="5.0" prefHeight="550.0" prefWidth="754.0" tabClosingPolicy="UNAVAILABLE">
