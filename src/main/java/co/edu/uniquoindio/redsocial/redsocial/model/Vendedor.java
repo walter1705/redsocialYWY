@@ -1,8 +1,12 @@
 package co.edu.uniquoindio.redsocial.redsocial.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Vendedor {
     private String id, nombre, apellido, email, direccion;
     private Usuario usuarioAsociado;
+    private List<Producto> productosAsociados = new ArrayList<>();
 
     public Vendedor(String id, String nombre, String apellido, String email,
                     String direccion, Usuario usuario) {
@@ -12,6 +16,19 @@ public class Vendedor {
         this.apellido = apellido;
         this.email = email;
         this.direccion = direccion;
+    }
+
+    //metodo AGREGAR a los productos asociados
+    public void agregarProducto(Producto producto) {
+        productosAsociados.add(producto);
+    }
+
+    public List<Producto> getProductosAsociados() {
+        return productosAsociados;
+    }
+
+    public void setProductosAsociados(List<Producto> productosAsociados) {
+        this.productosAsociados = productosAsociados;
     }
 
     public Usuario getUsuarioAsociado() {

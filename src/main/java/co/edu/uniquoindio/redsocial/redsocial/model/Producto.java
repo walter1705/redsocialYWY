@@ -1,16 +1,29 @@
 package co.edu.uniquoindio.redsocial.redsocial.model;
 
+import org.controlsfx.validation.decoration.ValidationDecoration;
+
 public class Producto {
     private String nombre, imagen, categoria;
     private EstadoProducto estadoProducto;
     private double precio;
+    private Vendedor vendedorAsociado;
 
-    public Producto(String nombre, String imagen, String categoria, EstadoProducto estadoProducto, double precio) {
+    public Producto(String nombre, String imagen, String categoria,
+                    EstadoProducto estadoProducto, double precio, Vendedor vendedorAsociado) {
+        this.vendedorAsociado = vendedorAsociado;
         this.nombre = nombre;
         this.imagen = imagen;
         this.categoria = categoria;
         this.estadoProducto = estadoProducto;
         this.precio = precio;
+    }
+
+    public Vendedor getVendedorAsociado() {
+        return vendedorAsociado;
+    }
+
+    public void setVendedorAsociado(Vendedor vendedorAsociado) {
+        this.vendedorAsociado = vendedorAsociado;
     }
 
     public String getNombre() {
