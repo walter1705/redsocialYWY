@@ -1,17 +1,17 @@
 package co.edu.uniquoindio.redsocial.redsocial.model;
 
-public class Vendedor {
+public class Administrador {
     private String id, nombre, apellido, email, direccion;
     private Usuario usuarioAsociado;
 
-    public Vendedor(String id, String nombre, String apellido, String email,
-                    String direccion, Usuario usuario) {
-        this.usuarioAsociado = usuario;
+    public Administrador(String id, String nombre, String apellido, String email,
+                         String direccion, Usuario usuario) {
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
         this.email = email;
         this.direccion = direccion;
+        this.usuarioAsociado = usuario;
     }
 
     public Usuario getUsuarioAsociado() {
