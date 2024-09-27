@@ -4,12 +4,12 @@ module co.edu.uniquoindio.redsocial.redsocial {
 
     requires org.controlsfx.controls;
 
-    opens co.edu.uniquoindio.redsocial.redsocial to javafx.fxml;
-    exports co.edu.uniquoindio.redsocial.redsocial;
-    opens co.edu.uniquoindio.redsocial.redsocial.viewController;
-    exports co.edu.uniquoindio.redsocial.redsocial.viewController;
-    opens co.edu.uniquoindio.redsocial.redsocial.controller;
-    exports co.edu.uniquoindio.redsocial.redsocial.controller;
+    opens co.edu.uniquoindio.redsocial to javafx.fxml;
+    exports co.edu.uniquoindio.redsocial;
+    opens co.edu.uniquoindio.redsocial.viewController;
+    exports co.edu.uniquoindio.redsocial.viewController;
+    opens co.edu.uniquoindio.redsocial.controller;
+    exports co.edu.uniquoindio.redsocial.controller;
     //opens co.edu.uniquoindio.redsocial.redsocial.mapping;
     //exports co.edu.uniquoindio.redsocial.redsocial.mapping;
 }

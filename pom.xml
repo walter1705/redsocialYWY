@@ -65,7 +65,7 @@
                         <id>default-cli</id>
                         <configuration>
                             <mainClass>
-                                co.edu.uniquoindio.redsocial.redsocial/co.edu.uniquoindio.redsocial.redsocial.HelloApplication
+                                co.edu.uniquoindio.redsocial.redsocial/co.edu.uniquoindio.redsocial.HelloApplication
                             </mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
