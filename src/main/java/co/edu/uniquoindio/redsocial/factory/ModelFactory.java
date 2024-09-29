@@ -23,7 +23,7 @@ public class ModelFactory implements IModelFactoryService {
     }
 
     public static ModelFactory getInstance() {
-        if (modelFactory==null) new ModelFactory();
+        if (modelFactory==null)  modelFactory = new ModelFactory();
         return modelFactory;
     }
 
@@ -33,5 +33,10 @@ public class ModelFactory implements IModelFactoryService {
         List<VendedorDto> vendedoresDto =  mapper.getVendedoresDto(redSocial.getListaVendedores());
         List<UsuarioDto> usuariosDto =  mapper.getUsuariosDto(redSocial.getListaUsuarios());
         return mapper.getUsuariosVendedoresDto(vendedoresDto, usuariosDto);
+    }
+
+    @Override
+    public List<UsuarioDto> getUsuariosDto() {
+        return mapper.getUsuariosDto(redSocial.getListaUsuarios());
     }
 }

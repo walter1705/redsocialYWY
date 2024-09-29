@@ -21,11 +21,14 @@ public class RedSocialMappingImpl implements IRedSocialMapping {
            throw new IllegalArgumentException("LISTA VENDEDORES NULA EN REDSOCIALMAPPING");
        }
        List<VendedorDto> vendedoresDto = new ArrayList<VendedorDto>(listaVendedores.size());
-       for(Vendedor vendedor : listaVendedores) {
-           vendedoresDto.add(vendedorToVendedorDto(vendedor));
-       }
+        for (Vendedor vendedor : listaVendedores) {
+            if (vendedor.getNombre() == null) vendedor.setNombre("");
+            if (vendedor.getApellido() == null) vendedor.setApellido("");
+            if (vendedor.getEmail() == null) vendedor.setEmail("");
+            vendedoresDto.add(vendedorToVendedorDto(vendedor));
+        }
 
-       return vendedoresDto;
+        return vendedoresDto;
     }
 
     @Override
@@ -51,7 +54,7 @@ public class RedSocialMappingImpl implements IRedSocialMapping {
         }
         List<UsuarioDto> usuariosDto = new ArrayList<UsuarioDto>(listaUsuarios.size());
         for(Usuario usuario : listaUsuarios) {
-            usuariosDto.add(usuarioToUsuarioDto(usuario));
+            if(usuario.getUsername() != null && usuario.getPassword() != null) usuariosDto.add(usuarioToUsuarioDto(usuario));
         }
 
         return usuariosDto;

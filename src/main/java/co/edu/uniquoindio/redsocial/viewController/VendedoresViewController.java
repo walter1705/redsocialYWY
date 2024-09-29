@@ -54,19 +54,19 @@ public class VendedoresViewController {
     private TableView<UsuarioVendedorDto> tableVendedor;
 
     @FXML
-    private TableColumn<VendedorDto, String> tcApellidoVendedor;
+    private TableColumn<UsuarioVendedorDto, String> tcApellidoVendedor;
 
     @FXML
-    private TableColumn<UsuarioDto, String> tcContrasenaUsuario;
+    private TableColumn<UsuarioVendedorDto, String> tcContrasenaUsuario;
 
     @FXML
-    private TableColumn<VendedorDto, String> tcEmailVendedor;
+    private TableColumn<UsuarioVendedorDto, String> tcEmailVendedor;
 
     @FXML
-    private TableColumn<UsuarioDto, String> tcNombreUsuario;
+    private TableColumn<UsuarioVendedorDto, String> tcNombreUsuario;
 
     @FXML
-    private TableColumn<VendedorDto, String> tcNombreVendedor;
+    private TableColumn<UsuarioVendedorDto, String> tcNombreVendedor;
 
     @FXML
     private TextField txtApellidoVendedor;

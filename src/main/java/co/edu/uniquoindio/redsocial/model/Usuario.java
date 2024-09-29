@@ -7,10 +7,10 @@ public class Usuario {
     private Vendedor vendedorAsociado;
     private Administrador administradorAsociado;
 
-    public Usuario(String user, String password, Vendedor vendedorAsociado, Administrador administradorAsociado) {
+    public Usuario(String username, String password, Vendedor vendedorAsociado, Administrador administradorAsociado) {
         this.administradorAsociado = administradorAsociado;
         this.vendedorAsociado = vendedorAsociado;
-        this.username = user;
+        this.username = username;
         this.password = password;
     }
 

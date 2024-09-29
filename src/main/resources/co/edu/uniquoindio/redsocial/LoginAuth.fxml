@@ -11,20 +11,21 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquoindio.redsocial.viewController.LoginAuthController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="340.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquoindio.redsocial.viewController.LoginAuthViewController">
    <children>
       <Pane layoutX="10.0" layoutY="77.0" prefHeight="255.0" prefWidth="579.0" style="-fx-background-color: e2e2e2;">
          <children>
             <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="322.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../../../../images/login.png" />
+                  <Image url="@../../../../images/login.png" />
                </image>
             </ImageView>
             <PasswordField fx:id="IntroducirContrasenaTextField" layoutX="34.0" layoutY="116.0" promptText="Contraseña" />
             <TextField fx:id="IntroducirUsuarioTextField" layoutX="34.0" layoutY="53.0" promptText="Usuario" />
             <Label fx:id="usuarioTxt" layoutX="34.0" layoutY="25.0" text="Usuario" />
             <Label fx:id="contrasenaTxt" layoutX="34.0" layoutY="92.0" text="Contraseña" />
-            <Button fx:id="IngresarButton" layoutX="34.0" layoutY="166.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="150.0" text="Ingresar" />
+            <Button fx:id="IngresarButton" layoutX="34.0" layoutY="166.0" mnemonicParsing="false" onAction="#OnIngresarAttempt" prefHeight="25.0" prefWidth="150.0" text="Ingresar" />
+            <Text fx:id="textLabellogin" fill="#ff3131" layoutX="30.0" layoutY="222.0" strokeType="OUTSIDE" strokeWidth="0.0" />
          </children>
       </Pane>
       <Pane prefHeight="70.0" prefWidth="600.0">

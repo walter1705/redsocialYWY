@@ -27,7 +27,7 @@ public class RedSocial {
     private Usuario obtenerUsuario(String username) {
         Usuario usuario = null;
         for (Usuario usuario1: listaUsuarios) {
-            if(!usuario1.getUsername().equals(username)){
+            if(usuario1.getUsername().equals(username)){
                 usuario = usuario1;
                 break;
             }
@@ -56,7 +56,7 @@ public class RedSocial {
             agregarRedSocial(nuevoUsuario);
             return true;
         }
-        return  false;
+        return false;
     }
 
     private Usuario getBuildUsuario(String username, String password, Vendedor vendedorAsociado, Administrador administradorAsociado) {

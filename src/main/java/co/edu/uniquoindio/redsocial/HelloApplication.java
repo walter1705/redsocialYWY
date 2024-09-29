@@ -15,7 +15,7 @@ public class HelloApplication extends Application {
 
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("LoginAuth.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 340);
-        stage.setTitle("MarketPlace");
+        stage.setTitle("MarketPlace login");
         Image icon = new Image(Objects.requireNonNull(getClass().getResource("/images/loginlttle.png")).toExternalForm());
         stage.getIcons().add(icon);
         stage.setScene(scene);

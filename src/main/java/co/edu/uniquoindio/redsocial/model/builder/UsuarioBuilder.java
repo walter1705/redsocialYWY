@@ -9,7 +9,7 @@ public class UsuarioBuilder {
     protected Vendedor vendedorAsociado;
     protected Administrador administradorAsociado;
 
-    public UsuarioBuilder username(String usernane) {
+    public UsuarioBuilder username(String username) {
         this.username = username;
         return this;
     }

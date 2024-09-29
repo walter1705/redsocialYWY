@@ -3,6 +3,7 @@ module co.edu.uniquoindio.redsocial.redsocial {
     requires javafx.fxml;
 
     requires org.controlsfx.controls;
+    requires java.desktop;
 
     opens co.edu.uniquoindio.redsocial to javafx.fxml;
     exports co.edu.uniquoindio.redsocial;
