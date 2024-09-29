@@ -1,7 +1,10 @@
 package co.edu.uniquoindio.redsocial.mapping.dto;
 
 public record UsuarioVendedorDto(
-        VendedorDto vendedorDto,
-        UsuarioDto usuarioDto
+        String username,
+        String password,
+        String nombre,
+        String apellido,
+        String email
 ) {
 }

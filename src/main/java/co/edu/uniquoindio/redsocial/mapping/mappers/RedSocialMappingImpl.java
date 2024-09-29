@@ -69,10 +69,49 @@ public class RedSocialMappingImpl implements IRedSocialMapping {
                 .password(usuarioDto.password())
                 .build();
     }
-
+    //Metodo para mappear los dto de vendedor y usuario, para que aparezcan juntos en la tabla
     @Override
     public List<UsuarioVendedorDto> getUsuariosVendedoresDto(List<VendedorDto> listaVendedoresDto
             , List<UsuarioDto> listaUsuariosDto) {
-        return List.of();
+        if (listaUsuariosDto == null || listaVendedoresDto == null) throw new IllegalArgumentException("BOTH OF LIST MAPPING IMPL CLASS");
+        int sizeOfList = Math.max(listaUsuariosDto.size(), listaVendedoresDto.size());
+        List<UsuarioVendedorDto> usuariosVendedoresDto = new ArrayList<UsuarioVendedorDto>(sizeOfList);
+        for(int i = 0;i<sizeOfList;i++) {
+            VendedorDto vendedor = (i < listaVendedoresDto.size()) ? listaVendedoresDto.get(i) : null;
+            UsuarioDto usuario = (i < listaUsuariosDto.size()) ? listaUsuariosDto.get(i) : null;
+            String nombreVendedor = (vendedor != null) ? vendedor.nombre() : "Usuario sin vendedor";
+            String apellidoVendedor = (vendedor != null) ? vendedor.apellido() : "";
+            String emailVendedor = (vendedor != null) ? vendedor.email() : "";
+            String username = (usuario != null) ? usuario.username() : "Vendedor sin usuario";
+            String password = (usuario != null) ? usuario.password() : "";
+            UsuarioVendedorDto usuarioVendedorDto = new UsuarioVendedorDto(
+                    nombreVendedor, apellidoVendedor, emailVendedor,
+                    username, password
+            );
+            usuariosVendedoresDto.add(usuarioVendedorDto);
+        }
+
+        return usuariosVendedoresDto;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
