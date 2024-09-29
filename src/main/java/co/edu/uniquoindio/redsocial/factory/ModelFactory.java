@@ -1,9 +1,11 @@
 package co.edu.uniquoindio.redsocial.factory;
 
+import co.edu.uniquoindio.redsocial.mapping.dto.UsuarioDto;
 import co.edu.uniquoindio.redsocial.mapping.dto.UsuarioVendedorDto;
 import co.edu.uniquoindio.redsocial.mapping.dto.VendedorDto;
 import co.edu.uniquoindio.redsocial.mapping.mappers.RedSocialMappingImpl;
 import co.edu.uniquoindio.redsocial.model.RedSocial;
+import co.edu.uniquoindio.redsocial.model.Usuario;
 import co.edu.uniquoindio.redsocial.service.IModelFactoryService;
 import co.edu.uniquoindio.redsocial.service.IRedSocialMapping;
 import co.edu.uniquoindio.redsocial.utils.DataUtil;
@@ -28,6 +30,8 @@ public class ModelFactory implements IModelFactoryService {
 
     @Override
     public List<UsuarioVendedorDto> getUsuariosVendedoresDto() {
-        return List.of();
+        List<VendedorDto> vendedoresDto =  mapper.getVendedoresDto(redSocial.getListaVendedores());
+        List<UsuarioDto> usuariosDto =  mapper.getUsuariosDto(redSocial.getListaUsuarios());
+        return mapper.getUsuariosVendedoresDto(vendedoresDto, usuariosDto);
     }
 }

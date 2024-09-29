@@ -110,11 +110,11 @@ public class VendedoresViewController {
 
     private void mostrarInformacionVendedor(UsuarioVendedorDto vendedorSelecionado) {
         if (vendedorSelecionado != null) {
-            txtNombreVendedor.setText(vendedorSelecionado.vendedorDto().nombre());
-            txtApellidoVendedor.setText(vendedorSelecionado.vendedorDto().apellido());
-            txtEmailVendedor.setText(vendedorSelecionado.vendedorDto().email());
-            txtNombreUsuario.setText(vendedorSelecionado.usuarioDto().username());
-            txtContrasenaUsuario.setText(vendedorSelecionado.usuarioDto().password());
+            txtNombreVendedor.setText(vendedorSelecionado.nombre());
+            txtApellidoVendedor.setText(vendedorSelecionado.apellido());
+            txtEmailVendedor.setText(vendedorSelecionado.email());
+            txtNombreUsuario.setText(vendedorSelecionado.username());
+            txtContrasenaUsuario.setText(vendedorSelecionado.password());
         }
     }
 
