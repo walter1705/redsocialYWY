@@ -30,25 +30,16 @@ public class VendedoresViewController {
     private URL location;
 
     @FXML
-    private Button btnActualizarUsuario;
+    private Button btnActualizar;
 
     @FXML
-    private Button btnActualizarVendedor;
-
-    @FXML
-    private Button btnAgregarUsuario;
-
-    @FXML
-    private Button btnAgregarVendedor;
+    private Button btnAgregar;
 
     @FXML
     private Button btnEliminar;
 
     @FXML
-    private Button btnNuevoUsuario;
-
-    @FXML
-    private Button btnNuevoVendedor;
+    private Button btnNuevo;
 
     @FXML
     private TableView<UsuarioVendedorDto> tableVendedor;
@@ -128,39 +119,25 @@ public class VendedoresViewController {
 
 
     @FXML
-    void onActualizarUsuario(ActionEvent event) {
+    void onActualizar(ActionEvent event) {
 
     }
 
     @FXML
-    void onActualizarVendedor(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onAgregarUsuario(ActionEvent event) {
-
-    }
-
-    @FXML
-    void onAgregarVendedor(ActionEvent event) {
+    void onAgregar(ActionEvent event) {
 
     }
 
     @FXML
     void onEliminarCliente(ActionEvent event) {
-
+        listaUsuariosVendedores.remove(vendedorSelecionado);
     }
 
     @FXML
-    void onNuevoUsuario(ActionEvent event) {
+    void onNuevo(ActionEvent event) {
 
     }
 
-    @FXML
-    void onNuevoVendedor(ActionEvent event) {
 
-    }
 
- 
 }

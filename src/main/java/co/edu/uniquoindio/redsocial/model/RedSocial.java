@@ -68,9 +68,6 @@ public class RedSocial {
                 .build();
     }
 
-
-
-
     //CRUD VENDEDOR
     private Vendedor obtenerVendedor(String id) {
         Vendedor vendedor = null;

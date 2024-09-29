@@ -88,8 +88,8 @@ public class RedSocialMappingImpl implements IRedSocialMapping {
             String username = (usuario != null) ? usuario.username() : "Vendedor sin usuario";
             String password = (usuario != null) ? usuario.password() : "";
             UsuarioVendedorDto usuarioVendedorDto = new UsuarioVendedorDto(
-                    nombreVendedor, apellidoVendedor, emailVendedor,
-                    username, password
+                    username, password,
+                    nombreVendedor, apellidoVendedor, emailVendedor
             );
             usuariosVendedoresDto.add(usuarioVendedorDto);
         }
