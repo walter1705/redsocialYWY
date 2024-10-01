@@ -101,6 +101,13 @@ public class RedSocial {
         return  false;
     }
 
+    public void eliminarVendedor(String id) {
+        Vendedor encontrarVendedor = obtenerVendedor(id);
+        if (encontrarVendedor!=null) {
+            listaVendedores.remove(encontrarVendedor);
+        }
+    }
+
     private Vendedor getBuildVendedor(Usuario usuarioAsociado, String direccion, String email,
                                       String apellido, String nombre, String id) {
         return Vendedor.builder()

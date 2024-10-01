@@ -8,7 +8,6 @@ import java.util.ResourceBundle;
 import co.edu.uniquoindio.redsocial.HelloApplication;
 import co.edu.uniquoindio.redsocial.factory.ModelFactory;
 import co.edu.uniquoindio.redsocial.mapping.dto.UsuarioDto;
-import co.edu.uniquoindio.redsocial.model.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,8 +20,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-
-import javax.swing.*;
 
 public class LoginAuthViewController {
 
@@ -98,10 +95,8 @@ public class LoginAuthViewController {
         stage.setTitle("MarketPlace");
 
         // Establecer un icono para la ventana
-        Image icon = new Image(Objects.requireNonNull(getClass().getResource("/images/loginlttle.png")).toExternalForm());
+        Image icon = new Image(Objects.requireNonNull(getClass().getResource("/images/redsociallogo.png")).toExternalForm());
         stage.getIcons().add(icon);
-
-        // Mostrar la nueva ventana (Stage)
         stage.setScene(scene);
         stage.show();
     }

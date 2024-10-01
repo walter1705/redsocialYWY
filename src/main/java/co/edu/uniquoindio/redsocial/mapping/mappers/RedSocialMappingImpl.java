@@ -35,7 +35,8 @@ public class RedSocialMappingImpl implements IRedSocialMapping {
     public VendedorDto vendedorToVendedorDto(Vendedor vendedor) {
         return new VendedorDto(vendedor.getNombre(),
                 vendedor.getApellido(),
-                vendedor.getEmail());
+                vendedor.getEmail(),
+                vendedor.getId());
 
     }
 
@@ -85,11 +86,12 @@ public class RedSocialMappingImpl implements IRedSocialMapping {
             String nombreVendedor = (vendedor != null) ? vendedor.nombre() : "Usuario sin vendedor";
             String apellidoVendedor = (vendedor != null) ? vendedor.apellido() : "";
             String emailVendedor = (vendedor != null) ? vendedor.email() : "";
+            String idVendedor = (vendedor != null) ? vendedor.id() : "";
             String username = (usuario != null) ? usuario.username() : "Vendedor sin usuario";
             String password = (usuario != null) ? usuario.password() : "";
             UsuarioVendedorDto usuarioVendedorDto = new UsuarioVendedorDto(
                     username, password,
-                    nombreVendedor, apellidoVendedor, emailVendedor
+                    nombreVendedor, apellidoVendedor, emailVendedor, idVendedor
             );
             usuariosVendedoresDto.add(usuarioVendedorDto);
         }

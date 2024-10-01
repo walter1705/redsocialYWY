@@ -39,4 +39,10 @@ public class ModelFactory implements IModelFactoryService {
     public List<UsuarioDto> getUsuariosDto() {
         return mapper.getUsuariosDto(redSocial.getListaUsuarios());
     }
+
+    public boolean eliminarUsuarioVendedor() {
+        //redSocial.eliminarUsuario();
+        //redSocial.eliminarVendedor(mapper.);
+        return false;
+    }
 }

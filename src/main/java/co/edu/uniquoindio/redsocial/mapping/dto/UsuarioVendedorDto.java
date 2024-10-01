@@ -5,6 +5,7 @@ public record UsuarioVendedorDto(
         String password,
         String nombre,
         String apellido,
-        String email
+        String email,
+        String id
 ) {
 }

@@ -4,6 +4,7 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import co.edu.uniquoindio.redsocial.controller.VendedoresController;
+import co.edu.uniquoindio.redsocial.factory.ModelFactory;
 import co.edu.uniquoindio.redsocial.mapping.dto.UsuarioDto;
 import co.edu.uniquoindio.redsocial.mapping.dto.UsuarioVendedorDto;
 import co.edu.uniquoindio.redsocial.mapping.dto.VendedorDto;
@@ -21,6 +22,7 @@ public class VendedoresViewController {
     VendedoresController vendedoresController;
     ObservableList<UsuarioVendedorDto> listaUsuariosVendedores = FXCollections.observableArrayList();
     UsuarioVendedorDto vendedorSelecionado;
+    ModelFactory modelFactory = ModelFactory.getInstance();
 
 
     @FXML
@@ -54,6 +56,9 @@ public class VendedoresViewController {
     private TableColumn<UsuarioVendedorDto, String> tcEmailVendedor;
 
     @FXML
+    private TableColumn<UsuarioVendedorDto, String> tcIdVendedor;
+
+    @FXML
     private TableColumn<UsuarioVendedorDto, String> tcNombreUsuario;
 
     @FXML
@@ -73,6 +78,9 @@ public class VendedoresViewController {
 
     @FXML
     private TextField txtNombreVendedor;
+
+    @FXML
+    private TextField txtIdVendedor;
 
     @FXML
     void initialize() {
@@ -95,15 +103,18 @@ public class VendedoresViewController {
     private void listenerSelection() {
         tableVendedor.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             vendedorSelecionado = newSelection;
-            mostrarInformacionVendedor(vendedorSelecionado);
+            if (vendedorSelecionado!=null){
+                mostrarInformacionVendedor(vendedorSelecionado);}
         });
     }
+
 
     private void mostrarInformacionVendedor(UsuarioVendedorDto vendedorSelecionado) {
         if (vendedorSelecionado != null) {
             txtNombreVendedor.setText(vendedorSelecionado.nombre());
             txtApellidoVendedor.setText(vendedorSelecionado.apellido());
             txtEmailVendedor.setText(vendedorSelecionado.email());
+            txtIdVendedor.setText(vendedorSelecionado.id());
             txtNombreUsuario.setText(vendedorSelecionado.username());
             txtContrasenaUsuario.setText(vendedorSelecionado.password());
         }
@@ -113,6 +124,7 @@ public class VendedoresViewController {
         tcNombreVendedor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().nombre()));
         tcApellidoVendedor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().apellido()));
         tcEmailVendedor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().email()));
+        tcIdVendedor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().id()));
         tcNombreUsuario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().username()));
         tcContrasenaUsuario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().password()));
     }
@@ -120,7 +132,21 @@ public class VendedoresViewController {
 
     @FXML
     void onActualizar(ActionEvent event) {
+        if (vendedorSelecionado != null) {
+            UsuarioVendedorDto vendedorActualizado = new UsuarioVendedorDto(
+                    txtNombreUsuario.getText(),
+                    txtContrasenaUsuario.getText(),
+                    txtNombreVendedor.getText(),
+                    txtApellidoVendedor.getText(),
+                    txtEmailVendedor.getText(),
+                    txtIdVendedor.getId()
 
+            );
+            int index = listaUsuariosVendedores.indexOf(vendedorSelecionado);
+            listaUsuariosVendedores.set(index, vendedorActualizado);
+            vendedorSelecionado = vendedorActualizado;
+            tableVendedor.refresh();
+        }
     }
 
     @FXML
@@ -131,13 +157,12 @@ public class VendedoresViewController {
     @FXML
     void onEliminarCliente(ActionEvent event) {
         listaUsuariosVendedores.remove(vendedorSelecionado);
+        //modelFactory;
+        tableVendedor.refresh();
     }
 
     @FXML
     void onNuevo(ActionEvent event) {
 
     }
-
-
-
 }
