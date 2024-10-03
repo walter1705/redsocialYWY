@@ -15,4 +15,8 @@ public class VendedoresController {
     public List<UsuarioVendedorDto> getUsuariosVendedoresDto() {
         return modelFactory.getUsuariosVendedoresDto();
     }
+
+    public boolean agregarUsuarioVendedor(UsuarioVendedorDto usuarioVendedorDto) {
+        return modelFactory.agregarUsuarioVendedor(usuarioVendedorDto);
+    }
 }

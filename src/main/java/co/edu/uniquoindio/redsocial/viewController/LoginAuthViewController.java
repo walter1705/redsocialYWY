@@ -5,7 +5,7 @@ import java.net.URL;
 import java.util.Objects;
 import java.util.ResourceBundle;
 
-import co.edu.uniquoindio.redsocial.HelloApplication;
+import co.edu.uniquoindio.redsocial.StartRedSocial;
 import co.edu.uniquoindio.redsocial.factory.ModelFactory;
 import co.edu.uniquoindio.redsocial.mapping.dto.UsuarioDto;
 import javafx.event.ActionEvent;
@@ -88,7 +88,7 @@ public class LoginAuthViewController {
 
     private void changeSceneToRedSocialApp(Stage stage) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("RedsocialApp.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(StartRedSocial.class.getResource("RedsocialApp.fxml"));
         Parent root = fxmlLoader.load(); // Cargar la vista del archivo FXML
 
         Scene scene = new Scene(root, 1037, 815);

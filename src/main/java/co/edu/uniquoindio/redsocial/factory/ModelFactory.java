@@ -1,5 +1,6 @@
 package co.edu.uniquoindio.redsocial.factory;
 
+import co.edu.uniquoindio.redsocial.mapping.dto.AdministradorDto;
 import co.edu.uniquoindio.redsocial.mapping.dto.UsuarioDto;
 import co.edu.uniquoindio.redsocial.mapping.dto.UsuarioVendedorDto;
 import co.edu.uniquoindio.redsocial.mapping.dto.VendedorDto;
@@ -30,14 +31,23 @@ public class ModelFactory implements IModelFactoryService {
 
     @Override
     public List<UsuarioVendedorDto> getUsuariosVendedoresDto() {
-        List<VendedorDto> vendedoresDto =  mapper.getVendedoresDto(redSocial.getListaVendedores());
-        List<UsuarioDto> usuariosDto =  mapper.getUsuariosDto(redSocial.getListaUsuarios());
-        return mapper.getUsuariosVendedoresDto(vendedoresDto, usuariosDto);
+        return mapper.getUsuariosVendedoresDto(redSocial.getListaVendedores(), redSocial.getListaUsuarios());
+    }
+
+    @Override
+    public List<AdministradorDto> getAdministradoresDto() {
+        return mapper.getAdministradoresDto(redSocial.getListaAdministradores());
     }
 
     @Override
     public List<UsuarioDto> getUsuariosDto() {
         return mapper.getUsuariosDto(redSocial.getListaUsuarios());
+    }
+
+    @Override
+    public boolean agregarUsuarioVendedor(UsuarioVendedorDto usuarioVendedorDto) {
+
+        return false;
     }
 
     public boolean eliminarUsuarioVendedor() {

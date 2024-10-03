@@ -9,11 +9,11 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Objects;
 
-public class HelloApplication extends Application {
+public class StartRedSocial extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("LoginAuth.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(StartRedSocial.class.getResource("LoginAuth.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 340);
         stage.setTitle("MarketPlace login");
         Image icon = new Image(Objects.requireNonNull(getClass().getResource("/images/loginicon.png")).toExternalForm());

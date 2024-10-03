@@ -1,10 +1,9 @@
 package co.edu.uniquoindio.redsocial.viewController;
 
-import co.edu.uniquoindio.redsocial.HelloApplication;
+import co.edu.uniquoindio.redsocial.StartRedSocial;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
@@ -26,7 +25,7 @@ public class RedsocialAppViewController {
     }
 
     private void changeSceneToLoginAuth(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("LoginAuth.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(StartRedSocial.class.getResource("LoginAuth.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 600, 340);
         stage.setTitle("MarketPlace login");
         Image icon = new Image(Objects.requireNonNull(getClass().getResource("/images/loginicon.png")).toExternalForm());

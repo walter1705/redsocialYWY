@@ -9,12 +9,20 @@ public class DataUtil {
 
         RedSocial redSocial = new RedSocial();
         //Administrador
-        Usuario usuario = Usuario.builder()
+        Administrador administrador = Administrador.builder()
+                .nombre("Yeral")
+                .apellido("Uwu")
+                .id("123")
+                .email("@uqvirtual.edu.co")
+                .direccion("pueblo tapado")
+                .build();
+        Usuario usuarioAdmin = Usuario.builder()
                 .username("admin")
                 .password("admin")
                 .build();
-        redSocial.crearUsuario(usuario);
-        redSocial.agregarRedSocial(usuario);
+        administrador.setUsuarioAsociado(usuarioAdmin);
+        redSocial.agregarRedSocial(administrador);
+        redSocial.agregarRedSocial(usuarioAdmin);
         return redSocial;
     }
 }
