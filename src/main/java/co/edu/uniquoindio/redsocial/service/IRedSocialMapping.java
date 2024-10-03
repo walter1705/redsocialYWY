@@ -22,6 +22,12 @@ public interface IRedSocialMapping {
     Usuario usuarioDtoToUsuario(UsuarioDto usuarioDto);
     List<UsuarioVendedorDto> getUsuariosVendedoresDto(List<Vendedor> listaVendedores,
                                                       List<Usuario> listaUsuarios);
-    public void verificarUsuarioRedunante(List<Vendedor> listaVendedores, List<Usuario> listaUsuarios);
-    
+    void verificarUsuarioRedunante(List<Vendedor> listaVendedores, List<Usuario> listaUsuarios);
+    Vendedor usuarioVendedorDtoToVendedor(UsuarioVendedorDto usuarioVendedorDto);
+    Usuario usuarioVendedorDtoToUsuario(UsuarioVendedorDto usuarioVendedorDto);
+    List<Vendedor> usuariosVendedoresDtoToVendedores(List<UsuarioVendedorDto> listaUsuariosVendedoresDto);
+    List<Usuario> usuariosVendedoresDtoToUsuario(List<UsuarioVendedorDto> listaUsuariosVendedoresDto);
+    void verificarUsuarioRedunanteDto(List<UsuarioVendedorDto> listaUsuariosVendedoresDto);
+    boolean verificarUsuarioDatosCompletos(Usuario usuario);
+    boolean verificarVendedorDatosCompletos(Vendedor vendedor);
 }

@@ -33,8 +33,9 @@ public class RedSocialMappingImpl implements IRedSocialMapping {
                 id(administradorDto.id()).
                 build();
     }
+
     @Override
-    public List<AdministradorDto> getAdministradoresDto(List<Administrador> listaAdministradores){
+    public List<AdministradorDto> getAdministradoresDto(List<Administrador> listaAdministradores) {
         if (listaAdministradores == null) {
             throw new IllegalArgumentException("LISTA ADMINISTRADORES NULA EN REDSOCIALMAPPING");
         }
@@ -44,6 +45,7 @@ public class RedSocialMappingImpl implements IRedSocialMapping {
         }
         return administradoresDto;
     }
+
     @Override
     public VendedorDto vendedorToVendedorDto(Vendedor vendedor) {
         return new VendedorDto(vendedor.getNombre(),
@@ -68,7 +70,7 @@ public class RedSocialMappingImpl implements IRedSocialMapping {
             throw new IllegalArgumentException("LISTA USUARIOS NULA EN REDSOCIALMAPPING");
         }
         List<UsuarioDto> usuariosDto = new ArrayList<UsuarioDto>(listaUsuarios.size());
-        for(Usuario usuario : listaUsuarios) {
+        for (Usuario usuario : listaUsuarios) {
             usuariosDto.add(usuarioToUsuarioDto(usuario));
         }
 
@@ -105,14 +107,15 @@ public class RedSocialMappingImpl implements IRedSocialMapping {
     @Override
     public List<UsuarioVendedorDto> getUsuariosVendedoresDto(List<Vendedor> listaVendedores
             , List<Usuario> listaUsuarios) {
-        if (listaUsuarios == null || listaVendedores == null) throw new IllegalArgumentException("BOTH OF LIST MAPPING IMPL CLASS");
-        int sizeOfList =listaUsuarios.size()+listaVendedores.size();
+        if (listaUsuarios == null || listaVendedores == null)
+            throw new IllegalArgumentException("BOTH OF LIST MAPPING IMPL CLASS");
+        int sizeOfList = listaUsuarios.size() + listaVendedores.size();
         List<UsuarioVendedorDto> usuariosVendedoresDto = new ArrayList<UsuarioVendedorDto>(sizeOfList);
         verificarUsuarioRedunante(listaVendedores, listaUsuarios);
 
-        for(Vendedor vendedor : listaVendedores){
+        for (Vendedor vendedor : listaVendedores) {
             String nombreVendedor = vendedor.getNombre();
-            String apellidoVendedor =vendedor.getApellido();
+            String apellidoVendedor = vendedor.getApellido();
             String emailVendedor = vendedor.getEmail();
             String idVendedor = vendedor.getId();
             Usuario usuario = vendedor.getUsuarioAsociado();
@@ -124,7 +127,7 @@ public class RedSocialMappingImpl implements IRedSocialMapping {
             );
             usuariosVendedoresDto.add(usuarioVendedorDto);
         }
-        for(Usuario usuario : listaUsuarios) {
+        for (Usuario usuario : listaUsuarios) {
             String username = (usuario != null) ? usuario.getUsername() : "Vendedor sin usuario";
             String password = (usuario != null) ? usuario.getPassword() : "";
             UsuarioVendedorDto usuarioVendedorDto = new UsuarioVendedorDto(
@@ -135,30 +138,85 @@ public class RedSocialMappingImpl implements IRedSocialMapping {
 
         return usuariosVendedoresDto;
     }
+
     @Override
     public void verificarUsuarioRedunante(List<Vendedor> listaVendedores, List<Usuario> listaUsuarios) {
-        for(Vendedor vendedor : listaVendedores) {
+        for (Vendedor vendedor : listaVendedores) {
             listaUsuarios.remove(vendedor.getUsuarioAsociado());
         }
     }
 
+    @Override
+    public Vendedor usuarioVendedorDtoToVendedor(UsuarioVendedorDto usuarioVendedorDto) {
+        return new VendedorBuilder()
+                .nombre(usuarioVendedorDto.nombre())
+                .apellido(usuarioVendedorDto.apellido())
+                .email(usuarioVendedorDto.email())
+                .id(usuarioVendedorDto.id())
+                .build();
+    }
+
+    @Override
+    public Usuario usuarioVendedorDtoToUsuario(UsuarioVendedorDto usuarioVendedorDto) {
+        return new UsuarioBuilder()
+                .username(usuarioVendedorDto.username())
+                .password(usuarioVendedorDto.password())
+                .build();
+    }
+
+    @Override
+    public List<Vendedor> usuariosVendedoresDtoToVendedores(List<UsuarioVendedorDto> listaUsuariosVendedoresDto) {
+        if (listaUsuariosVendedoresDto == null) throw new IllegalArgumentException("DTOUSUARIOVENDEDORE NULL LIST");
+        List<Vendedor> listaVendedores = new ArrayList<Vendedor>();
+        for (UsuarioVendedorDto usuarioVendedorDto : listaUsuariosVendedoresDto) {
+            Vendedor vendedor = usuarioVendedorDtoToVendedor(usuarioVendedorDto);
+            Usuario usuario = usuarioVendedorDtoToUsuario(usuarioVendedorDto);
+            if (verificarUsuarioDatosCompletos(usuario)) vendedor.setUsuarioAsociado(usuario);
+            if (verificarVendedorDatosCompletos(vendedor)) listaVendedores.add(vendedor);
+        }
+
+        return listaVendedores;
+    }
 
 
-}
+    @Override
+    public List<Usuario> usuariosVendedoresDtoToUsuario(List<UsuarioVendedorDto> listaUsuariosVendedoresDto) {
+        if (listaUsuariosVendedoresDto == null) throw new IllegalArgumentException("DTOUSUARIOVENDEDORE NULL LIST");
+        verificarUsuarioRedunanteDto(listaUsuariosVendedoresDto);
+        List<Usuario> listaUsuarios = new ArrayList<Usuario>();
+        for (UsuarioVendedorDto usuarioVendedorDto : listaUsuariosVendedoresDto) {
+            Usuario usuario = usuarioVendedorDtoToUsuario(usuarioVendedorDto);
+            if (verificarUsuarioDatosCompletos(usuario)) listaUsuarios.add(usuario);
+        }
 
+        return listaUsuarios;
+    }
 
+    @Override
+    public boolean verificarVendedorDatosCompletos(Vendedor vendedor) {
+        return !vendedor.getNombre().isEmpty() && !vendedor.getNombre().isBlank() &&
+                !vendedor.getApellido().isEmpty() && !vendedor.getApellido().isBlank() &&
+                !vendedor.getEmail().isEmpty() && !vendedor.getEmail().isBlank() &&
+                !vendedor.getId().isEmpty() && !vendedor.getId().isBlank();
+    }
 
+    @Override
+    public boolean verificarUsuarioDatosCompletos(Usuario usuario) {
+        return !usuario.getUsername().isEmpty() && !usuario.getUsername().isBlank() &&
+                !usuario.getPassword().isEmpty() && !usuario.getPassword().isBlank();
+    }
 
-
-
-
-
-
-
-
-
-
-
+    @Override
+    public void verificarUsuarioRedunanteDto(List<UsuarioVendedorDto> listaUsuariosVendedoresDto) {
+        for (UsuarioVendedorDto usuarioVendedorDto : listaUsuariosVendedoresDto) {
+            Vendedor vendedor = usuarioVendedorDtoToVendedor(usuarioVendedorDto);
+            Usuario usuario = usuarioVendedorDtoToUsuario(usuarioVendedorDto);
+            if (verificarUsuarioDatosCompletos(usuario) && verificarVendedorDatosCompletos(vendedor)) {
+                listaUsuariosVendedoresDto.remove(usuarioVendedorDto);
+            }
+            }
+        }
+    }
 
 
 
