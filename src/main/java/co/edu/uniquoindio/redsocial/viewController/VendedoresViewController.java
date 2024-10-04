@@ -3,6 +3,7 @@ package co.edu.uniquoindio.redsocial.viewController;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import co.edu.uniquoindio.redsocial.utils.RedSocialConstants.*;
 import co.edu.uniquoindio.redsocial.controller.VendedoresController;
 import co.edu.uniquoindio.redsocial.factory.ModelFactory;
 import co.edu.uniquoindio.redsocial.mapping.dto.UsuarioDto;
@@ -15,11 +16,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import static co.edu.uniquoindio.redsocial.utils.RedSocialConstants.*;
+
 public class VendedoresViewController {
     VendedoresController vendedoresController;
     ObservableList<UsuarioVendedorDto> listaUsuariosVendedores = FXCollections.observableArrayList();
-    UsuarioVendedorDto vendedorSelecionado;
-    ModelFactory modelFactory = ModelFactory.getInstance();
+    UsuarioVendedorDto vendedorSelecionado;;
 
 
     @FXML
@@ -122,38 +124,46 @@ public class VendedoresViewController {
         if (datosValidos(usuarioVendedorDto)) {
             if(vendedoresController.agregarUsuarioVendedor(usuarioVendedorDto)) {
                 listaUsuariosVendedores.addAll(usuarioVendedorDto);
-
+                limpiarCampos();
+                tableVendedor.refresh();
+                mostrarMensaje(TITULO_USUVENDEDOR_AGREGADO, HEADER, BODY_USUVENDEDOR_AGREGADO, Alert.AlertType.INFORMATION);
             }
-            else mostrarMensaje(null, null, null, null);
+            else {
+                mostrarMensaje(TITULO_USUVENDEDOR_NO_AGREGADO, HEADER, BODY_USUVENDEDOR_NO_AGREGADO, Alert.AlertType.ERROR);
+            }
         }
         else {
-            mostrarMensaje("Campos incompletos", "Notificacion", "Los datos del formulario estan incompletos", Alert.AlertType.INFORMATION);
+            mostrarMensaje(TITULO_CAMPOS_INCOMPLETOS, HEADER, BODY_CAMPOS_INCOMPLETOS, Alert.AlertType.INFORMATION);
         }
-
-    }
-
-    private void mostrarMensaje(String camposIncompletos, String notificacion, String s, Alert.AlertType alertType) {
 
     }
 
     private boolean datosValidos(UsuarioVendedorDto usuarioVendedorDto) {
-        if (usuarioVendedorDto.nombre().isEmpty() ||
-                usuarioVendedorDto.apellido().isEmpty() ||
-                usuarioVendedorDto.id().isEmpty() ||
-                usuarioVendedorDto.username().isEmpty() ||
-                usuarioVendedorDto.password().isEmpty()) {
-            return false;
-        }
-        return true;
+        if(!usuarioVendedorDto.nombre().isBlank() &&
+                !usuarioVendedorDto.apellido().isBlank() &&
+                !usuarioVendedorDto.id().isBlank() &&
+                !usuarioVendedorDto.email().isBlank()) return true;
+        else if (!usuarioVendedorDto.username().isBlank() &&
+                !usuarioVendedorDto.password().isBlank()) return true;
+        return false;
+    }
+
+
+    private void mostrarMensaje(String titulo, String header, String contenido, Alert.AlertType alertType) {
+        Alert aler = new Alert(alertType);
+        aler.setTitle(titulo);
+        aler.setHeaderText(header);
+        aler.setContentText(contenido);
+        aler.showAndWait();
     }
 
     private UsuarioVendedorDto crearUsuarioVendedorDto() {
-        return new UsuarioVendedorDto(txtNombreVendedor.getText(),
-            txtApellidoVendedor.getText(),
-            txtEmailVendedor.getText(),
-                txtIdVendedor.getText(),
-            txtNombreUsuario.getText(),
-            txtContrasenaUsuario.getText());
+        return new UsuarioVendedorDto(txtNombreUsuario.getText(),
+                txtContrasenaUsuario.getText(),
+                txtNombreVendedor.getText(),
+                txtApellidoVendedor.getText(),
+                txtEmailVendedor.getText(),
+                txtIdVendedor.getText());
     }
 
 
@@ -202,5 +212,14 @@ public class VendedoresViewController {
     @FXML
     void onNuevo(ActionEvent event) {
 
+    }
+
+    private void limpiarCampos() {
+        txtNombreVendedor.setText("");
+        txtApellidoVendedor.setText("");
+        txtEmailVendedor.setText("");
+        txtIdVendedor.setText("");
+        txtNombreUsuario.setText("");
+        txtContrasenaUsuario.setText("");
     }
 }

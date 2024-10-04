@@ -27,7 +27,7 @@ public class RedSocial {
     private Usuario obtenerUsuario(String username) {
         Usuario usuario = null;
         for (Usuario usuario1: listaUsuarios) {
-            if(usuario1.getUsername().equals(username)){
+            if(usuario1.getUsername().equals(username) && !usuario1.getUsername().isBlank()){
                 usuario = usuario1;
                 break;
             }
@@ -72,7 +72,7 @@ public class RedSocial {
     private Vendedor obtenerVendedor(String id) {
         Vendedor vendedor = null;
         for (Vendedor vendedor1: listaVendedores) {
-            if(!vendedor1.getId().equals(id)){
+            if(vendedor1.getId().equals(id) && !vendedor1.getId().isBlank()){
                 vendedor = vendedor1;
                 break;
             }
@@ -89,6 +89,7 @@ public class RedSocial {
             agregarRedSocial(vendedor);
             return true;
         }
+
         return  false;
     }
 

@@ -7,6 +7,7 @@ import co.edu.uniquoindio.redsocial.mapping.dto.VendedorDto;
 import co.edu.uniquoindio.redsocial.mapping.mappers.RedSocialMappingImpl;
 import co.edu.uniquoindio.redsocial.model.RedSocial;
 import co.edu.uniquoindio.redsocial.model.Usuario;
+import co.edu.uniquoindio.redsocial.model.Vendedor;
 import co.edu.uniquoindio.redsocial.service.IModelFactoryService;
 import co.edu.uniquoindio.redsocial.service.IRedSocialMapping;
 import co.edu.uniquoindio.redsocial.utils.DataUtil;
@@ -46,8 +47,8 @@ public class ModelFactory implements IModelFactoryService {
 
     @Override
     public boolean agregarUsuarioVendedor(UsuarioVendedorDto usuarioVendedorDto) {
-
-        return false;
+        return redSocial.crearVendedor(mapper.usuarioVendedorDtoToVendedor(usuarioVendedorDto))
+                && redSocial.crearUsuario(mapper.usuarioVendedorDtoToUsuario(usuarioVendedorDto));
     }
 
     public boolean eliminarUsuarioVendedor() {

@@ -13,4 +13,6 @@ module co.edu.uniquoindio.redsocial.redsocial {
     exports co.edu.uniquoindio.redsocial.controller;
     opens co.edu.uniquoindio.redsocial.mapping.dto;
     exports co.edu.uniquoindio.redsocial.mapping.dto;
+    opens co.edu.uniquoindio.redsocial.utils;
+    exports co.edu.uniquoindio.redsocial.utils;
 }

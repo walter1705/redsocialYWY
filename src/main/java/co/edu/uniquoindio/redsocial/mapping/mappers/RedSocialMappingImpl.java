@@ -148,12 +148,26 @@ public class RedSocialMappingImpl implements IRedSocialMapping {
 
     @Override
     public Vendedor usuarioVendedorDtoToVendedor(UsuarioVendedorDto usuarioVendedorDto) {
-        return new VendedorBuilder()
-                .nombre(usuarioVendedorDto.nombre())
-                .apellido(usuarioVendedorDto.apellido())
-                .email(usuarioVendedorDto.email())
-                .id(usuarioVendedorDto.id())
-                .build();
+        if (!usuarioVendedorDto.username().isEmpty() && !usuarioVendedorDto.password().isEmpty()) {
+            Usuario usuario = Usuario.builder()
+                    .username(usuarioVendedorDto.username())
+                    .password(usuarioVendedorDto.password())
+                    .build();
+            return new VendedorBuilder()
+                    .nombre(usuarioVendedorDto.nombre())
+                    .apellido(usuarioVendedorDto.apellido())
+                    .email(usuarioVendedorDto.email())
+                    .id(usuarioVendedorDto.id())
+                    .usuarioAsociado(usuario)
+                    .build();
+        } else {
+            return new VendedorBuilder()
+                    .nombre(usuarioVendedorDto.nombre())
+                    .apellido(usuarioVendedorDto.apellido())
+                    .email(usuarioVendedorDto.email())
+                    .id(usuarioVendedorDto.id())
+                    .build();
+        }
     }
 
     @Override
