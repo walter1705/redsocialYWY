@@ -1,6 +1,8 @@
 package co.edu.uniquoindio.redsocial.service;
 
 public interface IRedSocial {
+    boolean eliminarUsuario(String username);
+    boolean eliminarVendedor(String id);
     //boolean crearCliente(String nombre, String apellido, String cedula, int edad);
     //void eliminarCliente(String cedula);
     //List<Cliente> obtenerClientes();

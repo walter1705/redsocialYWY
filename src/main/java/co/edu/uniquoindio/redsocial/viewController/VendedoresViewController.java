@@ -135,7 +135,6 @@ public class VendedoresViewController {
         else {
             mostrarMensaje(TITULO_CAMPOS_INCOMPLETOS, HEADER, BODY_CAMPOS_INCOMPLETOS, Alert.AlertType.INFORMATION);
         }
-
     }
 
     private boolean datosValidos(UsuarioVendedorDto usuarioVendedorDto) {
@@ -198,16 +197,32 @@ public class VendedoresViewController {
 
     @FXML
     void onAgregar(ActionEvent event) {
-            agregarUsuarioVendedor();
+        agregarUsuarioVendedor();
     }
-
 
     @FXML
     void onEliminarCliente(ActionEvent event) {
-        listaUsuariosVendedores.remove(vendedorSelecionado);
-        //modelFactory;
-        tableVendedor.refresh();
+        eliminarUsuarioVendedor();
     }
+
+    private void eliminarUsuarioVendedor() {
+        if (vendedorSelecionado!=null) {
+            if(vendedoresController.eliminarUsuarioVendedor(vendedorSelecionado)) {
+                listaUsuariosVendedores.remove(vendedorSelecionado);
+                limpiarCampos();
+                tableVendedor.refresh();
+                mostrarMensaje(TITULO_USUVENDEDOR_ELIMINADO, HEADER, BODY_USUVENDEDOR_ELIMINADO, Alert.AlertType.INFORMATION);
+            }
+            else {
+                mostrarMensaje(TITULO_USUVENDEDOR_NO_ELIMNADO, HEADER, BODY_USUVENDEDOR_NO_ELIMINADO, Alert.AlertType.ERROR);
+            }
+        }
+        else {
+            mostrarMensaje(TITULO_CAMPOS_NO_SELECIONADO, HEADER, BODY_CAMPOS_NO_SELECIONADO, Alert.AlertType.INFORMATION);
+        }
+    }
+
+
 
     @FXML
     void onNuevo(ActionEvent event) {

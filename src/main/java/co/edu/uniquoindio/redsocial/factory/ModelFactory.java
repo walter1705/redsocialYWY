@@ -3,11 +3,8 @@ package co.edu.uniquoindio.redsocial.factory;
 import co.edu.uniquoindio.redsocial.mapping.dto.AdministradorDto;
 import co.edu.uniquoindio.redsocial.mapping.dto.UsuarioDto;
 import co.edu.uniquoindio.redsocial.mapping.dto.UsuarioVendedorDto;
-import co.edu.uniquoindio.redsocial.mapping.dto.VendedorDto;
 import co.edu.uniquoindio.redsocial.mapping.mappers.RedSocialMappingImpl;
 import co.edu.uniquoindio.redsocial.model.RedSocial;
-import co.edu.uniquoindio.redsocial.model.Usuario;
-import co.edu.uniquoindio.redsocial.model.Vendedor;
 import co.edu.uniquoindio.redsocial.service.IModelFactoryService;
 import co.edu.uniquoindio.redsocial.service.IRedSocialMapping;
 import co.edu.uniquoindio.redsocial.utils.DataUtil;
@@ -48,12 +45,11 @@ public class ModelFactory implements IModelFactoryService {
     @Override
     public boolean agregarUsuarioVendedor(UsuarioVendedorDto usuarioVendedorDto) {
         return redSocial.crearVendedor(mapper.usuarioVendedorDtoToVendedor(usuarioVendedorDto))
-                && redSocial.crearUsuario(mapper.usuarioVendedorDtoToUsuario(usuarioVendedorDto));
+                || redSocial.crearUsuario(mapper.usuarioVendedorDtoToUsuario(usuarioVendedorDto));
     }
 
-    public boolean eliminarUsuarioVendedor() {
-        //redSocial.eliminarUsuario();
-        //redSocial.eliminarVendedor(mapper.);
-        return false;
+    public boolean eliminarUsuarioVendedor(UsuarioVendedorDto vendedorSelecionado) {
+        return redSocial.eliminarVendedor(vendedorSelecionado.id())
+                || redSocial.eliminarUsuario(vendedorSelecionado.username());
     }
 }

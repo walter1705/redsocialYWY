@@ -14,4 +14,5 @@ public interface IModelFactoryService {
     List<AdministradorDto> getAdministradoresDto();
 
     boolean agregarUsuarioVendedor(UsuarioVendedorDto usuarioVendedorDto);
+    boolean eliminarUsuarioVendedor(UsuarioVendedorDto vendedorSelecionado);
 }

@@ -24,12 +24,23 @@ public class RedSocial {
     public void agregarRedSocial(Producto producto) {listaProductos.add(producto);}
 
     //CRUD USUARIO
+
+    private boolean verificarUsuarioRepetido(String username) {
+        for(Usuario usuario : listaUsuarios) {
+            if (usuario.getUsername().equals(username)) return true;
+        }
+
+        return false;
+    }
     private Usuario obtenerUsuario(String username) {
         Usuario usuario = null;
-        for (Usuario usuario1: listaUsuarios) {
-            if(usuario1.getUsername().equals(username) && !usuario1.getUsername().isBlank()){
-                usuario = usuario1;
-                break;
+        if(!verificarUsuarioRepetido(username)){
+            for (Usuario usuario1 : listaUsuarios) {
+                if (usuario1.getUsername().equals(username)
+                        && !usuario1.getUsername().isBlank()) {
+                    usuario = usuario1;
+                    break;
+                }
             }
         }
 
@@ -59,6 +70,16 @@ public class RedSocial {
         return false;
     }
 
+    public boolean eliminarUsuario(String username) {
+        Usuario usuarioEncontrado = obtenerUsuario(username);
+        if (usuarioEncontrado!=null) {
+            listaUsuarios.remove(usuarioEncontrado);
+            return true;
+        }
+        return false;
+    }
+
+
     private Usuario getBuildUsuario(String username, String password, Vendedor vendedorAsociado, Administrador administradorAsociado) {
         return Usuario.builder()
                 .username(username)
@@ -69,10 +90,20 @@ public class RedSocial {
     }
 
     //CRUD VENDEDOR
+
+    private boolean verificarVendedorRepetido(String id) {
+        for(Vendedor vendedor : listaVendedores) {
+            if (vendedor.getId().equals(id)) return true;
+        }
+
+        return false;
+    }
+
     private Vendedor obtenerVendedor(String id) {
         Vendedor vendedor = null;
-        for (Vendedor vendedor1: listaVendedores) {
-            if(vendedor1.getId().equals(id) && !vendedor1.getId().isBlank()){
+        for (Vendedor vendedor1 : listaVendedores) {
+            if (vendedor1.getId().equals(id)
+                    && !vendedor1.getId().isBlank()) {
                 vendedor = vendedor1;
                 break;
             }
@@ -102,11 +133,14 @@ public class RedSocial {
         return  false;
     }
 
-    public void eliminarVendedor(String id) {
+    public boolean eliminarVendedor(String id) {
         Vendedor encontrarVendedor = obtenerVendedor(id);
         if (encontrarVendedor!=null) {
             listaVendedores.remove(encontrarVendedor);
+            return true;
         }
+
+        return false;
     }
 
     private Vendedor getBuildVendedor(Usuario usuarioAsociado, String direccion, String email,
@@ -119,8 +153,6 @@ public class RedSocial {
                 .nombre(nombre)
                 .build();
     }
-
-
 
 
 
@@ -173,4 +205,6 @@ public class RedSocial {
     public void setListaUsuarios(List<Usuario> listaUsuarios) {
         this.listaUsuarios = listaUsuarios;
     }
+
+
 }
