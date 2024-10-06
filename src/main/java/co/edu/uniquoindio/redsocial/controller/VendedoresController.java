@@ -23,4 +23,8 @@ public class VendedoresController {
     public boolean eliminarUsuarioVendedor(UsuarioVendedorDto vendedorSelecionado) {
         return modelFactory.eliminarUsuarioVendedor(vendedorSelecionado);
     }
+
+    public boolean actualizarUsuarioVendedor(String username, String id, UsuarioVendedorDto usuarioVendedorDto) {
+        return modelFactory.actualizarUsuarioVendedor(username, id, usuarioVendedorDto);
+    }
 }

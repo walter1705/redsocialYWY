@@ -1,8 +1,14 @@
 package co.edu.uniquoindio.redsocial.service;
 
+import co.edu.uniquoindio.redsocial.model.Usuario;
+import co.edu.uniquoindio.redsocial.model.Vendedor;
+
 public interface IRedSocial {
     boolean eliminarUsuario(String username);
     boolean eliminarVendedor(String id);
+    public boolean actualizarUsuario(String username, Usuario usuario);
+
+    boolean actualizarVendedor(String id, Vendedor vendedor);
     //boolean crearCliente(String nombre, String apellido, String cedula, int edad);
     //void eliminarCliente(String cedula);
     //List<Cliente> obtenerClientes();

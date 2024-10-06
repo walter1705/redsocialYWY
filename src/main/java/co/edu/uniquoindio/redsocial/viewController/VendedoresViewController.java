@@ -106,7 +106,7 @@ public class VendedoresViewController {
                 mostrarInformacionVendedor(vendedorSelecionado);}
         });
     }
-
+    //partir usuario y vendedor
 
     private void mostrarInformacionVendedor(UsuarioVendedorDto vendedorSelecionado) {
         if (vendedorSelecionado != null) {
@@ -138,13 +138,13 @@ public class VendedoresViewController {
     }
 
     private boolean datosValidos(UsuarioVendedorDto usuarioVendedorDto) {
-        if(!usuarioVendedorDto.nombre().isBlank() &&
+        boolean usuarioValido = !usuarioVendedorDto.username().isBlank() && !usuarioVendedorDto.password().isBlank();
+        boolean vendedorValido = !usuarioVendedorDto.nombre().isBlank() &&
                 !usuarioVendedorDto.apellido().isBlank() &&
                 !usuarioVendedorDto.id().isBlank() &&
-                !usuarioVendedorDto.email().isBlank()) return true;
-        else if (!usuarioVendedorDto.username().isBlank() &&
-                !usuarioVendedorDto.password().isBlank()) return true;
-        return false;
+                !usuarioVendedorDto.email().isBlank();
+
+        return usuarioValido || vendedorValido;
     }
 
 
@@ -178,21 +178,7 @@ public class VendedoresViewController {
 
     @FXML
     void onActualizar(ActionEvent event) {
-        if (vendedorSelecionado != null) {
-            UsuarioVendedorDto vendedorActualizado = new UsuarioVendedorDto(
-                    txtNombreUsuario.getText(),
-                    txtContrasenaUsuario.getText(),
-                    txtNombreVendedor.getText(),
-                    txtApellidoVendedor.getText(),
-                    txtEmailVendedor.getText(),
-                    txtIdVendedor.getId()
-
-            );
-            int index = listaUsuariosVendedores.indexOf(vendedorSelecionado);
-            listaUsuariosVendedores.set(index, vendedorActualizado);
-            vendedorSelecionado = vendedorActualizado;
-            tableVendedor.refresh();
-        }
+        actualizarUsuarioVendedor();
     }
 
     @FXML
@@ -201,12 +187,38 @@ public class VendedoresViewController {
     }
 
     @FXML
-    void onEliminarCliente(ActionEvent event) {
+    void onEliminar(ActionEvent event) {
         eliminarUsuarioVendedor();
     }
 
+    private void actualizarUsuarioVendedor() {
+        UsuarioVendedorDto usuarioVendedorDto = crearUsuarioVendedorDto();
+        if (datosValidos(usuarioVendedorDto)) {
+            if (vendedoresController.actualizarUsuarioVendedor(vendedorSelecionado.username(), vendedorSelecionado.id(), usuarioVendedorDto)) {
+                actualizarUsuarioVendedorListaObserver(usuarioVendedorDto);
+                limpiarCampos();
+                tableVendedor.refresh();
+                mostrarMensaje(TITULO_USUVENDEDOR_ACTUALIZADO, HEADER, BODY_USUVENDEDOR_ACTUALIZADO, Alert.AlertType.INFORMATION);
+            }else {
+                mostrarMensaje(TITULO_USUVENDEDOR_NO_ACTUALIZADO, HEADER, BODY_USUVENDEDOR_NO_ACTUALIZADO, Alert.AlertType.ERROR);
+            }
+        }
+        else {
+            mostrarMensaje(TITULO_CAMPOS_NO_SELECIONADO, HEADER, BODY_CAMPOS_NO_SELECIONADO, Alert.AlertType.INFORMATION);
+        }
+    }
+
+    private void actualizarUsuarioVendedorListaObserver(UsuarioVendedorDto usuarioVendedorDto) {
+        for (int i = 0; i < listaUsuariosVendedores.size(); i++) {
+            if (listaUsuariosVendedores.get(i).id().equals(vendedorSelecionado.id())) {
+                listaUsuariosVendedores.set(i, usuarioVendedorDto);
+                break;
+            }
+        }
+    }
+
     private void eliminarUsuarioVendedor() {
-        if (vendedorSelecionado!=null) {
+        if (datosValidos(vendedorSelecionado)) {
             if(vendedoresController.eliminarUsuarioVendedor(vendedorSelecionado)) {
                 listaUsuariosVendedores.remove(vendedorSelecionado);
                 limpiarCampos();

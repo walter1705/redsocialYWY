@@ -14,5 +14,10 @@ public class RedSocialConstants {
     public static final String BODY_USUVENDEDOR_NO_ELIMINADO = "Usuario y/o vendedor no se ha eliminado, no existe.";
     public static final String TITULO_CAMPOS_NO_SELECIONADO = "Usuario y/o vendedor no se ha seleccionado.";
     public static final String BODY_CAMPOS_NO_SELECIONADO = "No se ha selecionado usuario y/o vendedor.";
+    public static final String TITULO_USUVENDEDOR_ACTUALIZADO = "Usuario y/o vendedor actualizado.";
+    public static final String BODY_USUVENDEDOR_ACTUALIZADO = "Usuario y/o vendedor actualizado correctamente.";
+    public static final String TITULO_USUVENDEDOR_NO_ACTUALIZADO = "Usuario y/o vendedor no actualizado.";
+    public static final String BODY_USUVENDEDOR_NO_ACTUALIZADO = "Usuario y/o vendedor no ha sido actualizado.";
+
 
 }
