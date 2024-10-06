@@ -122,11 +122,21 @@ public class VendedoresViewController {
     private void agregarUsuarioVendedor() {
         UsuarioVendedorDto usuarioVendedorDto = crearUsuarioVendedorDto();
         if (datosValidos(usuarioVendedorDto)) {
-            if(vendedoresController.agregarUsuarioVendedor(usuarioVendedorDto)) {
+            boolean usuarioAgregado = vendedoresController.agregarUsuarioDto(usuarioVendedorDto);
+            boolean vendedorAgregado = vendedoresController.agregarVendedorDto(usuarioVendedorDto);
+            if(usuarioAgregado && vendedorAgregado) {
                 listaUsuariosVendedores.addAll(usuarioVendedorDto);
                 limpiarCampos();
                 tableVendedor.refresh();
                 mostrarMensaje(TITULO_USUVENDEDOR_AGREGADO, HEADER, BODY_USUVENDEDOR_AGREGADO, Alert.AlertType.INFORMATION);
+            } else if(usuarioAgregado) {
+                listaUsuariosVendedores.addAll(getUsuarioFromMainDto(usuarioVendedorDto));
+                limpiarCampos();
+                tableVendedor.refresh();
+            } else if(vendedorAgregado) {
+                listaUsuariosVendedores.addAll(getVendedorFromMainDto(usuarioVendedorDto));
+                limpiarCampos();
+                tableVendedor.refresh();
             }
             else {
                 mostrarMensaje(TITULO_USUVENDEDOR_NO_AGREGADO, HEADER, BODY_USUVENDEDOR_NO_AGREGADO, Alert.AlertType.ERROR);
@@ -135,6 +145,24 @@ public class VendedoresViewController {
         else {
             mostrarMensaje(TITULO_CAMPOS_INCOMPLETOS, HEADER, BODY_CAMPOS_INCOMPLETOS, Alert.AlertType.INFORMATION);
         }
+    }
+
+    private UsuarioVendedorDto getVendedorFromMainDto(UsuarioVendedorDto usuarioVendedorDto) {
+        return new UsuarioVendedorDto("",
+              "",
+              usuarioVendedorDto.nombre(),
+              usuarioVendedorDto.apellido(),
+              usuarioVendedorDto.email(),
+                usuarioVendedorDto.id()
+        );    }
+
+    private UsuarioVendedorDto getUsuarioFromMainDto(UsuarioVendedorDto usuarioVendedorDto) {
+        return new UsuarioVendedorDto(usuarioVendedorDto.username(),
+                usuarioVendedorDto.password(),
+                "",
+                "",
+                "",
+                "");
     }
 
     private boolean datosValidos(UsuarioVendedorDto usuarioVendedorDto) {

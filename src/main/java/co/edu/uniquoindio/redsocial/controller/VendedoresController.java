@@ -16,8 +16,12 @@ public class VendedoresController {
         return modelFactory.getUsuariosVendedoresDto();
     }
 
-    public boolean agregarUsuarioVendedor(UsuarioVendedorDto usuarioVendedorDto) {
-        return modelFactory.agregarUsuarioVendedor(usuarioVendedorDto);
+    public boolean agregarUsuarioDto(UsuarioVendedorDto usuarioVendedorDto) {
+        return modelFactory.agregarUsuarioDto(usuarioVendedorDto);
+    }
+
+    public boolean agregarVendedorDto(UsuarioVendedorDto usuarioVendedorDto) {
+        return modelFactory.agregarVendedorDto(usuarioVendedorDto);
     }
 
     public boolean eliminarUsuarioVendedor(UsuarioVendedorDto vendedorSelecionado) {

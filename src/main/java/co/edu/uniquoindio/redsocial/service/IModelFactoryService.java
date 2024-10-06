@@ -13,7 +13,8 @@ public interface IModelFactoryService {
     List<UsuarioDto> getUsuariosDto();
     List<AdministradorDto> getAdministradoresDto();
 
-    boolean agregarUsuarioVendedor(UsuarioVendedorDto usuarioVendedorDto);
+    boolean agregarUsuarioDto(UsuarioVendedorDto usuarioVendedorDto);
+    boolean agregarVendedorDto(UsuarioVendedorDto usuarioVendedorDto);
     boolean eliminarUsuarioVendedor(UsuarioVendedorDto vendedorSelecionado);
 
     boolean actualizarUsuarioVendedor(String username, String id, UsuarioVendedorDto usuarioVendedorDto);

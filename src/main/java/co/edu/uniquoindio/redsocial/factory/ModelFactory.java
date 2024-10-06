@@ -43,17 +43,13 @@ public class ModelFactory implements IModelFactoryService {
     }
 
     @Override
-    public boolean agregarUsuarioVendedor(UsuarioVendedorDto usuarioVendedorDto) {
-        boolean usuarioCreado = true;
-        boolean vendedorCreado = true;
+    public boolean agregarUsuarioDto(UsuarioVendedorDto usuarioVendedorDto) {
+        return redSocial.crearUsuario(mapper.usuarioVendedorDtoToUsuario(usuarioVendedorDto));
+    }
 
-        if (usuarioVendedorDto.necesitaUsuario()) {
-            usuarioCreado = redSocial.crearUsuario(mapper.usuarioVendedorDtoToUsuario(usuarioVendedorDto));
-        }
-        if (usuarioVendedorDto.necesitaVendedor()) {
-            vendedorCreado = redSocial.crearVendedor(mapper.usuarioVendedorDtoToVendedor(usuarioVendedorDto));
-        }
-        return  usuarioCreado && vendedorCreado;
+    @Override
+    public boolean agregarVendedorDto(UsuarioVendedorDto usuarioVendedorDto) {
+        return redSocial.crearVendedor(mapper.usuarioVendedorDtoToVendedor(usuarioVendedorDto));
     }
 
     @Override
