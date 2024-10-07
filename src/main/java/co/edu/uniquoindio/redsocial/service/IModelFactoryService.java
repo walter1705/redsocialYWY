@@ -17,5 +17,6 @@ public interface IModelFactoryService {
     boolean agregarVendedorDto(UsuarioVendedorDto usuarioVendedorDto);
     boolean eliminarUsuarioVendedor(UsuarioVendedorDto vendedorSelecionado);
 
-    boolean actualizarUsuarioVendedor(String username, String id, UsuarioVendedorDto usuarioVendedorDto);
+    boolean actualizarUsuario(String username, UsuarioVendedorDto usuarioVendedorDto);
+    boolean actualizarVendedor(String id, UsuarioVendedorDto usuarioVendedorDto);
 }

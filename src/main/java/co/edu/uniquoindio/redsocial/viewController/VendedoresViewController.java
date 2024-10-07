@@ -129,17 +129,17 @@ public class VendedoresViewController {
             if (usuarioAgregado && vendedorAgregado) {
                 listaUsuariosVendedores.addAll(usuarioVendedorDto);
                 limpiarCampos();
-                tableVendedor.refresh();
+                refrescarTabla();
                 mostrarMensaje(TITULO_USUVENDEDOR_AGREGADO, HEADER, BODY_USUVENDEDOR_AGREGADO, Alert.AlertType.INFORMATION);
             } else if (usuarioAgregado) {
                 listaUsuariosVendedores.addAll(getUsuarioFromMainDto(usuarioVendedorDto));
                 limpiarCampos();
-                tableVendedor.refresh();
+                refrescarTabla();
                 mostrarMensaje(TITULO_USUARIO_AGREGADO, HEADER, BODY_USUARIO_AGREGADO, Alert.AlertType.INFORMATION);
             } else if (vendedorAgregado) {
                 listaUsuariosVendedores.addAll(getVendedorFromMainDto(usuarioVendedorDto));
                 limpiarCampos();
-                tableVendedor.refresh();
+                refrescarTabla();
                 mostrarMensaje(TITULO_VENDEDOR_AGREGADO, HEADER, BODY_VENDEDOR_AGREGADO, Alert.AlertType.INFORMATION);
             } else {
                 mostrarMensaje(TITULO_USUVENDEDOR_NO_AGREGADO, HEADER, BODY_USUVENDEDOR_NO_AGREGADO, Alert.AlertType.ERROR);
@@ -149,7 +149,7 @@ public class VendedoresViewController {
             if (usuarioAgregado) {
                 listaUsuariosVendedores.addAll(getUsuarioFromMainDto(usuarioVendedorDto));
                 limpiarCampos();
-                tableVendedor.refresh();
+                refrescarTabla();
                 mostrarMensaje(TITULO_USUARIO_AGREGADO, HEADER, BODY_USUARIO_AGREGADO, Alert.AlertType.INFORMATION);
             } else {
                 mostrarMensaje(TITULO_USUARIO_NO_AGREGADO, HEADER, BODY_USUARIO_NO_AGREGADO, Alert.AlertType.INFORMATION);
@@ -159,7 +159,7 @@ public class VendedoresViewController {
             if (vendedorAgregado) {
                 listaUsuariosVendedores.addAll(getVendedorFromMainDto(usuarioVendedorDto));
                 limpiarCampos();
-                tableVendedor.refresh();
+                refrescarTabla();
                 mostrarMensaje(TITULO_VENDEDOR_AGREGADO, HEADER, BODY_VENDEDOR_AGREGADO, Alert.AlertType.INFORMATION);
             } else{
                 mostrarMensaje(TITULO_VENDEDOR_NO_AGREGADO, HEADER, BODY_VENDEDOR_NO_AGREGADO, Alert.AlertType.INFORMATION);
@@ -169,6 +169,67 @@ public class VendedoresViewController {
         }
     }
 
+    private void actualizarUsuarioVendedor() {
+        UsuarioVendedorDto usuarioVendedorDto = crearUsuarioVendedorDto();
+        if (datosValidosUsuario(usuarioVendedorDto) && datosValidosVendedor(usuarioVendedorDto)) {
+            boolean usuarioActualizado = vendedoresController.actualizarUsuario(vendedorSelecionado.username(), usuarioVendedorDto);
+            boolean vendedorActualizado = vendedoresController.actualizarVendedor(vendedorSelecionado.id(), usuarioVendedorDto);
+            if (usuarioActualizado && vendedorActualizado) {
+                actualizarUsuarioVendedorListaObserver(usuarioVendedorDto);
+                limpiarCampos();
+                refrescarTabla();
+                mostrarMensaje(TITULO_USUVENDEDOR_ACTUALIZADO, HEADER, BODY_USUVENDEDOR_ACTUALIZADO, Alert.AlertType.INFORMATION);
+            } else if(usuarioActualizado) {
+                actualizarUsuarioVendedorListaObserver(crearUsuarioVendedorDtoOldVendedorNewUser(usuarioVendedorDto));
+                limpiarCampos();
+                refrescarTabla();
+                //mostrarMensaje(TITULO_USUARIO_ACTUALIZADO, HEADER, BODY_USUARIO_ACTUALIZADO, Alert.AlertType.INFORMATION);
+            } else if (vendedorActualizado) {
+                actualizarUsuarioVendedorListaObserver(crearUsuarioVendedorDtoOldUserNewVendedor(usuarioVendedorDto));
+                limpiarCampos();
+                refrescarTabla();
+                //mostrarMensaje(TITULO_VENDEDOR_ACTUALIZADO, HEADER, BODY_VENDEDOR_ACTUALIZADO, Alert.AlertType.INFORMATION);
+            } else {
+                mostrarMensaje(TITULO_USUVENDEDOR_NO_ACTUALIZADO, HEADER, BODY_USUVENDEDOR_NO_ACTUALIZADO, Alert.AlertType.ERROR);
+            }
+        } else {
+            mostrarMensaje(TITULO_CAMPOS_NO_SELECIONADO, HEADER, BODY_CAMPOS_NO_SELECIONADO, Alert.AlertType.INFORMATION);
+        }
+    }
+
+    private UsuarioVendedorDto crearUsuarioVendedorDtoOldVendedorNewUser(UsuarioVendedorDto usuarioVendedorDto) {
+        return new UsuarioVendedorDto(
+                usuarioVendedorDto.username(),
+                usuarioVendedorDto.password(),
+                vendedorSelecionado.nombre(),
+                vendedorSelecionado.apellido(),
+                vendedorSelecionado.email(),
+                vendedorSelecionado.id()
+        );
+    }
+
+    private UsuarioVendedorDto crearUsuarioVendedorDtoOldUserNewVendedor(UsuarioVendedorDto usuarioVendedorDto) {
+        return new UsuarioVendedorDto(
+                vendedorSelecionado.username(),
+                vendedorSelecionado.password(),
+                usuarioVendedorDto.nombre(),
+                usuarioVendedorDto.apellido(),
+                usuarioVendedorDto.email(),
+                usuarioVendedorDto.id()
+        );
+    }
+
+    private void actualizarUsuarioVendedorListaObserver(UsuarioVendedorDto usuarioVendedorDto) {
+        for (int i = 0; i < listaUsuariosVendedores.size(); i++) {
+            if (listaUsuariosVendedores.get(i).id().equals(vendedorSelecionado.id()) ||
+                    listaUsuariosVendedores.get(i).username().equals(vendedorSelecionado.username()) &&
+                            !listaUsuariosVendedores.get(i).id().isBlank() &&
+                            !listaUsuariosVendedores.get(i).username().isBlank()) {
+                listaUsuariosVendedores.set(i, usuarioVendedorDto);
+                break;
+            }
+        }
+    }
 
     private UsuarioVendedorDto getVendedorFromMainDto(UsuarioVendedorDto usuarioVendedorDto) {
         return new UsuarioVendedorDto("",
@@ -189,7 +250,7 @@ public class VendedoresViewController {
                 "");
     }
 
-    private boolean datosValidosUsuario(UsuarioVendedorDto usuarioVendedorDto) {
+    private boolean datosValidosVendedor(UsuarioVendedorDto usuarioVendedorDto) {
         return !usuarioVendedorDto.nombre().isBlank() &&
                 !usuarioVendedorDto.apellido().isBlank() &&
                 !usuarioVendedorDto.id().isBlank() &&
@@ -197,7 +258,7 @@ public class VendedoresViewController {
     }
 
 
-    private boolean datosValidosVendedor(UsuarioVendedorDto usuarioVendedorDto) {
+    private boolean datosValidosUsuario(UsuarioVendedorDto usuarioVendedorDto) {
         return !usuarioVendedorDto.username().isBlank() && !usuarioVendedorDto.password().isBlank();
     }
 
@@ -244,43 +305,24 @@ public class VendedoresViewController {
         eliminarUsuarioVendedor();
     }
 
-    private void actualizarUsuarioVendedor() {
-        UsuarioVendedorDto usuarioVendedorDto = crearUsuarioVendedorDto();
-        if (datosValidosUsuario(usuarioVendedorDto)) {
-            if (vendedoresController.actualizarUsuarioVendedor(vendedorSelecionado.username(), vendedorSelecionado.id(), usuarioVendedorDto)) {
-                actualizarUsuarioVendedorListaObserver(usuarioVendedorDto);
-                limpiarCampos();
-                tableVendedor.refresh();
-                mostrarMensaje(TITULO_USUVENDEDOR_ACTUALIZADO, HEADER, BODY_USUVENDEDOR_ACTUALIZADO, Alert.AlertType.INFORMATION);
-            } else {
-                mostrarMensaje(TITULO_USUVENDEDOR_NO_ACTUALIZADO, HEADER, BODY_USUVENDEDOR_NO_ACTUALIZADO, Alert.AlertType.ERROR);
-            }
-        } else {
-            mostrarMensaje(TITULO_CAMPOS_NO_SELECIONADO, HEADER, BODY_CAMPOS_NO_SELECIONADO, Alert.AlertType.INFORMATION);
-        }
-    }
 
-    private void actualizarUsuarioVendedorListaObserver(UsuarioVendedorDto usuarioVendedorDto) {
-        for (int i = 0; i < listaUsuariosVendedores.size(); i++) {
-            if (listaUsuariosVendedores.get(i).id().equals(vendedorSelecionado.id())) {
-                listaUsuariosVendedores.set(i, usuarioVendedorDto);
-                break;
-            }
-        }
-    }
+
+
 
     private void eliminarUsuarioVendedor() {
-        if (datosValidosUsuario(vendedorSelecionado)) //FFFFF{
+        if (datosValidosUsuario(vendedorSelecionado) || datosValidosVendedor(vendedorSelecionado)) {
             if (vendedoresController.eliminarUsuarioVendedor(vendedorSelecionado)) {
                 listaUsuariosVendedores.remove(vendedorSelecionado);
                 limpiarCampos();
-                tableVendedor.refresh();
+                refrescarTabla();
                 mostrarMensaje(TITULO_USUVENDEDOR_ELIMINADO, HEADER, BODY_USUVENDEDOR_ELIMINADO, Alert.AlertType.INFORMATION);
             } else {
                 mostrarMensaje(TITULO_USUVENDEDOR_NO_ELIMNADO, HEADER, BODY_USUVENDEDOR_NO_ELIMINADO, Alert.AlertType.ERROR);
-            }else {
-            mostrarMensaje(TITULO_CAMPOS_NO_SELECIONADO, HEADER, BODY_CAMPOS_NO_SELECIONADO, Alert.AlertType.INFORMATION);
-        }
+            }
+        } else{
+                mostrarMensaje(TITULO_CAMPOS_NO_SELECIONADO, HEADER, BODY_CAMPOS_NO_SELECIONADO, Alert.AlertType.INFORMATION);
+            }
+
     }
 
     @FXML
@@ -295,5 +337,10 @@ public class VendedoresViewController {
         txtIdVendedor.setText("");
         txtNombreUsuario.setText("");
         txtContrasenaUsuario.setText("");
+    }
+
+    private void refrescarTabla() {
+        tableVendedor.refresh();
+        tableVendedor.getSelectionModel().clearSelection();
     }
 }

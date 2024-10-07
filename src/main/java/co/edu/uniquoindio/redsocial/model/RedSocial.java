@@ -45,7 +45,6 @@ public class RedSocial implements IRedSocial {
                 }
             }
 
-
         return usuario;
     }
 
@@ -87,12 +86,14 @@ public class RedSocial implements IRedSocial {
 
     public boolean actualizarUsuario(String username, Usuario usuario) {
         Usuario usarioEncontrado = obtenerUsuario(username);
-        if (usarioEncontrado!=null){
-            for (Usuario usuario1 : listaUsuarios) {
-                if (usuario1.getUsername().equals(username)) {
-                    usuario1.setUsername(usuario.getUsername());
-                    usuario1.setPassword(usuario.getPassword());
-                    return true;
+        if (verificarUsuarioRepetido(username)){
+            if (usarioEncontrado != null) {
+                for (Usuario usuario1 : listaUsuarios) {
+                    if (usuario1.getUsername().equals(username)) {
+                        usuario1.setUsername(usuario.getUsername());
+                        usuario1.setPassword(usuario.getPassword());
+                        return true;
+                    }
                 }
             }
         }
@@ -169,14 +170,16 @@ public class RedSocial implements IRedSocial {
     @Override
     public boolean actualizarVendedor(String id, Vendedor vendedor) {
         Vendedor vendedorEncontrado = obtenerVendedor(id);
-        if (vendedorEncontrado!=null){
-            for (Vendedor vendedor1 : listaVendedores) {
-                if (vendedor1.getId().equals(id)) {
-                    vendedor1.setNombre(vendedor.getNombre());
-                    vendedor1.setApellido(vendedor.getApellido());
-                    vendedor1.setDireccion(vendedor.getDireccion());
-                    vendedor1.setId(vendedor.getId());
-                    return true;
+        if (verificarVendedorRepetido(id)){
+            if (vendedorEncontrado != null) {
+                for (Vendedor vendedor1 : listaVendedores) {
+                    if (vendedor1.getId().equals(id)) {
+                        vendedor1.setNombre(vendedor.getNombre());
+                        vendedor1.setApellido(vendedor.getApellido());
+                        vendedor1.setDireccion(vendedor.getDireccion());
+                        vendedor1.setId(vendedor.getId());
+                        return true;
+                    }
                 }
             }
         }
