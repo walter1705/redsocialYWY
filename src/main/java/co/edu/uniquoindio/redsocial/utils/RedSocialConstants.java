@@ -10,7 +10,7 @@ public class RedSocialConstants {
     public static final String BODY_USUVENDEDOR_AGREGADO = "El usuario y el vendedor se ha agregado correctamente.";
     public static final String TITULO_USUVENDEDOR_AGREGADO = "Usuario y vendedor agregado.";
 
-    public static final String TITULO_USUARIo_AGREGADO = "Usuario agregado.";
+    public static final String TITULO_USUARIO_AGREGADO = "Usuario agregado.";
     public static final String BODY_USUARIO_AGREGADO = "Usuario agregado correctamente.";
     public static final String TITULO_USUARIO_NO_AGREGADO = "Usuario no agregado.";
     public static final String BODY_USUARIO_NO_AGREGADO = "Usuario no ha sido agregado, ya existe.";

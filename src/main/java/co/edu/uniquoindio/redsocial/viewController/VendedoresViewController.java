@@ -21,7 +21,8 @@ import static co.edu.uniquoindio.redsocial.utils.RedSocialConstants.*;
 public class VendedoresViewController {
     VendedoresController vendedoresController;
     ObservableList<UsuarioVendedorDto> listaUsuariosVendedores = FXCollections.observableArrayList();
-    UsuarioVendedorDto vendedorSelecionado;;
+    UsuarioVendedorDto vendedorSelecionado;
+
 
 
     @FXML
@@ -102,8 +103,9 @@ public class VendedoresViewController {
     private void listenerSelection() {
         tableVendedor.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
             vendedorSelecionado = newSelection;
-            if (vendedorSelecionado!=null){
-                mostrarInformacionVendedor(vendedorSelecionado);}
+            if (vendedorSelecionado != null) {
+                mostrarInformacionVendedor(vendedorSelecionado);
+            }
         });
     }
     //partir usuario y vendedor
@@ -121,40 +123,62 @@ public class VendedoresViewController {
 
     private void agregarUsuarioVendedor() {
         UsuarioVendedorDto usuarioVendedorDto = crearUsuarioVendedorDto();
-        if (datosValidos(usuarioVendedorDto)) {
+        if (datosValidosUsuario(usuarioVendedorDto) && datosValidosVendedor(usuarioVendedorDto)) {
             boolean usuarioAgregado = vendedoresController.agregarUsuarioDto(usuarioVendedorDto);
             boolean vendedorAgregado = vendedoresController.agregarVendedorDto(usuarioVendedorDto);
-            if(usuarioAgregado && vendedorAgregado) {
+            if (usuarioAgregado && vendedorAgregado) {
                 listaUsuariosVendedores.addAll(usuarioVendedorDto);
                 limpiarCampos();
                 tableVendedor.refresh();
                 mostrarMensaje(TITULO_USUVENDEDOR_AGREGADO, HEADER, BODY_USUVENDEDOR_AGREGADO, Alert.AlertType.INFORMATION);
-            } else if(usuarioAgregado) {
+            } else if (usuarioAgregado) {
                 listaUsuariosVendedores.addAll(getUsuarioFromMainDto(usuarioVendedorDto));
                 limpiarCampos();
                 tableVendedor.refresh();
-            } else if(vendedorAgregado) {
+                mostrarMensaje(TITULO_USUARIO_AGREGADO, HEADER, BODY_USUARIO_AGREGADO, Alert.AlertType.INFORMATION);
+            } else if (vendedorAgregado) {
                 listaUsuariosVendedores.addAll(getVendedorFromMainDto(usuarioVendedorDto));
                 limpiarCampos();
                 tableVendedor.refresh();
-            }
-            else {
+                mostrarMensaje(TITULO_VENDEDOR_AGREGADO, HEADER, BODY_VENDEDOR_AGREGADO, Alert.AlertType.INFORMATION);
+            } else {
                 mostrarMensaje(TITULO_USUVENDEDOR_NO_AGREGADO, HEADER, BODY_USUVENDEDOR_NO_AGREGADO, Alert.AlertType.ERROR);
             }
-        }
-        else {
+        } else if(datosValidosUsuario(usuarioVendedorDto)) {
+            boolean usuarioAgregado = vendedoresController.agregarUsuarioDto(usuarioVendedorDto);
+            if (usuarioAgregado) {
+                listaUsuariosVendedores.addAll(getUsuarioFromMainDto(usuarioVendedorDto));
+                limpiarCampos();
+                tableVendedor.refresh();
+                mostrarMensaje(TITULO_USUARIO_AGREGADO, HEADER, BODY_USUARIO_AGREGADO, Alert.AlertType.INFORMATION);
+            } else {
+                mostrarMensaje(TITULO_USUARIO_NO_AGREGADO, HEADER, BODY_USUARIO_NO_AGREGADO, Alert.AlertType.INFORMATION);
+            }
+        } else if (datosValidosVendedor(usuarioVendedorDto)) {
+            boolean vendedorAgregado = vendedoresController.agregarVendedorDto(usuarioVendedorDto);
+            if (vendedorAgregado) {
+                listaUsuariosVendedores.addAll(getVendedorFromMainDto(usuarioVendedorDto));
+                limpiarCampos();
+                tableVendedor.refresh();
+                mostrarMensaje(TITULO_VENDEDOR_AGREGADO, HEADER, BODY_VENDEDOR_AGREGADO, Alert.AlertType.INFORMATION);
+            } else{
+                mostrarMensaje(TITULO_VENDEDOR_NO_AGREGADO, HEADER, BODY_VENDEDOR_NO_AGREGADO, Alert.AlertType.INFORMATION);
+            }
+        } else {
             mostrarMensaje(TITULO_CAMPOS_INCOMPLETOS, HEADER, BODY_CAMPOS_INCOMPLETOS, Alert.AlertType.INFORMATION);
         }
     }
 
+
     private UsuarioVendedorDto getVendedorFromMainDto(UsuarioVendedorDto usuarioVendedorDto) {
         return new UsuarioVendedorDto("",
-              "",
-              usuarioVendedorDto.nombre(),
-              usuarioVendedorDto.apellido(),
-              usuarioVendedorDto.email(),
+                "",
+                usuarioVendedorDto.nombre(),
+                usuarioVendedorDto.apellido(),
+                usuarioVendedorDto.email(),
                 usuarioVendedorDto.id()
-        );    }
+        );
+    }
 
     private UsuarioVendedorDto getUsuarioFromMainDto(UsuarioVendedorDto usuarioVendedorDto) {
         return new UsuarioVendedorDto(usuarioVendedorDto.username(),
@@ -165,16 +189,17 @@ public class VendedoresViewController {
                 "");
     }
 
-    private boolean datosValidos(UsuarioVendedorDto usuarioVendedorDto) {
-        boolean usuarioValido = !usuarioVendedorDto.username().isBlank() && !usuarioVendedorDto.password().isBlank();
-        boolean vendedorValido = !usuarioVendedorDto.nombre().isBlank() &&
+    private boolean datosValidosUsuario(UsuarioVendedorDto usuarioVendedorDto) {
+        return !usuarioVendedorDto.nombre().isBlank() &&
                 !usuarioVendedorDto.apellido().isBlank() &&
                 !usuarioVendedorDto.id().isBlank() &&
                 !usuarioVendedorDto.email().isBlank();
-
-        return usuarioValido || vendedorValido;
     }
 
+
+    private boolean datosValidosVendedor(UsuarioVendedorDto usuarioVendedorDto) {
+        return !usuarioVendedorDto.username().isBlank() && !usuarioVendedorDto.password().isBlank();
+    }
 
     private void mostrarMensaje(String titulo, String header, String contenido, Alert.AlertType alertType) {
         Alert aler = new Alert(alertType);
@@ -221,17 +246,16 @@ public class VendedoresViewController {
 
     private void actualizarUsuarioVendedor() {
         UsuarioVendedorDto usuarioVendedorDto = crearUsuarioVendedorDto();
-        if (datosValidos(usuarioVendedorDto)) {
+        if (datosValidosUsuario(usuarioVendedorDto)) {
             if (vendedoresController.actualizarUsuarioVendedor(vendedorSelecionado.username(), vendedorSelecionado.id(), usuarioVendedorDto)) {
                 actualizarUsuarioVendedorListaObserver(usuarioVendedorDto);
                 limpiarCampos();
                 tableVendedor.refresh();
                 mostrarMensaje(TITULO_USUVENDEDOR_ACTUALIZADO, HEADER, BODY_USUVENDEDOR_ACTUALIZADO, Alert.AlertType.INFORMATION);
-            }else {
+            } else {
                 mostrarMensaje(TITULO_USUVENDEDOR_NO_ACTUALIZADO, HEADER, BODY_USUVENDEDOR_NO_ACTUALIZADO, Alert.AlertType.ERROR);
             }
-        }
-        else {
+        } else {
             mostrarMensaje(TITULO_CAMPOS_NO_SELECIONADO, HEADER, BODY_CAMPOS_NO_SELECIONADO, Alert.AlertType.INFORMATION);
         }
     }
@@ -246,23 +270,18 @@ public class VendedoresViewController {
     }
 
     private void eliminarUsuarioVendedor() {
-        if (datosValidos(vendedorSelecionado)) {
-            if(vendedoresController.eliminarUsuarioVendedor(vendedorSelecionado)) {
+        if (datosValidosUsuario(vendedorSelecionado)) //FFFFF{
+            if (vendedoresController.eliminarUsuarioVendedor(vendedorSelecionado)) {
                 listaUsuariosVendedores.remove(vendedorSelecionado);
                 limpiarCampos();
                 tableVendedor.refresh();
                 mostrarMensaje(TITULO_USUVENDEDOR_ELIMINADO, HEADER, BODY_USUVENDEDOR_ELIMINADO, Alert.AlertType.INFORMATION);
-            }
-            else {
+            } else {
                 mostrarMensaje(TITULO_USUVENDEDOR_NO_ELIMNADO, HEADER, BODY_USUVENDEDOR_NO_ELIMINADO, Alert.AlertType.ERROR);
-            }
-        }
-        else {
+            }else {
             mostrarMensaje(TITULO_CAMPOS_NO_SELECIONADO, HEADER, BODY_CAMPOS_NO_SELECIONADO, Alert.AlertType.INFORMATION);
         }
     }
-
-
 
     @FXML
     void onNuevo(ActionEvent event) {
