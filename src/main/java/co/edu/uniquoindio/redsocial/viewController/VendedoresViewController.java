@@ -108,7 +108,6 @@ public class VendedoresViewController {
             }
         });
     }
-    //partir usuario y vendedor
 
     private void mostrarInformacionVendedor(UsuarioVendedorDto vendedorSelecionado) {
         if (vendedorSelecionado != null) {
@@ -183,12 +182,12 @@ public class VendedoresViewController {
                 actualizarUsuarioVendedorListaObserver(crearUsuarioVendedorDtoOldVendedorNewUser(usuarioVendedorDto));
                 limpiarCampos();
                 refrescarTabla();
-                //mostrarMensaje(TITULO_USUARIO_ACTUALIZADO, HEADER, BODY_USUARIO_ACTUALIZADO, Alert.AlertType.INFORMATION);
+                mostrarMensaje(TITULO_USUARIO_ACTUALIZADO, HEADER, BODY_USUARIO_ACTUALIZADO, Alert.AlertType.INFORMATION);
             } else if (vendedorActualizado) {
                 actualizarUsuarioVendedorListaObserver(crearUsuarioVendedorDtoOldUserNewVendedor(usuarioVendedorDto));
                 limpiarCampos();
                 refrescarTabla();
-                //mostrarMensaje(TITULO_VENDEDOR_ACTUALIZADO, HEADER, BODY_VENDEDOR_ACTUALIZADO, Alert.AlertType.INFORMATION);
+                mostrarMensaje(TITULO_VENDEDOR_ACTUALIZADO, HEADER, BODY_VENDEDOR_ACTUALIZADO, Alert.AlertType.INFORMATION);
             } else {
                 mostrarMensaje(TITULO_USUVENDEDOR_NO_ACTUALIZADO, HEADER, BODY_USUVENDEDOR_NO_ACTUALIZADO, Alert.AlertType.ERROR);
             }

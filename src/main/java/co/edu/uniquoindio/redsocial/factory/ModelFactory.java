@@ -60,7 +60,7 @@ public class ModelFactory implements IModelFactoryService {
 
     @Override
     public boolean actualizarUsuario(String username, UsuarioVendedorDto usuarioVendedorDto) {
-        return redSocial.actualizarUsuario(username ,mapper.usuarioVendedorDtoToUsuario(usuarioVendedorDto));
+        return redSocial.actualizarUsuario(username , mapper.usuarioVendedorDtoToUsuario(usuarioVendedorDto));
     }
 
     @Override
