@@ -89,12 +89,11 @@ public class LoginAuthViewController {
     private void changeSceneToRedSocialApp(Stage stage) throws IOException {
 
         FXMLLoader fxmlLoader = new FXMLLoader(StartRedSocial.class.getResource("RedsocialApp.fxml"));
-        Parent root = fxmlLoader.load(); // Cargar la vista del archivo FXML
+        Parent root = fxmlLoader.load();
 
         Scene scene = new Scene(root, 1037, 815);
         stage.setTitle("MarketPlace");
 
-        // Establecer un icono para la ventana
         Image icon = new Image(Objects.requireNonNull(getClass().getResource("/images/redsociallogo.png")).toExternalForm());
         stage.getIcons().add(icon);
         stage.setScene(scene);
@@ -103,13 +102,6 @@ public class LoginAuthViewController {
 
     @FXML
     void initialize() {
-        assert IngresarButton != null : "fx:id=\"IngresarButton\" was not injected: check your FXML file 'LoginAuth.fxml'.";
-        assert IntroducirContrasenaTextField != null : "fx:id=\"IntroducirContrasenaTextField\" was not injected: check your FXML file 'LoginAuth.fxml'.";
-        assert IntroducirUsuarioTextField != null : "fx:id=\"IntroducirUsuarioTextField\" was not injected: check your FXML file 'LoginAuth.fxml'.";
-        assert contrasenaTxt != null : "fx:id=\"contrasenaTxt\" was not injected: check your FXML file 'LoginAuth.fxml'.";
-        assert textLabellogin != null : "fx:id=\"textLabellogin\" was not injected: check your FXML file 'LoginAuth.fxml'.";
-        assert usuarioTxt != null : "fx:id=\"usuarioTxt\" was not injected: check your FXML file 'LoginAuth.fxml'.";
-
     }
 
 }

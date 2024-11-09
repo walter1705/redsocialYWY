@@ -85,9 +85,9 @@ public class RedSocial implements IRedSocial {
     }
 
     public boolean actualizarUsuario(String username, Usuario usuario) {
-        Usuario usarioEncontrado = obtenerUsuario(username);
-        if (verificarUsuarioRepetido(usuario.getUsername())){
-            if (usarioEncontrado != null) {
+        Usuario usuarioEncontrado = obtenerUsuario(username);
+        if(usuarioEncontrado != null) {
+            if (verificarUsuarioRepetido(usuario.getUsername()) && usuarioEncontrado.getUsername().equals(username)) {
                 for (Usuario usuario1 : listaUsuarios) {
                     if (usuario1.getUsername().equals(username)) {
                         usuario1.setUsername(usuario.getUsername());
@@ -171,7 +171,7 @@ public class RedSocial implements IRedSocial {
     public boolean actualizarVendedor(String id, Vendedor vendedor) {
         Vendedor vendedorEncontrado = obtenerVendedor(id);
         if (vendedorEncontrado != null) {
-            if (verificarVendedorRepetido(vendedor.getId()) || vendedorEncontrado.getId().equals(id)) {
+            if (verificarVendedorRepetido(vendedor.getId()) && vendedorEncontrado.getId().equals(id)) {
                 for (Vendedor vendedor1 : listaVendedores) {
                     if (vendedor1.getId().equals(id)) {
                         vendedor1.setNombre(vendedor.getNombre());
