@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
@@ -8,7 +9,6 @@
 
 <AnchorPane prefHeight="815.0" prefWidth="1037.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquoindio.redsocial.viewController.RedsocialAppViewController">
    <children>
-      <Button layoutX="-37.0" mnemonicParsing="false" prefWidth="89.0" text="Button" />
       <TabPane layoutX="-1.0" prefHeight="815.0" prefWidth="1037.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
           <Tab text="Administrador">
@@ -26,7 +26,10 @@
           </Tab>
             <Tab text="Vendedor2">
               <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Separator layoutX="1.0" layoutY="741.0" prefHeight="17.0" prefWidth="1037.0" />
+                     </children></AnchorPane>
               </content>
             </Tab>
         </tabs>

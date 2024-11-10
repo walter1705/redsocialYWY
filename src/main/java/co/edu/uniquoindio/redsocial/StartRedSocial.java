@@ -13,8 +13,8 @@ public class StartRedSocial extends Application {
     @Override
     public void start(Stage stage) throws IOException {
 
-        FXMLLoader fxmlLoader = new FXMLLoader(StartRedSocial.class.getResource("LoginAuth.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 600, 340);
+        FXMLLoader fxmlLoader = new FXMLLoader(StartRedSocial.class.getResource("RedsocialApp.fxml")); //aqui va login
+        Scene scene = new Scene(fxmlLoader.load(),1037,815); //600, 340    1037,815
         stage.setTitle("MarketPlace login");
         Image icon = new Image(Objects.requireNonNull(getClass().getResource("/images/loginicon.png")).toExternalForm());
         stage.getIcons().add(icon);
