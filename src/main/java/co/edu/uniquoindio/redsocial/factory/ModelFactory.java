@@ -1,13 +1,11 @@
 package co.edu.uniquoindio.redsocial.factory;
 
-import co.edu.uniquoindio.redsocial.mapping.dto.AdministradorDto;
-import co.edu.uniquoindio.redsocial.mapping.dto.UsuarioDto;
-import co.edu.uniquoindio.redsocial.mapping.dto.UsuarioVendedorDto;
-import co.edu.uniquoindio.redsocial.mapping.mappers.RedSocialMappingImpl;
+
 import co.edu.uniquoindio.redsocial.model.Logger;
 import co.edu.uniquoindio.redsocial.model.RedSocial;
+import co.edu.uniquoindio.redsocial.model.Usuario;
+import co.edu.uniquoindio.redsocial.model.Vendedor;
 import co.edu.uniquoindio.redsocial.service.IModelFactoryService;
-import co.edu.uniquoindio.redsocial.service.IRedSocialMapping;
 import co.edu.uniquoindio.redsocial.utils.DataUtil;
 
 import java.util.List;
@@ -15,12 +13,10 @@ import java.util.List;
 public class ModelFactory implements IModelFactoryService {
     private static ModelFactory modelFactory;
     private RedSocial redSocial;
-    private IRedSocialMapping mapper;
     private Logger logger;
 
     private ModelFactory() {
         redSocial = DataUtil.inicializarDatosPrueba();;
-        mapper = new RedSocialMappingImpl();
         logger = new Logger();
     }
 
@@ -31,43 +27,29 @@ public class ModelFactory implements IModelFactoryService {
 
 
     @Override
-    public List<UsuarioVendedorDto> getUsuariosVendedoresDto() {
-        return mapper.getUsuariosVendedoresDto(redSocial.getListaVendedores(), redSocial.getListaUsuarios());
+    public List<Vendedor> obtenerVendedores() {
+        return redSocial.getListaVendedores();
     }
 
     @Override
-    public List<AdministradorDto> getAdministradoresDto() {
-        return mapper.getAdministradoresDto(redSocial.getListaAdministradores());
+    public boolean agregarVendedor(Vendedor vendedor) {
+        return redSocial.crearVendedor(vendedor);
     }
 
     @Override
-    public List<UsuarioDto> getUsuariosDto() {
-        return mapper.getUsuariosDto(redSocial.getListaUsuarios());
+    public boolean actualizarVendedor(String id, Vendedor vendedor) {
+        return redSocial.actualizarVendedor(id, vendedor);
     }
 
     @Override
-    public boolean agregarUsuarioDto(UsuarioVendedorDto usuarioVendedorDto) {
-        return redSocial.crearUsuario(mapper.usuarioVendedorDtoToUsuario(usuarioVendedorDto));
+    public boolean eliminarVendedor(Vendedor vendedor) {
+        return redSocial.eliminarVendedor(vendedor.getId());
     }
 
-    @Override
-    public boolean agregarVendedorDto(UsuarioVendedorDto usuarioVendedorDto) {
-        return redSocial.crearVendedor(mapper.usuarioVendedorDtoToVendedor(usuarioVendedorDto));
-    }
+
 
     @Override
-    public boolean eliminarUsuarioVendedor(UsuarioVendedorDto vendedorSelecionado) {
-        return redSocial.eliminarVendedor(vendedorSelecionado.id())
-                | redSocial.eliminarUsuario(vendedorSelecionado.username());
-    }
-
-    @Override
-    public boolean actualizarUsuario(String username, UsuarioVendedorDto usuarioVendedorDto) {
-        return redSocial.actualizarUsuario(username , mapper.usuarioVendedorDtoToUsuario(usuarioVendedorDto));
-    }
-
-    @Override
-    public boolean actualizarVendedor(String id, UsuarioVendedorDto usuarioVendedorDto) {
-        return redSocial.actualizarVendedor(id, mapper.usuarioVendedorDtoToVendedor(usuarioVendedorDto));
+    public List<Usuario> getUsuarios() {
+        return redSocial.getListaUsuarios();
     }
 }

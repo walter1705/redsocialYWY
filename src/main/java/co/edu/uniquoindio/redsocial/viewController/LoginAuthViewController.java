@@ -7,7 +7,7 @@ import java.util.ResourceBundle;
 
 import co.edu.uniquoindio.redsocial.StartRedSocial;
 import co.edu.uniquoindio.redsocial.factory.ModelFactory;
-import co.edu.uniquoindio.redsocial.mapping.dto.UsuarioDto;
+import co.edu.uniquoindio.redsocial.model.Usuario;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -68,9 +68,9 @@ public class LoginAuthViewController {
 
     private void validateLogin() throws IOException {
         boolean centi = false;
-        for(UsuarioDto usuario : modelFactory.getUsuariosDto()) {
-            if (usuario.username().equals(IntroducirUsuarioTextField.getText()) &&
-                    usuario.password().equals(IntroducirContrasenaTextField.getText())) {
+        for(Usuario usuario : modelFactory.getUsuarios()) {
+            if (usuario.getUsername().equals(IntroducirUsuarioTextField.getText()) &&
+                    usuario.getPassword().equals(IntroducirContrasenaTextField.getText())) {
 
                 centi = true;
                 Stage currentStage = (Stage) IngresarButton.getScene().getWindow();

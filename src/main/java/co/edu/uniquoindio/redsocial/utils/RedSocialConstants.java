@@ -33,6 +33,8 @@ public class RedSocialConstants {
     public static final String BODY_USUVENDEDOR_ACTUALIZADO = "Usuario y/o vendedor actualizado correctamente.";
     public static final String TITULO_USUVENDEDOR_NO_ACTUALIZADO = "Usuario y/o vendedor no actualizado.";
     public static final String BODY_USUVENDEDOR_NO_ACTUALIZADO = "Usuario y/o vendedor no ha sido actualizado.";
+    public static final String BODYVENDEDOR_NO_SELECCIONADO = "Se tiene que elegir un vendedor para seleccionarlo.";
+    public static final String TITULOVENDEDOR_NO_SELECCIONADO = "Vendedor no seleccionado.";
 
     public static final String TITULO_USUARIO_ACTUALIZADO = "Usuario actualizado.";
     public static final String BODY_USUARIO_ACTUALIZADO = "Usuario ha sido actualizado.";

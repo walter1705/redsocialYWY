@@ -3,12 +3,11 @@ package co.edu.uniquoindio.redsocial.viewController;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import co.edu.uniquoindio.redsocial.utils.RedSocialConstants.*;
+import co.edu.uniquoindio.redsocial.model.Usuario;
+import co.edu.uniquoindio.redsocial.model.Vendedor;
 import co.edu.uniquoindio.redsocial.controller.VendedoresController;
-import co.edu.uniquoindio.redsocial.factory.ModelFactory;
-import co.edu.uniquoindio.redsocial.mapping.dto.UsuarioDto;
-import co.edu.uniquoindio.redsocial.mapping.dto.UsuarioVendedorDto;
-import co.edu.uniquoindio.redsocial.mapping.dto.VendedorDto;
+import co.edu.uniquoindio.redsocial.model.builder.UsuarioBuilder;
+import co.edu.uniquoindio.redsocial.model.builder.VendedorBuilder;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -20,8 +19,8 @@ import static co.edu.uniquoindio.redsocial.utils.RedSocialConstants.*;
 
 public class VendedoresViewController {
     VendedoresController vendedoresController;
-    ObservableList<UsuarioVendedorDto> listaUsuariosVendedores = FXCollections.observableArrayList();
-    UsuarioVendedorDto vendedorSelecionado;
+    ObservableList<Vendedor> listaVendedores = FXCollections.observableArrayList();
+    Vendedor vendedorSelecionado;
 
 
 
@@ -44,25 +43,28 @@ public class VendedoresViewController {
     private Button btnNuevo;
 
     @FXML
-    private TableView<UsuarioVendedorDto> tableVendedor;
+    private TableView<Vendedor> tableVendedor;
 
     @FXML
-    private TableColumn<UsuarioVendedorDto, String> tcApellidoVendedor;
+    private TableColumn<Vendedor, String> tcApellidoVendedor;
 
     @FXML
-    private TableColumn<UsuarioVendedorDto, String> tcContrasenaUsuario;
+    private TableColumn<Vendedor, String> tcContrasenaUsuario;
 
     @FXML
-    private TableColumn<UsuarioVendedorDto, String> tcEmailVendedor;
+    private TableColumn<Vendedor, String> tcEmailVendedor;
 
     @FXML
-    private TableColumn<UsuarioVendedorDto, String> tcIdVendedor;
+    private TableColumn<Vendedor, String> tcIdVendedor;
 
     @FXML
-    private TableColumn<UsuarioVendedorDto, String> tcNombreUsuario;
+    private TableColumn<Vendedor, String> tcDireccionvendedor;
 
     @FXML
-    private TableColumn<UsuarioVendedorDto, String> tcNombreVendedor;
+    private TableColumn<Vendedor, String> tcNombreUsuario;
+
+    @FXML
+    private TableColumn<Vendedor, String> tcNombreVendedor;
 
     @FXML
     private TextField txtApellidoVendedor;
@@ -83,6 +85,9 @@ public class VendedoresViewController {
     private TextField txtIdVendedor;
 
     @FXML
+    private TextField txtDireccionVendedor;
+
+    @FXML
     void initialize() {
         vendedoresController = new VendedoresController();
         initView();
@@ -92,12 +97,12 @@ public class VendedoresViewController {
         initDataBinding();
         obtenerVendedores();
         tableVendedor.getItems().clear();
-        tableVendedor.setItems(listaUsuariosVendedores);
+        tableVendedor.setItems(listaVendedores);
         listenerSelection();
     }
 
     private void obtenerVendedores() {
-        listaUsuariosVendedores.addAll(vendedoresController.getUsuariosVendedoresDto());
+        listaVendedores.addAll(vendedoresController.obtenerVendedores());
     }
 
     private void listenerSelection() {
@@ -109,156 +114,79 @@ public class VendedoresViewController {
         });
     }
 
-    private void mostrarInformacionVendedor(UsuarioVendedorDto vendedorSelecionado) {
+    private void mostrarInformacionVendedor(Vendedor vendedorSelecionado) {
         if (vendedorSelecionado != null) {
-            txtNombreVendedor.setText(vendedorSelecionado.nombre());
-            txtApellidoVendedor.setText(vendedorSelecionado.apellido());
-            txtEmailVendedor.setText(vendedorSelecionado.email());
-            txtIdVendedor.setText(vendedorSelecionado.id());
-            txtNombreUsuario.setText(vendedorSelecionado.username());
-            txtContrasenaUsuario.setText(vendedorSelecionado.password());
+            txtNombreVendedor.setText(vendedorSelecionado.getNombre());
+            txtApellidoVendedor.setText(vendedorSelecionado.getApellido());
+            txtEmailVendedor.setText(vendedorSelecionado.getEmail());
+            txtIdVendedor.setText(vendedorSelecionado.getId());
+            txtNombreUsuario.setText(vendedorSelecionado.getUsuarioAsociado().getUsername());
+            txtContrasenaUsuario.setText(vendedorSelecionado.getUsuarioAsociado().getPassword());
         }
     }
 
-    private void agregarUsuarioVendedor() {
-        UsuarioVendedorDto usuarioVendedorDto = crearUsuarioVendedorDto();
-        if (datosValidosUsuario(usuarioVendedorDto) && datosValidosVendedor(usuarioVendedorDto)) {
-            boolean usuarioAgregado = vendedoresController.agregarUsuarioDto(usuarioVendedorDto);
-            boolean vendedorAgregado = vendedoresController.agregarVendedorDto(usuarioVendedorDto);
-            if (usuarioAgregado && vendedorAgregado) {
-                listaUsuariosVendedores.addAll(usuarioVendedorDto);
+    private void agregarVendedor() {
+        Vendedor vendedor = crearVendedor();
+        if (datosValidosUsuario(vendedor) && datosValidosVendedor(vendedor)) {
+            boolean vendedorAgregado = vendedoresController.agregarVendedor(vendedor);
+            if (vendedorAgregado) {
+                listaVendedores.addAll(vendedor);
                 limpiarCampos();
                 refrescarTabla();
                 mostrarMensaje(TITULO_USUVENDEDOR_AGREGADO, HEADER, BODY_USUVENDEDOR_AGREGADO, Alert.AlertType.INFORMATION);
-            } else if (usuarioAgregado) {
-                listaUsuariosVendedores.addAll(getUsuarioFromMainDto(usuarioVendedorDto));
-                limpiarCampos();
-                refrescarTabla();
-                mostrarMensaje(TITULO_USUARIO_AGREGADO, HEADER, BODY_USUARIO_AGREGADO, Alert.AlertType.INFORMATION);
-            } else if (vendedorAgregado) {
-                listaUsuariosVendedores.addAll(getVendedorFromMainDto(usuarioVendedorDto));
-                limpiarCampos();
-                refrescarTabla();
-                mostrarMensaje(TITULO_VENDEDOR_AGREGADO, HEADER, BODY_VENDEDOR_AGREGADO, Alert.AlertType.INFORMATION);
             } else {
                 mostrarMensaje(TITULO_USUVENDEDOR_NO_AGREGADO, HEADER, BODY_USUVENDEDOR_NO_AGREGADO, Alert.AlertType.ERROR);
-            }
-        } else if(datosValidosUsuario(usuarioVendedorDto)) {
-            boolean usuarioAgregado = vendedoresController.agregarUsuarioDto(usuarioVendedorDto);
-            if (usuarioAgregado) {
-                listaUsuariosVendedores.addAll(getUsuarioFromMainDto(usuarioVendedorDto));
-                limpiarCampos();
-                refrescarTabla();
-                mostrarMensaje(TITULO_USUARIO_AGREGADO, HEADER, BODY_USUARIO_AGREGADO, Alert.AlertType.INFORMATION);
-            } else {
-                mostrarMensaje(TITULO_USUARIO_NO_AGREGADO, HEADER, BODY_USUARIO_NO_AGREGADO, Alert.AlertType.INFORMATION);
-            }
-        } else if (datosValidosVendedor(usuarioVendedorDto)) {
-            boolean vendedorAgregado = vendedoresController.agregarVendedorDto(usuarioVendedorDto);
-            if (vendedorAgregado) {
-                listaUsuariosVendedores.addAll(getVendedorFromMainDto(usuarioVendedorDto));
-                limpiarCampos();
-                refrescarTabla();
-                mostrarMensaje(TITULO_VENDEDOR_AGREGADO, HEADER, BODY_VENDEDOR_AGREGADO, Alert.AlertType.INFORMATION);
-            } else{
-                mostrarMensaje(TITULO_VENDEDOR_NO_AGREGADO, HEADER, BODY_VENDEDOR_NO_AGREGADO, Alert.AlertType.INFORMATION);
             }
         } else {
             mostrarMensaje(TITULO_CAMPOS_INCOMPLETOS, HEADER, BODY_CAMPOS_INCOMPLETOS, Alert.AlertType.INFORMATION);
         }
     }
 
-    private void actualizarUsuarioVendedor() {
-        UsuarioVendedorDto usuarioVendedorDto = crearUsuarioVendedorDto();
-        if (datosValidosUsuario(usuarioVendedorDto) && datosValidosVendedor(usuarioVendedorDto)) {
-            boolean usuarioActualizado = vendedoresController.actualizarUsuario(vendedorSelecionado.username(), usuarioVendedorDto);
-            boolean vendedorActualizado = vendedoresController.actualizarVendedor(vendedorSelecionado.id(), usuarioVendedorDto);
-            if (usuarioActualizado && vendedorActualizado) {
-                actualizarUsuarioVendedorListaObserver(usuarioVendedorDto);
+    private void actualizarVendedor() {
+        Vendedor vendedor = crearVendedor();
+        if(vendedorSelecionado!=null) {
+        if (datosValidosVendedor(vendedor)) {
+            boolean vendedorActualizado = vendedoresController.actualizarVendedor(vendedorSelecionado.getId(), vendedor);
+            if (vendedorActualizado) {
+                actualizarVendedorListaObserver(vendedor);
                 limpiarCampos();
                 refrescarTabla();
                 mostrarMensaje(TITULO_USUVENDEDOR_ACTUALIZADO, HEADER, BODY_USUVENDEDOR_ACTUALIZADO, Alert.AlertType.INFORMATION);
-            } else if(usuarioActualizado) {
-                actualizarUsuarioVendedorListaObserver(crearUsuarioVendedorDtoOldVendedorNewUser(usuarioVendedorDto));
-                limpiarCampos();
-                refrescarTabla();
-                mostrarMensaje(TITULO_USUARIO_ACTUALIZADO, HEADER, BODY_USUARIO_ACTUALIZADO, Alert.AlertType.INFORMATION);
-            } else if (vendedorActualizado) {
-                actualizarUsuarioVendedorListaObserver(crearUsuarioVendedorDtoOldUserNewVendedor(usuarioVendedorDto));
-                limpiarCampos();
-                refrescarTabla();
-                mostrarMensaje(TITULO_VENDEDOR_ACTUALIZADO, HEADER, BODY_VENDEDOR_ACTUALIZADO, Alert.AlertType.INFORMATION);
             } else {
                 mostrarMensaje(TITULO_USUVENDEDOR_NO_ACTUALIZADO, HEADER, BODY_USUVENDEDOR_NO_ACTUALIZADO, Alert.AlertType.ERROR);
             }
         } else {
             mostrarMensaje(TITULO_CAMPOS_NO_SELECIONADO, HEADER, BODY_CAMPOS_NO_SELECIONADO, Alert.AlertType.INFORMATION);
+        }} else {
+            mostrarMensaje(TITULOVENDEDOR_NO_SELECCIONADO, HEADER, BODYVENDEDOR_NO_SELECCIONADO, Alert.AlertType.ERROR);
         }
     }
 
-    private UsuarioVendedorDto crearUsuarioVendedorDtoOldVendedorNewUser(UsuarioVendedorDto usuarioVendedorDto) {
-        return new UsuarioVendedorDto(
-                usuarioVendedorDto.username(),
-                usuarioVendedorDto.password(),
-                vendedorSelecionado.nombre(),
-                vendedorSelecionado.apellido(),
-                vendedorSelecionado.email(),
-                vendedorSelecionado.id()
-        );
-    }
-
-    private UsuarioVendedorDto crearUsuarioVendedorDtoOldUserNewVendedor(UsuarioVendedorDto usuarioVendedorDto) {
-        return new UsuarioVendedorDto(
-                vendedorSelecionado.username(),
-                vendedorSelecionado.password(),
-                usuarioVendedorDto.nombre(),
-                usuarioVendedorDto.apellido(),
-                usuarioVendedorDto.email(),
-                usuarioVendedorDto.id()
-        );
-    }
-
-    private void actualizarUsuarioVendedorListaObserver(UsuarioVendedorDto usuarioVendedorDto) {
-        for (int i = 0; i < listaUsuariosVendedores.size(); i++) {
-            if (listaUsuariosVendedores.get(i).id().equals(vendedorSelecionado.id()) ||
-                    listaUsuariosVendedores.get(i).username().equals(vendedorSelecionado.username()) &&
-                            !listaUsuariosVendedores.get(i).id().isBlank() &&
-                            !listaUsuariosVendedores.get(i).username().isBlank()) {
-                listaUsuariosVendedores.set(i, usuarioVendedorDto);
+    private void actualizarVendedorListaObserver(Vendedor vendedor) {
+        for (int i = 0; i < listaVendedores.size(); i++) {
+            if (listaVendedores.get(i).getId().equals(vendedorSelecionado.getId()) ||
+                    listaVendedores.get(i).getUsuarioAsociado().getUsername()
+                            .equals(vendedorSelecionado.getUsuarioAsociado().getUsername()) &&
+                            !listaVendedores.get(i).getId().isBlank() &&
+                            !listaVendedores.get(i).getUsuarioAsociado().getUsername().isBlank()) {
+                listaVendedores.set(i, vendedor);
                 break;
             }
         }
     }
 
-    private UsuarioVendedorDto getVendedorFromMainDto(UsuarioVendedorDto usuarioVendedorDto) {
-        return new UsuarioVendedorDto("",
-                "",
-                usuarioVendedorDto.nombre(),
-                usuarioVendedorDto.apellido(),
-                usuarioVendedorDto.email(),
-                usuarioVendedorDto.id()
-        );
-    }
-
-    private UsuarioVendedorDto getUsuarioFromMainDto(UsuarioVendedorDto usuarioVendedorDto) {
-        return new UsuarioVendedorDto(usuarioVendedorDto.username(),
-                usuarioVendedorDto.password(),
-                "",
-                "",
-                "",
-                "");
-    }
-
-    private boolean datosValidosVendedor(UsuarioVendedorDto usuarioVendedorDto) {
-        return !usuarioVendedorDto.nombre().isBlank() &&
-                !usuarioVendedorDto.apellido().isBlank() &&
-                !usuarioVendedorDto.id().isBlank() &&
-                !usuarioVendedorDto.email().isBlank();
+    private boolean datosValidosVendedor(Vendedor vendedor) {
+        return !vendedor.getNombre().isBlank() &&
+                !vendedor.getApellido().isBlank() &&
+                !vendedor.getId().isBlank() &&
+                !vendedor.getEmail().isBlank() &&
+                !vendedor.getDireccion().isBlank();
     }
 
 
-    private boolean datosValidosUsuario(UsuarioVendedorDto usuarioVendedorDto) {
-        return !usuarioVendedorDto.username().isBlank() && !usuarioVendedorDto.password().isBlank();
+    private boolean datosValidosUsuario(Vendedor vendedor) {
+        return !vendedor.getUsuarioAsociado().getUsername().isBlank()
+                && !vendedor.getUsuarioAsociado().getPassword().isBlank();
     }
 
     private void mostrarMensaje(String titulo, String header, String contenido, Alert.AlertType alertType) {
@@ -269,34 +197,43 @@ public class VendedoresViewController {
         aler.showAndWait();
     }
 
-    private UsuarioVendedorDto crearUsuarioVendedorDto() {
-        return new UsuarioVendedorDto(txtNombreUsuario.getText(),
-                txtContrasenaUsuario.getText(),
-                txtNombreVendedor.getText(),
-                txtApellidoVendedor.getText(),
-                txtEmailVendedor.getText(),
-                txtIdVendedor.getText());
+    private Vendedor crearVendedor() {
+        Vendedor vendedor = new VendedorBuilder()
+                .nombre(txtNombreUsuario.getText())
+                .apellido(txtApellidoVendedor.getText())
+                .email(txtEmailVendedor.getText())
+                .id(txtIdVendedor.getText())
+                .direccion(txtDireccionVendedor.getText())
+                .build();
+        Usuario usuario = new UsuarioBuilder()
+                .username(txtNombreUsuario.getText())
+                .password(txtContrasenaUsuario.getText())
+                .build();
+        vendedor.setUsuarioAsociado(usuario);
+        usuario.setVendedorAsociado(vendedor);
+        return vendedor;
     }
 
 
     private void initDataBinding() {
-        tcNombreVendedor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().nombre()));
-        tcApellidoVendedor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().apellido()));
-        tcEmailVendedor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().email()));
-        tcIdVendedor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().id()));
-        tcNombreUsuario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().username()));
-        tcContrasenaUsuario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().password()));
+        tcNombreVendedor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
+        tcApellidoVendedor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getApellido()));
+        tcEmailVendedor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEmail()));
+        tcIdVendedor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getId()));
+        tcDireccionvendedor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDireccion()));
+        tcNombreUsuario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getUsuarioAsociado().getUsername()));
+        tcContrasenaUsuario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getUsuarioAsociado().getPassword()));
     }
 
 
     @FXML
     void onActualizar(ActionEvent event) {
-        actualizarUsuarioVendedor();
+        actualizarVendedor();
     }
 
     @FXML
     void onAgregar(ActionEvent event) {
-        agregarUsuarioVendedor();
+        agregarVendedor();
     }
 
     @FXML
@@ -310,8 +247,8 @@ public class VendedoresViewController {
 
     private void eliminarUsuarioVendedor() {
         if (datosValidosUsuario(vendedorSelecionado) || datosValidosVendedor(vendedorSelecionado)) {
-            if (vendedoresController.eliminarUsuarioVendedor(vendedorSelecionado)) {
-                listaUsuariosVendedores.remove(vendedorSelecionado);
+            if (vendedoresController.eliminarVendedor(vendedorSelecionado)) {
+                listaVendedores.remove(vendedorSelecionado);
                 limpiarCampos();
                 refrescarTabla();
                 mostrarMensaje(TITULO_USUVENDEDOR_ELIMINADO, HEADER, BODY_USUVENDEDOR_ELIMINADO, Alert.AlertType.INFORMATION);
@@ -324,16 +261,12 @@ public class VendedoresViewController {
 
     }
 
-    @FXML
-    void onNuevo(ActionEvent event) {
-
-    }
-
     private void limpiarCampos() {
         txtNombreVendedor.setText("");
         txtApellidoVendedor.setText("");
         txtEmailVendedor.setText("");
         txtIdVendedor.setText("");
+        txtDireccionVendedor.setText("");
         txtNombreUsuario.setText("");
         txtContrasenaUsuario.setText("");
     }

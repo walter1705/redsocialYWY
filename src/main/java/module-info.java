@@ -14,8 +14,8 @@ module co.edu.uniquoindio.redsocial.redsocial {
     exports co.edu.uniquoindio.redsocial.viewController;
     opens co.edu.uniquoindio.redsocial.controller;
     exports co.edu.uniquoindio.redsocial.controller;
-    opens co.edu.uniquoindio.redsocial.mapping.dto;
-    exports co.edu.uniquoindio.redsocial.mapping.dto;
+    opens co.edu.uniquoindio.redsocial.model;
+    exports co.edu.uniquoindio.redsocial.model;
     opens co.edu.uniquoindio.redsocial.utils;
     exports co.edu.uniquoindio.redsocial.utils;
 }

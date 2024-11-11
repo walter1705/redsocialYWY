@@ -148,13 +148,14 @@ public class RedSocial implements IRedSocial {
 
     public boolean crearVendedor(Vendedor nuevoVendedor){
         Vendedor vendedorEncontrado = obtenerVendedor(nuevoVendedor.getId());
-        if (verificarVendedorRepetido(nuevoVendedor.getId())){
+        if (comprobarDatosVendedor(nuevoVendedor)){
             if (vendedorEncontrado == null) {
                 agregarRedSocial(nuevoVendedor);
+                agregarRedSocial(nuevoVendedor.getUsuarioAsociado());
                 return true;
             }
         }
-        return  false;
+        return false;
     }
 
     public boolean eliminarVendedor(String id) {
@@ -171,7 +172,7 @@ public class RedSocial implements IRedSocial {
     public boolean actualizarVendedor(String id, Vendedor vendedor) {
         Vendedor vendedorEncontrado = obtenerVendedor(id);
         if (vendedorEncontrado != null) {
-            if (verificarVendedorRepetido(vendedor.getId()) && vendedorEncontrado.getId().equals(id)) {
+            if (comprobarDatosVendedor(vendedor) && vendedorEncontrado.getId().equals(id)) {
                 for (Vendedor vendedor1 : listaVendedores) {
                     if (vendedor1.getId().equals(id)) {
                         vendedor1.setNombre(vendedor.getNombre());
@@ -184,6 +185,20 @@ public class RedSocial implements IRedSocial {
             }
         }
         return false;
+    }
+
+    @Override
+    public boolean comprobarDatosVendedor(Vendedor vendedor) {
+        for (Vendedor vendedor1 : listaVendedores) {
+            if (vendedor1.getId().equals(vendedor.getId())) {
+                return false;
+            }
+            if (vendedor1.getUsuarioAsociado().getUsername().equals(vendedor.getUsuarioAsociado().getUsername())) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     private Vendedor getBuildVendedor(Usuario usuarioAsociado, String direccion, String email,
