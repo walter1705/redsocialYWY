@@ -5,6 +5,7 @@ public class Producto {
     private EstadoProducto estadoProducto;
     private double precio;
     private Vendedor vendedorAsociado;
+    private Publicacion publicacionAsociado;
 
     public Producto(String nombre, String imagen, String categoria,
                     EstadoProducto estadoProducto, double precio, Vendedor vendedorAsociado) {

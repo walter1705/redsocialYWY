@@ -10,7 +10,7 @@ import com.itextpdf.layout.element.Paragraph;
 import java.nio.file.Path;
 
 public class PdfLoggerStrategy implements ILoggerStrategy {
-    private static String extension = ".pdf";
+    private static final String extension = ".pdf";
 
     @Override
     public void write(String data, String fecha, String path, String titulo, Usuario usuario) {

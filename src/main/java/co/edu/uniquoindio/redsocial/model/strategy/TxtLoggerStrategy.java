@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.nio.file.Path;
 
 public class TxtLoggerStrategy implements ILoggerStrategy {
-    private static String extension = ".txt";
+    private static final String extension = ".txt";
 
     @Override
     public void write(String data, String fecha, String path, String titulo, Usuario usuario) {

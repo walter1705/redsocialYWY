@@ -1,11 +1,13 @@
 package co.edu.uniquoindio.redsocial.model.builder;
 
+import co.edu.uniquoindio.redsocial.model.Muro;
 import co.edu.uniquoindio.redsocial.model.Usuario;
 import co.edu.uniquoindio.redsocial.model.Vendedor;
 
 public class VendedorBuilder {
     protected String id, nombre, apellido, email, direccion;
     protected Usuario usuarioAsociado;
+    protected Muro muro;
 
     public VendedorBuilder nombre(String nombre) {
         this.nombre = nombre;
@@ -37,7 +39,12 @@ public class VendedorBuilder {
         return this;
     }
 
+    public VendedorBuilder muro(Muro muro) {
+        this.muro = muro;
+        return this;
+    }
+
     public Vendedor build() {
-        return new Vendedor(usuarioAsociado, direccion,  email, apellido, nombre, id);
+        return new Vendedor(usuarioAsociado, direccion,  email, apellido, nombre, id, muro);
     }
 }
