@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="815.0" prefWidth="1037.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquoindio.redsocial.viewController.VendedorTemplateViewController">
+   <children>
+      <TabPane prefHeight="815.0" prefWidth="1037.0" tabClosingPolicy="UNAVAILABLE">
+         <tabs>
+            <Tab text="Muro">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="758.0" prefWidth="503.0">
+                           <children>
+                              <SplitPane dividerPositions="0.5217965653896961" prefHeight="757.0" prefWidth="507.0">
+                                <items>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                       <children>
+                                          <ImageView fitHeight="32.0" fitWidth="35.0" layoutX="102.0" layoutY="709.0" pickOnBounds="true" preserveRatio="true">
+                                             <image>
+                                                <Image url="@../../../../images/likeImage.jpeg" />
+                                             </image>
+                                          </ImageView>
+                                          <Label fx:id="likeCounter" layoutX="153.0" layoutY="717.0" text="0" />
+                                       </children>
+                                    </AnchorPane>
+                                </items>
+                              </SplitPane>
+                           </children>
+                        </AnchorPane>
+                        <AnchorPane layoutX="780.0" layoutY="14.0" prefHeight="758.0" prefWidth="242.0" />
+                        <AnchorPane layoutX="528.0" layoutY="14.0" prefHeight="758.0" prefWidth="242.0" />
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Productos">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+              </content>
+            </Tab>
+         </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>
