@@ -1,5 +1,6 @@
 package co.edu.uniquoindio.redsocial.viewController;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
@@ -13,13 +14,18 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 
 import static co.edu.uniquoindio.redsocial.utils.RedSocialConstants.*;
 
 public class VendedoresViewController {
+    RedsocialAppViewController redSocialAppViewController;
+
     VendedoresController vendedoresController;
     ObservableList<Vendedor> listaVendedores = FXCollections.observableArrayList();
+
     Vendedor vendedorSelecionado;
 
 
@@ -90,6 +96,7 @@ public class VendedoresViewController {
     @FXML
     void initialize() {
         vendedoresController = new VendedoresController();
+        redSocialAppViewController = RedsocialAppViewController.getController();
         initView();
     }
 
@@ -127,18 +134,40 @@ public class VendedoresViewController {
 
     private void agregarVendedor() {
         Vendedor vendedor = crearVendedor();
-        if (datosValidosUsuario(vendedor) && datosValidosVendedor(vendedor)) {
-            boolean vendedorAgregado = vendedoresController.agregarVendedor(vendedor);
-            if (vendedorAgregado) {
-                listaVendedores.addAll(vendedor);
-                limpiarCampos();
-                refrescarTabla();
-                mostrarMensaje(TITULO_USUVENDEDOR_AGREGADO, HEADER, BODY_USUVENDEDOR_AGREGADO, Alert.AlertType.INFORMATION);
+        if (listaVendedores.size()<10) {
+            if (datosValidosUsuario(vendedor) && datosValidosVendedor(vendedor)) {
+                boolean vendedorAgregado = vendedoresController.agregarVendedor(vendedor);
+                if (vendedorAgregado) {
+                    listaVendedores.addAll(vendedor);
+                    limpiarCampos();
+                    refrescarTabla();
+                    agregarTabVendedor(vendedor);
+                    mostrarMensaje(TITULO_USUVENDEDOR_AGREGADO, HEADER, BODY_USUVENDEDOR_AGREGADO, Alert.AlertType.INFORMATION);
+                } else {
+                    mostrarMensaje(TITULO_USUVENDEDOR_NO_AGREGADO, HEADER, BODY_USUVENDEDOR_NO_AGREGADO, Alert.AlertType.ERROR);
+                }
             } else {
-                mostrarMensaje(TITULO_USUVENDEDOR_NO_AGREGADO, HEADER, BODY_USUVENDEDOR_NO_AGREGADO, Alert.AlertType.ERROR);
+                mostrarMensaje(TITULO_CAMPOS_INCOMPLETOS, HEADER, BODY_CAMPOS_INCOMPLETOS, Alert.AlertType.INFORMATION);
             }
         } else {
-            mostrarMensaje(TITULO_CAMPOS_INCOMPLETOS, HEADER, BODY_CAMPOS_INCOMPLETOS, Alert.AlertType.INFORMATION);
+            mostrarMensaje(TITULO_LIMITE_VENDEDORES, HEADER, BODY_LIMITE_VENDEDORES, Alert.AlertType.INFORMATION);
+        }
+    }
+
+    private void agregarTabVendedor(Vendedor vendedor) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquoindio/redsocial/VendedorTemplate.fxml"));
+            AnchorPane vendedorContent = loader.load();
+
+            VendedorTemplateViewController vendedorController = loader.getController();
+            vendedorController.updateView(); ///actualizar con contenido
+            Tab nuevoTab = new Tab();
+            nuevoTab.setText(vendedor.getNombre());
+            nuevoTab.setContent(vendedorContent); // Establecer el contenido del tab
+            redSocialAppViewController.mainTab.getTabPane().getTabs().add(nuevoTab);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println("Error al cargar la vista de Vendedor.");
         }
     }
 
@@ -238,19 +267,21 @@ public class VendedoresViewController {
 
     @FXML
     void onEliminar(ActionEvent event) {
-        eliminarUsuarioVendedor();
+        eliminarVendedor();
     }
 
 
 
 
 
-    private void eliminarUsuarioVendedor() {
-        if (datosValidosUsuario(vendedorSelecionado) || datosValidosVendedor(vendedorSelecionado)) {
+    private void eliminarVendedor() {
+        if (datosValidosVendedor(vendedorSelecionado) && datosValidosUsuario(vendedorSelecionado)) {
             if (vendedoresController.eliminarVendedor(vendedorSelecionado)) {
+                eliminarTabVendedor(vendedorSelecionado);
                 listaVendedores.remove(vendedorSelecionado);
                 limpiarCampos();
                 refrescarTabla();
+
                 mostrarMensaje(TITULO_USUVENDEDOR_ELIMINADO, HEADER, BODY_USUVENDEDOR_ELIMINADO, Alert.AlertType.INFORMATION);
             } else {
                 mostrarMensaje(TITULO_USUVENDEDOR_NO_ELIMNADO, HEADER, BODY_USUVENDEDOR_NO_ELIMINADO, Alert.AlertType.ERROR);
@@ -258,7 +289,20 @@ public class VendedoresViewController {
         } else{
                 mostrarMensaje(TITULO_CAMPOS_NO_SELECIONADO, HEADER, BODY_CAMPOS_NO_SELECIONADO, Alert.AlertType.INFORMATION);
             }
+    }
 
+    public void eliminarTabVendedor(Vendedor vendedor) {
+        Tab tabToRemove = null;
+        for (Tab tab : redSocialAppViewController.mainTab.getTabPane().getTabs()) {
+            if (vendedor.getUsuarioAsociado().getUsername().equals(tab.getText())) {
+                tabToRemove = tab;
+                break;
+            }
+        }
+
+        if (tabToRemove != null) {
+            redSocialAppViewController.mainTab.getTabPane().getTabs().remove(tabToRemove);
+        }
     }
 
     private void limpiarCampos() {

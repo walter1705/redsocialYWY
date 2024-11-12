@@ -1,42 +1,87 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane prefHeight="815.0" prefWidth="1037.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquoindio.redsocial.viewController.VendedorTemplateViewController">
    <children>
-      <TabPane prefHeight="815.0" prefWidth="1037.0" tabClosingPolicy="UNAVAILABLE">
+      <TabPane prefHeight="747.0" prefWidth="1037.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>
+            <Tab text="Perfil">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <SplitPane dividerPositions="0.4632731958762886" prefHeight="789.0" prefWidth="1037.0">
+                          <items>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                 <children>
+                                    <Label layoutX="210.0" layoutY="14.0" text="Mensajes" />
+                                 </children>
+                              </AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                 <children>
+                                    <Label layoutX="249.0" layoutY="14.0" text="Contactos" />
+                                    <TableView layoutX="13.0" layoutY="51.0" prefHeight="323.0" prefWidth="526.0">
+                                      <columns>
+                                        <TableColumn fx:id="tableViewListaContactos" prefWidth="524.6666564941406" text="Nombre" />
+                                      </columns>
+                                    </TableView>
+                                 </children>
+                              </AnchorPane>
+                          </items>
+                        </SplitPane>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
             <Tab text="Muro">
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="758.0" prefWidth="503.0">
+                        <AnchorPane layoutX="14.0" layoutY="14.0" prefHeight="758.0" prefWidth="1009.0">
                            <children>
-                              <SplitPane dividerPositions="0.5217965653896961" prefHeight="757.0" prefWidth="507.0">
+                              <SplitPane dividerPositions="0.7250165453342159" prefHeight="757.0" prefWidth="1010.0">
                                 <items>
-                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
                                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                        <children>
-                                          <ImageView fitHeight="32.0" fitWidth="35.0" layoutX="102.0" layoutY="709.0" pickOnBounds="true" preserveRatio="true">
+                                          <TableView layoutX="14.0" layoutY="40.0" prefHeight="705.0" prefWidth="707.0">
+                                            <columns>
+                                                <TableColumn fx:id="tcProductNombre" prefWidth="205.33331203460693" text="Nombre" />
+                                                <TableColumn fx:id="tcProductPrecio" prefWidth="110.00003051757812" text="Precio" />
+                                                <TableColumn fx:id="tcProductCategoria" prefWidth="146.66668701171875" text="Categoria" />
+                                                <TableColumn fx:id="tcProductDescripcion" prefWidth="244.66668701171875" text="Descripcion" />
+                                            </columns>
+                                          </TableView>
+                                          <Label layoutX="306.0" layoutY="14.0" text="Productos publicados" />
+                                       </children></AnchorPane>
+                                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                                       <children>
+                                          <ImageView fitHeight="32.0" fitWidth="35.0" layoutX="134.0" layoutY="653.0" pickOnBounds="true" preserveRatio="true">
                                              <image>
                                                 <Image url="@../../../../images/likeImage.jpeg" />
                                              </image>
                                           </ImageView>
-                                          <Label fx:id="likeCounter" layoutX="153.0" layoutY="717.0" text="0" />
+                                          <Label fx:id="likeCounter" layoutX="188.0" layoutY="661.0" text="0" />
+                                          <ToggleButton fx:id="bttnLike" layoutX="77.0" layoutY="656.0" mnemonicParsing="false" onAction="#onBttnLike" text="Like" />
+                                          <Label layoutX="103.0" layoutY="183.0" text="Comentarios" />
+                                          <VBox layoutX="6.0" layoutY="211.0" prefHeight="485.0" prefWidth="261.0" />
+                                          <ImageView fx:id="imageViewListProductos" fitHeight="163.0" fitWidth="248.0" layoutX="13.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
                                        </children>
                                     </AnchorPane>
                                 </items>
                               </SplitPane>
                            </children>
                         </AnchorPane>
-                        <AnchorPane layoutX="780.0" layoutY="14.0" prefHeight="758.0" prefWidth="242.0" />
-                        <AnchorPane layoutX="528.0" layoutY="14.0" prefHeight="758.0" prefWidth="242.0" />
                      </children>
                   </AnchorPane>
               </content>
@@ -48,5 +93,6 @@
             </Tab>
          </tabs>
       </TabPane>
+      <Separator layoutY="742.0" prefHeight="13.0" prefWidth="1037.0" />
    </children>
 </AnchorPane>

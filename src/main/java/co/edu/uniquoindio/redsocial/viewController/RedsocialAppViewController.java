@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Tab;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
@@ -13,9 +14,23 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class RedsocialAppViewController {
+    static RedsocialAppViewController controller;
+    public RedsocialAppViewController() {
+        controller = this;
+    }
+
+    public static RedsocialAppViewController getController() {
+        if (controller == null) {
+            controller = new RedsocialAppViewController();
+        }
+        return controller;
+
+    }
 
     @FXML
     private Button btnCerrarSesion;
+    @FXML
+    public Tab mainTab;
 
     @FXML
     void onCerrarSesion(ActionEvent event) throws IOException {

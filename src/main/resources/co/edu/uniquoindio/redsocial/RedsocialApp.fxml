@@ -10,7 +10,7 @@
    <children>
       <TabPane layoutX="-1.0" prefHeight="815.0" prefWidth="1037.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-          <Tab text="Administrador">
+          <Tab fx:id="mainTab" text="Administrador">
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                 <children>
