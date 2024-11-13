@@ -20,6 +20,7 @@ public class RedsocialAppViewController {
     private static VendedoresViewController vendedoresViewController;
     public RedsocialAppViewController() {
         controller = this;
+        vendedoresViewController = new VendedoresViewController();
     }
 
     public static RedsocialAppViewController getController() {
@@ -30,10 +31,6 @@ public class RedsocialAppViewController {
     }
 
     public VendedoresViewController getVendedoresViewController() {
-        if (vendedoresViewController == null) {
-            vendedoresViewController = new VendedoresViewController();
-        }
-
         return vendedoresViewController;
     }
 

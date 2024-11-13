@@ -2,13 +2,20 @@ package co.edu.uniquoindio.redsocial.viewController;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import co.edu.uniquoindio.redsocial.model.Vendedor;
+import javafx.beans.binding.Bindings;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.control.*;
+import javafx.util.StringConverter;
 
 public class EstadisticasViewController {
+    VendedoresViewController vendedoresViewController = RedsocialAppViewController.getController().getVendedoresViewController();
+
 
     @FXML
     private ResourceBundle resources;
@@ -77,10 +84,10 @@ public class EstadisticasViewController {
     private RadioButton topDiezMostLike;
 
     @FXML
-    private ChoiceBox<?> vendedor1ChoiceBoxMsjEnviados;
+    private ChoiceBox<Vendedor> vendedor1ChoiceBoxMsjEnviados;
 
     @FXML
-    private ChoiceBox<?> vendedor2ChoiceBoxMsjEnviados;
+    private ChoiceBox<Vendedor> vendedor2ChoiceBoxMsjEnviados;
 
     @FXML
     void OnCantProductosEachVendedor(ActionEvent event) {
@@ -115,6 +122,27 @@ public class EstadisticasViewController {
     @FXML
     void initialize() {
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        inicializarEstadisticas1();
+    }
+
+    private void inicializarEstadisticas1() {
+        // Configura el StringConverter para mostrar solo el nombre de usuario en la ChoiceBox
+        StringConverter<Vendedor> vendedorStringConverter = new StringConverter<>() {
+            @Override
+            public String toString(Vendedor vendedor) {
+                return vendedor != null ? vendedor.getUsuarioAsociado().getUsername() : "";
+            }
+
+            @Override
+            public Vendedor fromString(String s) {
+                return null;
+            }
+        };
+
+        vendedor1ChoiceBoxMsjEnviados.setConverter(vendedorStringConverter);
+        vendedor2ChoiceBoxMsjEnviados.setConverter(vendedorStringConverter);
+        vendedor1ChoiceBoxMsjEnviados.setItems(vendedoresViewController.listaVendedores);
+        vendedor2ChoiceBoxMsjEnviados.setItems(vendedoresViewController.listaVendedores);
     }
 
 }

@@ -156,7 +156,7 @@ public class VendedoresViewController {
             if (datosValidosUsuario(vendedor) && datosValidosVendedor(vendedor)) {
                 boolean vendedorAgregado = vendedoresController.agregarVendedor(vendedor);
                 if (vendedorAgregado) {
-                    listaVendedores.addAll(vendedor);
+                    redSocialAppViewController.getVendedoresViewController().listaVendedores.add(vendedor);
                     limpiarCampos();
                     refrescarTabla();
                     agregarTabVendedor(vendedor);
@@ -223,7 +223,7 @@ public class VendedoresViewController {
                             .equals(vendedorSelecionado.getUsuarioAsociado().getUsername()) &&
                             !listaVendedores.get(i).getId().isBlank() &&
                             !listaVendedores.get(i).getUsuarioAsociado().getUsername().isBlank()) {
-                listaVendedores.set(i, vendedor);
+                redSocialAppViewController.getVendedoresViewController().listaVendedores.set(i, vendedor);
                 break;
             }
         }
@@ -303,7 +303,7 @@ public class VendedoresViewController {
         if (datosValidosVendedor(vendedorSelecionado) && datosValidosUsuario(vendedorSelecionado)) {
             if (vendedoresController.eliminarVendedor(vendedorSelecionado)) {
                 eliminarTabVendedor(vendedorSelecionado);
-                listaVendedores.remove(vendedorSelecionado);
+                redSocialAppViewController.getVendedoresViewController().listaVendedores.remove(vendedorSelecionado);
                 limpiarCampos();
                 refrescarTabla();
 
