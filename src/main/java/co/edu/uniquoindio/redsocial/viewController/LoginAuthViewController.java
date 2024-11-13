@@ -91,6 +91,11 @@ public class LoginAuthViewController {
         FXMLLoader fxmlLoader = new FXMLLoader(StartRedSocial.class.getResource("RedsocialApp.fxml"));
         Parent root = fxmlLoader.load();
 
+        RedsocialAppViewController redSocialController = fxmlLoader.getController();
+
+        // Llamar a loadViewsAfterLogin desde el controlador de vendedores
+        //redSocialController.getVendedoresViewController().loadViewsAfterLogin();
+
         Scene scene = new Scene(root, 1037, 815);
         stage.setTitle("MarketPlace");
 

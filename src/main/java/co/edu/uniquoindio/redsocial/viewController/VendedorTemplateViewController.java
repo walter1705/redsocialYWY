@@ -10,8 +10,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 
 public class VendedorTemplateViewController {
+
+    @FXML
+    private AnchorPane rootPane;
 
     @FXML
     private ResourceBundle resources;
@@ -149,6 +153,10 @@ public class VendedorTemplateViewController {
         assert txtNombreProducto != null : "fx:id=\"txtNombreProducto\" was not injected: check your FXML file 'VendedorTemplate.fxml'.";
         assert txtPrecioProducto != null : "fx:id=\"txtPrecioProducto\" was not injected: check your FXML file 'VendedorTemplate.fxml'.";
 
+    }
+
+    public AnchorPane getView() {
+        return rootPane;
     }
 
     public void updateView() {

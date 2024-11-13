@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="815.0" prefWidth="1037.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquoindio.redsocial.viewController.VendedorTemplateViewController">
+<AnchorPane fx:id="rootPane" prefHeight="815.0" prefWidth="1037.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquoindio.redsocial.viewController.VendedorTemplateViewController">
    <children>
       <TabPane prefHeight="747.0" prefWidth="1037.0" tabClosingPolicy="UNAVAILABLE">
          <tabs>

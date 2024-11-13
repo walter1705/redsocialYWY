@@ -9,6 +9,7 @@ import co.edu.uniquoindio.redsocial.model.Vendedor;
 import co.edu.uniquoindio.redsocial.controller.VendedoresController;
 import co.edu.uniquoindio.redsocial.model.builder.UsuarioBuilder;
 import co.edu.uniquoindio.redsocial.model.builder.VendedorBuilder;
+import co.edu.uniquoindio.redsocial.viewController.viewControllerHelpers.TabManagerVendedorTemplate;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,8 +27,9 @@ public class VendedoresViewController {
     VendedoresController vendedoresController;
     ObservableList<Vendedor> listaVendedores = FXCollections.observableArrayList();
 
-    Vendedor vendedorSelecionado;
+    TabManagerVendedorTemplate tabManagerVendedorTemplate = TabManagerVendedorTemplate.getInstance();
 
+    Vendedor vendedorSelecionado;
 
 
     @FXML
@@ -96,9 +98,25 @@ public class VendedoresViewController {
     @FXML
     void initialize() {
         vendedoresController = new VendedoresController();
+        tabManagerVendedorTemplate = TabManagerVendedorTemplate.getInstance();
+
         redSocialAppViewController = RedsocialAppViewController.getController();
+
         initView();
+        loadViewsAfterLogin();
     }
+
+    public void loadViewsAfterLogin() {
+
+        for (Tab tab : tabManagerVendedorTemplate.getTabs()) {
+            if (!redSocialAppViewController.TabPane.getTabs().contains(tab)) {
+                redSocialAppViewController.TabPane.getTabs().add(tab);
+            }
+        }
+
+    }
+
+
 
     private void initView() {
         initDataBinding();
@@ -156,15 +174,21 @@ public class VendedoresViewController {
 
     private void agregarTabVendedor(Vendedor vendedor) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquoindio/redsocial/VendedorTemplate.fxml"));
-            AnchorPane vendedorContent = loader.load();
+            if (tabManagerVendedorTemplate.hasTab(vendedor)) {
+                Tab tabExistente = tabManagerVendedorTemplate.getTab(vendedor);
+                redSocialAppViewController.mainTab.getTabPane().getTabs().add(tabExistente);
+            } else {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/co/edu/uniquoindio/redsocial/VendedorTemplate.fxml"));
+                AnchorPane vendedorContent = loader.load();
 
-            VendedorTemplateViewController vendedorController = loader.getController();
-            vendedorController.updateView(); ///actualizar con contenido
-            Tab nuevoTab = new Tab();
-            nuevoTab.setText(vendedor.getNombre());
-            nuevoTab.setContent(vendedorContent); // Establecer el contenido del tab
-            redSocialAppViewController.mainTab.getTabPane().getTabs().add(nuevoTab);
+                VendedorTemplateViewController vendedorController = loader.getController();
+                vendedorController.updateView();
+
+                Tab nuevoTab = new Tab(vendedor.getNombre(), vendedorContent);
+                redSocialAppViewController.mainTab.getTabPane().getTabs().add(nuevoTab);
+
+                tabManagerVendedorTemplate.agregarTab(vendedor, nuevoTab);
+            }
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Error al cargar la vista de Vendedor.");
@@ -182,6 +206,7 @@ public class VendedoresViewController {
                 refrescarTabla();
                 mostrarMensaje(TITULO_USUVENDEDOR_ACTUALIZADO, HEADER, BODY_USUVENDEDOR_ACTUALIZADO, Alert.AlertType.INFORMATION);
             } else {
+                mostrarMensaje(TITULO_USUVENDEDOR_NO_ACTUALIZADO, HEADER, BODY_USUVENDEDOR_NO_ACTUALIZADO, Alert.AlertType.ERROR);
                 mostrarMensaje(TITULO_USUVENDEDOR_NO_ACTUALIZADO, HEADER, BODY_USUVENDEDOR_NO_ACTUALIZADO, Alert.AlertType.ERROR);
             }
         } else {
