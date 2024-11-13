@@ -43,6 +43,10 @@ public class RedSocialConstants {
     public static final String BODY_USUARIO_ACTUALIZADO = "Usuario ha sido actualizado.";
     public static final String TITULO_VENDEDOR_ACTUALIZADO = "Vendedor actualizado.";
     public static final String BODY_VENDEDOR_ACTUALIZADO = "Vendedor ha sido actualizado.";
-
+    //BOTONES ESTADISTICAS
+    public static final String TITULO_NO_SE_SELECCIONA_EL_MISMO = "Mismo elemento seleccionado.";
+    public static final String BODY_NO_SE_SELECCIONA_EL_MISMO = "Se tienen que seleccionar vendedores diferentes.";
+    public static final String TITULO_NO_SE_SELECCIONA_UNO = "Campos incompletos.  ";
+    public static final String BODY_NO_SE_SELECCIONA_UNO = "Se tiene que seleccionar dos vendedores.";
 
 }

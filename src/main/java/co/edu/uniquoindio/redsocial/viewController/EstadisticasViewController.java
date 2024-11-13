@@ -4,14 +4,14 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 import co.edu.uniquoindio.redsocial.model.Vendedor;
-import javafx.beans.binding.Bindings;
-import javafx.collections.transformation.FilteredList;
+import co.edu.uniquoindio.redsocial.viewController.viewControllerHelpers.ViewControllerUtil;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.chart.BarChart;
 import javafx.scene.control.*;
 import javafx.util.StringConverter;
+
+import static co.edu.uniquoindio.redsocial.utils.RedSocialConstants.*;
 
 public class EstadisticasViewController {
     VendedoresViewController vendedoresViewController = RedsocialAppViewController.getController().getVendedoresViewController();
@@ -99,10 +99,7 @@ public class EstadisticasViewController {
 
     }
 
-    @FXML
-    void onCantMensajesDosVendedores(ActionEvent event) {
 
-    }
 
     @FXML
     void onCantProductorFecha(ActionEvent event) {
@@ -124,7 +121,7 @@ public class EstadisticasViewController {
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         inicializarEstadisticas1();
     }
-
+    //ESTADISTICAS 1 METHODS
     private void inicializarEstadisticas1() {
         // Configura el StringConverter para mostrar solo el nombre de usuario en la ChoiceBox
         StringConverter<Vendedor> vendedorStringConverter = new StringConverter<>() {
@@ -143,7 +140,46 @@ public class EstadisticasViewController {
         vendedor2ChoiceBoxMsjEnviados.setConverter(vendedorStringConverter);
         vendedor1ChoiceBoxMsjEnviados.setItems(vendedoresViewController.listaVendedores);
         vendedor2ChoiceBoxMsjEnviados.setItems(vendedoresViewController.listaVendedores);
+        textAreaMsjEnviados.setEditable(false);
     }
 
+    private void limpiarBotonesCantidadMensajes() {
+        vendedor1ChoiceBoxMsjEnviados.getSelectionModel().clearSelection();
+        vendedor2ChoiceBoxMsjEnviados.getSelectionModel().clearSelection();
+    }
+
+    private boolean verificarBotonCantidadMensajes() {
+        if (vendedor1ChoiceBoxMsjEnviados.getValue()==null ||
+                vendedor2ChoiceBoxMsjEnviados.getValue()==null) {
+            ViewControllerUtil.mostrarMensaje(TITULO_NO_SE_SELECCIONA_UNO, HEADER, BODY_NO_SE_SELECCIONA_UNO, Alert.AlertType.INFORMATION);
+            cantMensajesDosVendedores.setSelected(false);
+            limpiarBotonesCantidadMensajes();
+            return false;
+        }
+
+        if (cantMensajesDosVendedores.isSelected()) {
+            if(vendedor1ChoiceBoxMsjEnviados.getValue().equals(vendedor2ChoiceBoxMsjEnviados.getValue()) ||
+                    vendedor2ChoiceBoxMsjEnviados.getValue().equals(vendedor1ChoiceBoxMsjEnviados.getValue())) {
+                cantMensajesDosVendedores.setSelected(false);
+                ViewControllerUtil.mostrarMensaje(TITULO_NO_SE_SELECCIONA_EL_MISMO, HEADER, BODY_NO_SE_SELECCIONA_EL_MISMO,
+                Alert.AlertType.INFORMATION);
+                limpiarBotonesCantidadMensajes();
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+
+    @FXML
+    void onCantMensajesDosVendedores(ActionEvent event) {
+        if(verificarBotonCantidadMensajes()) {
+            //modelFactoryGetMensajesEach(v1, v2)
+            //vendedor1ChoiceBoxMsjEnviados.getValue().getMuroAsociado().getListaMensajes().size(); //TODO
+        }
+    }
+
+    //ESTADISTICAS 2 METHODS
 }
 
