@@ -5,6 +5,7 @@ import co.edu.uniquoindio.redsocial.model.Logger;
 import co.edu.uniquoindio.redsocial.model.RedSocial;
 import co.edu.uniquoindio.redsocial.model.Usuario;
 import co.edu.uniquoindio.redsocial.model.Vendedor;
+import co.edu.uniquoindio.redsocial.proxy.RedSocialProxy;
 import co.edu.uniquoindio.redsocial.service.IModelFactoryService;
 import co.edu.uniquoindio.redsocial.utils.DataUtil;
 
@@ -14,15 +15,21 @@ public class ModelFactory implements IModelFactoryService {
     private static ModelFactory modelFactory;
     private RedSocial redSocial;
     private Logger logger;
+    private RedSocialProxy proxy;
 
     private ModelFactory() {
         redSocial = DataUtil.inicializarDatosPrueba();;
         logger = new Logger();
+        proxy = new RedSocialProxy(redSocial);
     }
 
     public static ModelFactory getInstance() {
         if (modelFactory==null)  modelFactory = new ModelFactory();
         return modelFactory;
+    }
+
+    public void setUsuarioLogeado(Vendedor vendedor) {
+        proxy.setUsuarioAutenticado(vendedor);
     }
 
 
@@ -37,8 +44,8 @@ public class ModelFactory implements IModelFactoryService {
     }
 
     @Override
-    public boolean actualizarVendedor(String id, Vendedor vendedor) {
-        return redSocial.actualizarVendedor(id, vendedor);
+    public boolean actualizarVendedor(String id, String username, Vendedor vendedor) {
+        return redSocial.actualizarVendedor(id, username, vendedor);
     }
 
     @Override

@@ -19,8 +19,8 @@ public class VendedoresController {
         return modelFactory.agregarVendedor(vendedor);
     }
 
-    public boolean actualizarVendedor(String id, Vendedor vendedor) {
-        return modelFactory.actualizarVendedor(id, vendedor);
+    public boolean actualizarVendedor(String id, String username, Vendedor vendedor) {
+        return modelFactory.actualizarVendedor(id, username, vendedor);
     }
 
     public boolean eliminarVendedor(Vendedor vendedorSelecionado) {

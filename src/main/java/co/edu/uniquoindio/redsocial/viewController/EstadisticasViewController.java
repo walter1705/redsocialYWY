@@ -14,7 +14,7 @@ import javafx.util.StringConverter;
 import static co.edu.uniquoindio.redsocial.utils.RedSocialConstants.*;
 
 public class EstadisticasViewController {
-    VendedoresViewController vendedoresViewController = RedsocialAppViewController.getController().getVendedoresViewController();
+    VendedoresViewController vendedoresViewController = VendedoresViewController.getInstance();
 
 
     @FXML
@@ -181,5 +181,7 @@ public class EstadisticasViewController {
     }
 
     //ESTADISTICAS 2 METHODS
+
+    
 }
 

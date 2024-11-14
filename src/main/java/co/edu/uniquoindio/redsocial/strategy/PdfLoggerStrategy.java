@@ -1,4 +1,4 @@
-package co.edu.uniquoindio.redsocial.model.strategy;
+package co.edu.uniquoindio.redsocial.strategy;
 
 import co.edu.uniquoindio.redsocial.model.Usuario;
 import co.edu.uniquoindio.redsocial.service.ILoggerStrategy;

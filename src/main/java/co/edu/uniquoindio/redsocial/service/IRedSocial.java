@@ -8,7 +8,7 @@ public interface IRedSocial {
 
     boolean actualizarUsuario(String username, Usuario usuario);
 
-    boolean actualizarVendedor(String id, Vendedor vendedor);
+    boolean actualizarVendedor(String id, String username, Vendedor vendedor);
     boolean comprobarDatosVendedor(Vendedor vendedor);
     boolean eliminarVendedor(String id);
 

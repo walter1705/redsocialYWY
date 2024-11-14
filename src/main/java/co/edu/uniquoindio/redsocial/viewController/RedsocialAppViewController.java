@@ -17,10 +17,8 @@ import java.util.Objects;
 
 public class RedsocialAppViewController {
     private static RedsocialAppViewController controller;
-    private static VendedoresViewController vendedoresViewController;
     public RedsocialAppViewController() {
         controller = this;
-        vendedoresViewController = new VendedoresViewController();
     }
 
     public static RedsocialAppViewController getController() {
@@ -30,9 +28,7 @@ public class RedsocialAppViewController {
         return controller;
     }
 
-    public VendedoresViewController getVendedoresViewController() {
-        return vendedoresViewController;
-    }
+
 
     @FXML
     private Button btnCerrarSesion;

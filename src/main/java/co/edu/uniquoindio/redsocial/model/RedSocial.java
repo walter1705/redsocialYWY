@@ -169,21 +169,25 @@ public class RedSocial implements IRedSocial {
     }
 
     @Override
-    public boolean actualizarVendedor(String id, Vendedor vendedor) {
+    public boolean actualizarVendedor(String id, String username, Vendedor vendedor) {
         Vendedor vendedorEncontrado = obtenerVendedor(id);
         if (vendedorEncontrado != null) {
-            if (comprobarDatosVendedor(vendedor) && vendedorEncontrado.getId().equals(id)) {
+            if (vendedorEncontrado.getId().equals(id)) {
                 for (Vendedor vendedor1 : listaVendedores) {
-                    if (vendedor1.getId().equals(id)) {
+                    if (vendedor1.getId().equals(id) && vendedor1.getUsuarioAsociado().getUsername().equals(username)) {
                         vendedor1.setNombre(vendedor.getNombre());
                         vendedor1.setApellido(vendedor.getApellido());
                         vendedor1.setDireccion(vendedor.getDireccion());
                         vendedor1.setId(vendedor.getId());
+                        vendedor1.setEmail(vendedor.getEmail());
+                        vendedor1.getUsuarioAsociado().setUsername(vendedor.getUsuarioAsociado().getUsername());
+                        vendedor1.getUsuarioAsociado().setPassword(vendedor.getUsuarioAsociado().getPassword());
                         return true;
                     }
                 }
             }
         }
+
         return false;
     }
 

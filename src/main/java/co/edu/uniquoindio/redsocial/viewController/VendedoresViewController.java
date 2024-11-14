@@ -25,12 +25,25 @@ public class VendedoresViewController {
     RedsocialAppViewController redSocialAppViewController;
 
     VendedoresController vendedoresController;
-    ObservableList<Vendedor> listaVendedores = FXCollections.observableArrayList();
+    ObservableList<Vendedor> listaVendedores;
 
     TabManagerVendedorTemplate tabManagerVendedorTemplate = TabManagerVendedorTemplate.getInstance();
 
     Vendedor vendedorSelecionado;
 
+    private static VendedoresViewController vendedoresViewController;
+
+    public VendedoresViewController() {
+        vendedoresViewController = this;
+        listaVendedores = FXCollections.observableArrayList();
+    }
+
+    public static VendedoresViewController getInstance() {
+        if (vendedoresViewController == null) {
+            vendedoresViewController = new VendedoresViewController();
+        }
+        return vendedoresViewController;
+    }
 
     @FXML
     private ResourceBundle resources;
@@ -145,6 +158,7 @@ public class VendedoresViewController {
             txtApellidoVendedor.setText(vendedorSelecionado.getApellido());
             txtEmailVendedor.setText(vendedorSelecionado.getEmail());
             txtIdVendedor.setText(vendedorSelecionado.getId());
+            txtDireccionVendedor.setText(vendedorSelecionado.getDireccion());
             txtNombreUsuario.setText(vendedorSelecionado.getUsuarioAsociado().getUsername());
             txtContrasenaUsuario.setText(vendedorSelecionado.getUsuarioAsociado().getPassword());
         }
@@ -156,7 +170,7 @@ public class VendedoresViewController {
             if (datosValidosUsuario(vendedor) && datosValidosVendedor(vendedor)) {
                 boolean vendedorAgregado = vendedoresController.agregarVendedor(vendedor);
                 if (vendedorAgregado) {
-                    redSocialAppViewController.getVendedoresViewController().listaVendedores.add(vendedor);
+                    listaVendedores.add(vendedor);
                     limpiarCampos();
                     refrescarTabla();
                     agregarTabVendedor(vendedor);
@@ -198,8 +212,9 @@ public class VendedoresViewController {
     private void actualizarVendedor() {
         Vendedor vendedor = crearVendedor();
         if(vendedorSelecionado!=null) {
-        if (datosValidosVendedor(vendedor)) {
-            boolean vendedorActualizado = vendedoresController.actualizarVendedor(vendedorSelecionado.getId(), vendedor);
+        if (datosValidosVendedor(vendedor) && datosValidosUsuario(vendedor)) {
+            boolean vendedorActualizado = vendedoresController.actualizarVendedor(vendedorSelecionado.getId(),
+                    vendedorSelecionado.getUsuarioAsociado().getUsername() ,vendedor);
             if (vendedorActualizado) {
                 actualizarVendedorListaObserver(vendedor);
                 limpiarCampos();
@@ -223,7 +238,7 @@ public class VendedoresViewController {
                             .equals(vendedorSelecionado.getUsuarioAsociado().getUsername()) &&
                             !listaVendedores.get(i).getId().isBlank() &&
                             !listaVendedores.get(i).getUsuarioAsociado().getUsername().isBlank()) {
-                redSocialAppViewController.getVendedoresViewController().listaVendedores.set(i, vendedor);
+                listaVendedores.set(i, vendedor);
                 break;
             }
         }
@@ -303,7 +318,7 @@ public class VendedoresViewController {
         if (datosValidosVendedor(vendedorSelecionado) && datosValidosUsuario(vendedorSelecionado)) {
             if (vendedoresController.eliminarVendedor(vendedorSelecionado)) {
                 eliminarTabVendedor(vendedorSelecionado);
-                redSocialAppViewController.getVendedoresViewController().listaVendedores.remove(vendedorSelecionado);
+                listaVendedores.remove(vendedorSelecionado);
                 limpiarCampos();
                 refrescarTabla();
 

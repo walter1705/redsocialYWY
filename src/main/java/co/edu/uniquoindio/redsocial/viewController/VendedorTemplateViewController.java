@@ -14,7 +14,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 public class VendedorTemplateViewController {
-    VendedoresViewController vendedoresViewController = new VendedoresViewController();
 
     @FXML
     private AnchorPane rootPane;
