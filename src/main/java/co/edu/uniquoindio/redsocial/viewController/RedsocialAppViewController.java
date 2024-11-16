@@ -27,9 +27,7 @@ public class RedsocialAppViewController {
         }
         return controller;
     }
-
-
-
+    
     @FXML
     private Button btnCerrarSesion;
 
@@ -67,9 +65,7 @@ public class RedsocialAppViewController {
             AnchorPane adminContent = loader.load();
 
             AdministradorTabViewController vendedorController = loader.getController();
-
             mainTab.setContent(adminContent);
-
         } catch (IOException e) {
             e.printStackTrace();
             System.out.println("Error al cargar la vista AdministradorTab.");

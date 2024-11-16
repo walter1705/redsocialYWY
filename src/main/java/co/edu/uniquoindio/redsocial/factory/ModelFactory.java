@@ -1,14 +1,12 @@
 package co.edu.uniquoindio.redsocial.factory;
 
 
-import co.edu.uniquoindio.redsocial.model.Logger;
-import co.edu.uniquoindio.redsocial.model.RedSocial;
-import co.edu.uniquoindio.redsocial.model.Usuario;
-import co.edu.uniquoindio.redsocial.model.Vendedor;
+import co.edu.uniquoindio.redsocial.model.*;
 import co.edu.uniquoindio.redsocial.proxy.RedSocialProxy;
 import co.edu.uniquoindio.redsocial.service.IModelFactoryService;
 import co.edu.uniquoindio.redsocial.utils.DataUtil;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public class ModelFactory implements IModelFactoryService {
@@ -58,5 +56,15 @@ public class ModelFactory implements IModelFactoryService {
     @Override
     public List<Usuario> getUsuarios() {
         return redSocial.getListaUsuarios();
+    }
+
+    @Override
+    public String cantProductosFechas(LocalDate d1, LocalDate d2) {
+        return redSocial.cantProductosFechas(d1, d2);
+    }
+
+    @Override
+    public boolean agregarProducto(Producto producto) {
+        return redSocial.agregarProducto(producto);
     }
 }

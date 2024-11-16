@@ -1,11 +1,14 @@
 package co.edu.uniquoindio.redsocial.viewController;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import co.edu.uniquoindio.redsocial.controller.VendedorTemplateController;
 import co.edu.uniquoindio.redsocial.model.EstadoProducto;
 import co.edu.uniquoindio.redsocial.model.Producto;
 import co.edu.uniquoindio.redsocial.model.Vendedor;
+import co.edu.uniquoindio.redsocial.model.builder.ProductoBuilder;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -14,6 +17,9 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
 public class VendedorTemplateViewController {
+    VendedorTemplateController vendedorTemplateController = new VendedorTemplateController();
+    Producto productoSeleccionado;
+
 
     @FXML
     private AnchorPane rootPane;
@@ -98,12 +104,7 @@ public class VendedorTemplateViewController {
 
     @FXML
     private TextField txtPrecioProducto;
-
-    @FXML
-    void onBttnLike(ActionEvent event) {
-
-    }
-
+    //CRUD
     @FXML
     void onImagenProductoPath(ActionEvent event) {
 
@@ -116,7 +117,38 @@ public class VendedorTemplateViewController {
 
     @FXML
     void onCrearProducto(ActionEvent event) {
+        Producto producto = crearProducto();
+        if (datosTxtProducto()) {
+            boolean productoAgregado = vendedorTemplateController.agregarProducto(producto);
+            if (productoAgregado) {}
+        }
+    }
 
+
+    private boolean datosTxtProducto() {
+        return txtDescripcionProducto.getText()!=null
+                && txtDescripcionProducto.getText()!=null
+                && txtPrecioProducto.getText()!=null //TODO
+                && txtCategoriaProducto.getText()!=null
+                && txtNombreProducto.getText()!=null
+                && comboBoxEstado.getValue()!=null;
+                //TODO IMAGEN;
+    }
+
+    private Producto crearProducto() {
+        return Producto.builder()
+                .descripcion(txtDescripcionProducto.getText())
+                .id(generarIdProducto())
+                .estadoProducto(comboBoxEstado.getValue())
+                .fechaPublicacion(LocalDate.now())
+                .categoria(txtCategoriaProducto.getText())
+                .nombre(txtNombreProducto.getText())
+                .precio(Integer.parseInt(txtPrecioProducto.getText()))
+                .build();
+    }
+
+    private String generarIdProducto() {
+        return ""; //TODO
     }
 
     @FXML
@@ -124,8 +156,11 @@ public class VendedorTemplateViewController {
 
     }
 
+    //interacciones red social
+    @FXML
+    void onBttnLike(ActionEvent event) {
 
-
+    }
     public AnchorPane getView() {
         return rootPane;
     }

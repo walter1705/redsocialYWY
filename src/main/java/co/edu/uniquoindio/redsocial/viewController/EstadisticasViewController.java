@@ -1,8 +1,10 @@
 package co.edu.uniquoindio.redsocial.viewController;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
+import co.edu.uniquoindio.redsocial.controller.EstadisticasController;
 import co.edu.uniquoindio.redsocial.model.Vendedor;
 import co.edu.uniquoindio.redsocial.viewController.viewControllerHelpers.ViewControllerUtil;
 import javafx.event.ActionEvent;
@@ -15,6 +17,7 @@ import static co.edu.uniquoindio.redsocial.utils.RedSocialConstants.*;
 
 public class EstadisticasViewController {
     VendedoresViewController vendedoresViewController = VendedoresViewController.getInstance();
+    EstadisticasController estadisticasController = new EstadisticasController();
 
 
     @FXML
@@ -101,10 +104,7 @@ public class EstadisticasViewController {
 
 
 
-    @FXML
-    void onCantProductorFecha(ActionEvent event) {
 
-    }
 
     @FXML
     void onExportarLog(ActionEvent event) {
@@ -175,13 +175,44 @@ public class EstadisticasViewController {
     @FXML
     void onCantMensajesDosVendedores(ActionEvent event) {
         if(verificarBotonCantidadMensajes()) {
-            //modelFactoryGetMensajesEach(v1, v2)
+            //controllerClassGetMensajesEach(v1, v2)
             //vendedor1ChoiceBoxMsjEnviados.getValue().getMuroAsociado().getListaMensajes().size(); //TODO
         }
     }
 
     //ESTADISTICAS 2 METHODS
+    @FXML
+    void onCantProductorFecha(ActionEvent event) {
+        if(verificaronCantProductorFecha()) {
+            LocalDate d1 = datePickerInicialReq.getValue();
+            LocalDate d2 = datePickerFinalReq.getValue();
+            String cantidad = estadisticasController.cantProductosFechas(d1, d2);
+            textAreaFechaDeterminada.setText(cantidad);
+        }
+    }
 
-    
+    private void limpiarDatePickerReq() {
+        datePickerInicialReq.setValue(null);
+        datePickerFinalReq.setValue(null);
+    }
+
+    private boolean verificaronCantProductorFecha() {
+        if (datePickerInicialReq.getValue()==null ||
+                vendedor2ChoiceBoxMsjEnviados.getValue()==null) {
+            ViewControllerUtil.mostrarMensaje(TITULO_NO_SE_SELECCIONA_UNO, HEADER, BODY_NO_SE_SELECCIONA_UNO, Alert.AlertType.INFORMATION);
+            cantProductorFecha.setSelected(false);
+            limpiarDatePickerReq();
+            return false;
+        } else if (datePickerInicialReq.getValue().isBefore(datePickerFinalReq.getValue())) {
+            ViewControllerUtil.mostrarMensaje(TITULO_NO_SE_SELECCIONA_UNO, HEADER, BODY_NO_DESPUES, Alert.AlertType.WARNING);
+            cantProductorFecha.setSelected(false);
+            limpiarDatePickerReq();
+            return false;
+        }
+        return true;
+    }
+
+
+
 }
 

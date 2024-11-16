@@ -16,7 +16,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="scrollPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="715.0" prefWidth="1037.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquoindio.redsocial.viewController.EstadisticasViewController">
+<ScrollPane fx:id="scrollPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="2400.0" prefWidth="1037.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquoindio.redsocial.viewController.EstadisticasViewController">
   <content>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="2400.0" prefWidth="1037.0">
          <children>
@@ -41,8 +41,8 @@
             <AnchorPane layoutY="387.0" prefHeight="548.0" prefWidth="1037.0">
                <children>
                   <RadioButton fx:id="cantProductorFecha" layoutX="14.0" layoutY="33.0" mnemonicParsing="false" onAction="#onCantProductorFecha" text="Cantidad de productos publicados entre determinada fecha " />
-                  <DatePicker fx:id="datePickerInicialReq" layoutX="222.0" layoutY="132.0" />
-                  <DatePicker fx:id="datePickerFinalReq" layoutX="585.0" layoutY="132.0" />
+                  <DatePicker fx:id="datePickerInicialReq" layoutX="222.0" layoutY="132.0" promptText="Inicio" />
+                  <DatePicker fx:id="datePickerFinalReq" layoutX="585.0" layoutY="132.0" promptText="Fin" />
                   <Label fx:id="labelFechaInicialProductosReq" layoutX="277.0" layoutY="98.0" text="Fecha inicial" />
                   <Label fx:id="labelFechaFinalProductosReq" layoutX="644.0" layoutY="98.0" text="Fecha final" />
                   <TextArea fx:id="textAreaFechaDeterminada" layoutX="385.0" layoutY="237.0" prefHeight="45.0" prefWidth="200.0" />

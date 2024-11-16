@@ -1,20 +1,65 @@
 package co.edu.uniquoindio.redsocial.model;
 
+import co.edu.uniquoindio.redsocial.model.builder.ProductoBuilder;
+
+import java.time.LocalDate;
+
 public class Producto {
-    private String nombre, imagen, categoria;
+    private String nombre, imagen, categoria, id, descripcion;
     private EstadoProducto estadoProducto;
     private double precio;
     private Vendedor vendedorAsociado;
     private Publicacion publicacionAsociado;
+    private LocalDate fechaPublicacion;
 
     public Producto(String nombre, String imagen, String categoria,
-                    EstadoProducto estadoProducto, double precio, Vendedor vendedorAsociado) {
+                    EstadoProducto estadoProducto, double precio, Vendedor vendedorAsociado,
+                    LocalDate fechaPublicacion, String id, String descripcion) {
         this.vendedorAsociado = vendedorAsociado;
         this.nombre = nombre;
         this.imagen = imagen;
         this.categoria = categoria;
         this.estadoProducto = estadoProducto;
         this.precio = precio;
+        this.fechaPublicacion = fechaPublicacion;
+        this.id = id;
+        this.descripcion = descripcion;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public Publicacion getPublicacionAsociado() {
+        return publicacionAsociado;
+    }
+
+    public void setPublicacionAsociado(Publicacion publicacionAsociado) {
+        this.publicacionAsociado = publicacionAsociado;
+    }
+
+    public LocalDate getFechaPublicacion() {
+        return fechaPublicacion;
+    }
+
+    public void setFechaPublicacion(LocalDate fechaPublicacion) {
+        this.fechaPublicacion = fechaPublicacion;
+    }
+
+    public static ProductoBuilder builder() {
+        return new ProductoBuilder();
     }
 
     public Vendedor getVendedorAsociado() {

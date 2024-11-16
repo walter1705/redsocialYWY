@@ -49,4 +49,5 @@ public class RedSocialConstants {
     public static final String TITULO_NO_SE_SELECCIONA_UNO = "Campos incompletos.  ";
     public static final String BODY_NO_SE_SELECCIONA_UNO = "Se tiene que seleccionar dos vendedores.";
 
+    public static final String BODY_NO_DESPUES = "Selecciona las fechas correctamente";
 }

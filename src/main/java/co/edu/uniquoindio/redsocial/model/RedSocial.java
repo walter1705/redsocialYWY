@@ -2,8 +2,10 @@ package co.edu.uniquoindio.redsocial.model;
 
 import co.edu.uniquoindio.redsocial.service.IRedSocial;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class RedSocial implements IRedSocial {
     private String nombre;
@@ -216,11 +218,22 @@ public class RedSocial implements IRedSocial {
                 .build();
     }
 
+    @Override
+    public String cantProductosFechas(LocalDate v1, LocalDate v2) {
+        return Integer.toString(listaProductos.stream()
+                .filter(n -> n.getFechaPublicacion().isAfter(v1) && n.getFechaPublicacion().isBefore(v2))
+                .toList().size());
+    }
+    //CRUD PRODUCTO
 
 
-
-
-
+    @Override
+    public boolean agregarProducto(Producto producto) {
+        if () {
+            listaProductos.add(producto);
+        }
+        return false;
+    }
 
 
 
