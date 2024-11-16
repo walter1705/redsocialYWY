@@ -22,4 +22,6 @@ public interface IModelFactoryService {
     String cantProductosFechas(LocalDate d1, LocalDate d2);
 
     boolean agregarProducto(Producto producto);
+
+    String generarIdProducto();
 }

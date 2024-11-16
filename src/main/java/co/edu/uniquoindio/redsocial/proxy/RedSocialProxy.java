@@ -3,6 +3,8 @@ package co.edu.uniquoindio.redsocial.proxy;
 import co.edu.uniquoindio.redsocial.model.*;
 import co.edu.uniquoindio.redsocial.service.IRedSocial;
 
+import java.time.LocalDate;
+
 public class RedSocialProxy implements IRedSocial {
     private RedSocial redSocial;
     private Persona usuarioAutenticado;
@@ -49,6 +51,21 @@ public class RedSocialProxy implements IRedSocial {
             return redSocial.eliminarVendedor(id);
         }
         System.out.println("Acceso denegado: Solo los administradores pueden eliminar vendedores.");
+        return false;
+    }
+
+    @Override
+    public String cantProductosFechas(LocalDate v1, LocalDate v2) {
+        return "";
+    }
+
+    @Override
+    public Producto encontrarProducto(String id) {
+        return null;
+    }
+
+    @Override
+    public boolean agregarProducto(Producto producto) {
         return false;
     }
 

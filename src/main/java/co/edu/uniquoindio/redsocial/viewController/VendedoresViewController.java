@@ -196,6 +196,7 @@ public class VendedoresViewController {
                 AnchorPane vendedorContent = loader.load();
 
                 VendedorTemplateViewController vendedorController = loader.getController();
+                vendedorController.vendedorAsociado = vendedor;
                 vendedorController.updateView();
 
                 Tab nuevoTab = new Tab(vendedor.getNombre(), vendedorContent);

@@ -10,4 +10,8 @@ public class VendedorTemplateController {
     public boolean agregarProducto(Producto producto) {
         return modelFactory.agregarProducto(producto);
     }
+
+    public String generarIdProducto() {
+        return modelFactory.generarIdProducto();
+    }
 }

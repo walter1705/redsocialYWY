@@ -50,4 +50,12 @@ public class RedSocialConstants {
     public static final String BODY_NO_SE_SELECCIONA_UNO = "Se tiene que seleccionar dos vendedores.";
 
     public static final String BODY_NO_DESPUES = "Selecciona las fechas correctamente";
+    public static final String BODY_PATH_PRODUCTO_NOT_SELECTED = "No se ha selecionado la imagen del producto";
+
+    public static final String TITULO_PRODUCTO_NO_CREADO = "Producto no creado.";
+    public static final String BODY_PRODUCTO_NO_CREADO = "Producto no creado, ya existe.";
+    public static final String TITULO_PRODUCTO_AGREGADO = "Producto agregado.";
+    public static final String BODY_PRODUCTO_AGREGADO = "Producto agregado correcctamente.";
+    public static final String TITULO_SOLO_NUMEROS = "Solo se permite numeros.";
+    public static final String BODY_SOLO_NUMEROS = "Solo se permite numeros en el campo del precio del producto.";
 }

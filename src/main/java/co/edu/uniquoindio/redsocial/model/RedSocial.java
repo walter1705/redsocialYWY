@@ -224,13 +224,27 @@ public class RedSocial implements IRedSocial {
                 .filter(n -> n.getFechaPublicacion().isAfter(v1) && n.getFechaPublicacion().isBefore(v2))
                 .toList().size());
     }
-    //CRUD PRODUCTO
 
+
+    //CRUD PRODUCTO
+    @Override
+    public Producto encontrarProducto(String id) {
+        Producto producto = null;
+        for (Producto producto1 : listaProductos) {
+            if (producto1.getId().equals(id)) {
+                producto = producto1;
+            }
+        }
+
+        return producto;
+    }
 
     @Override
     public boolean agregarProducto(Producto producto) {
-        if () {
-            listaProductos.add(producto);
+        Producto productoEncontrado = encontrarProducto(producto.getId());
+        if (productoEncontrado == null) {
+            agregarRedSocial(producto);
+            return true;
         }
         return false;
     }
