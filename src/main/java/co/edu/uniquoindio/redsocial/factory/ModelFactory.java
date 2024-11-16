@@ -72,4 +72,14 @@ public class ModelFactory implements IModelFactoryService {
     public String generarIdProducto() {
         return Integer.toString(redSocial.getListaProductos().size()+1);
     }
+
+    @Override
+    public List<Producto> getProductos() {
+        return redSocial.getListaProductos();
+    }
+
+    @Override
+    public boolean actualizarProducto(Producto productoSeleccionado, Producto productoField) {
+        return redSocial.actualizarProducto(productoSeleccionado, productoField);
+    }
 }

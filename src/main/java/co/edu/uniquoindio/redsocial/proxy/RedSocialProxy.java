@@ -69,6 +69,11 @@ public class RedSocialProxy implements IRedSocial {
         return false;
     }
 
+    @Override
+    public boolean actualizarProducto(Producto productoSeleccionado, Producto productoField) {
+        return false;
+    }
+
     private boolean esAdministrador() {
         return usuarioAutenticado instanceof Administrador;
     }

@@ -24,4 +24,8 @@ public interface IModelFactoryService {
     boolean agregarProducto(Producto producto);
 
     String generarIdProducto();
+
+    List<Producto> getProductos();
+
+    boolean actualizarProducto(Producto productoSeleccionado, Producto productoField);
 }

@@ -2,6 +2,7 @@ package co.edu.uniquoindio.redsocial.model.builder;
 
 import co.edu.uniquoindio.redsocial.model.EstadoProducto;
 import co.edu.uniquoindio.redsocial.model.Producto;
+import co.edu.uniquoindio.redsocial.model.Publicacion;
 import co.edu.uniquoindio.redsocial.model.Vendedor;
 
 import java.time.LocalDate;
@@ -12,6 +13,12 @@ public class ProductoBuilder {
     protected double precio;
     protected Vendedor vendedorAsociado;
     protected LocalDate fechaPublicacion;
+    protected Publicacion publicacion;
+
+    public ProductoBuilder publicacion(Publicacion publicacion) {
+        this.publicacion = publicacion;
+        return this;
+    }
 
     public ProductoBuilder nombre(String nombre) {
         this.nombre = nombre;
@@ -58,6 +65,6 @@ public class ProductoBuilder {
     }
 
     public Producto build() {
-        return new Producto(nombre, imagen, categoria, estadoProducto, precio, vendedorAsociado, fechaPublicacion, id , descripcion);
+        return new Producto(nombre, imagen, categoria, estadoProducto, precio, vendedorAsociado, fechaPublicacion, id , descripcion, publicacion);
     }
 }

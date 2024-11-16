@@ -21,4 +21,5 @@ public interface IRedSocial {
     boolean agregarProducto(Producto producto);
 
 
+    boolean actualizarProducto(Producto productoSeleccionado, Producto productoField);
 }

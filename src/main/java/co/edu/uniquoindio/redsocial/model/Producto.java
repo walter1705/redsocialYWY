@@ -14,7 +14,7 @@ public class Producto {
 
     public Producto(String nombre, String imagen, String categoria,
                     EstadoProducto estadoProducto, double precio, Vendedor vendedorAsociado,
-                    LocalDate fechaPublicacion, String id, String descripcion) {
+                    LocalDate fechaPublicacion, String id, String descripcion, Publicacion publicacionAsociado) {
         this.vendedorAsociado = vendedorAsociado;
         this.nombre = nombre;
         this.imagen = imagen;
@@ -24,6 +24,7 @@ public class Producto {
         this.fechaPublicacion = fechaPublicacion;
         this.id = id;
         this.descripcion = descripcion;
+        this.publicacionAsociado = publicacionAsociado;
     }
 
     public String getDescripcion() {

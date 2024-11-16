@@ -3,6 +3,8 @@ package co.edu.uniquoindio.redsocial.controller;
 import co.edu.uniquoindio.redsocial.factory.ModelFactory;
 import co.edu.uniquoindio.redsocial.model.Producto;
 
+import java.util.List;
+
 public class VendedorTemplateController {
     ModelFactory modelFactory = ModelFactory.getInstance();
 
@@ -13,5 +15,13 @@ public class VendedorTemplateController {
 
     public String generarIdProducto() {
         return modelFactory.generarIdProducto();
+    }
+
+    public List<Producto> getProductos() {
+        return modelFactory.getProductos();
+    }
+
+    public boolean actualizarProducto(Producto productoSeleccionado, Producto productoField) {
+        return modelFactory.actualizarProducto(productoSeleccionado, productoField);
     }
 }

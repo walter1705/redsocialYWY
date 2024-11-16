@@ -56,6 +56,11 @@ public class RedSocialConstants {
     public static final String BODY_PRODUCTO_NO_CREADO = "Producto no creado, ya existe.";
     public static final String TITULO_PRODUCTO_AGREGADO = "Producto agregado.";
     public static final String BODY_PRODUCTO_AGREGADO = "Producto agregado correcctamente.";
+    public static final String TITULO_PRODUCTO_ACTUALIZADO = "Producto actualizado.";
+    public static final String BODY_PRODUCTO_ACTUALIZADO = "Producto actualizado correcctamente.";
+    public static final String TITULO_PRODUCTO_NO_ACTUALIZADO = "Producto no actualizado.";
+    public static final String BODY_PRODUCTO_NO_ACTUALIZADO = "Error producto no actualizado correcctamente.";
+    public static final String BODY_PRODUCTO_NO_SELECCIONADO = "Debes seleccionar un producto para actualizarlo. ";
     public static final String TITULO_SOLO_NUMEROS = "Solo se permite numeros.";
     public static final String BODY_SOLO_NUMEROS = "Solo se permite numeros en el campo del precio del producto.";
 }

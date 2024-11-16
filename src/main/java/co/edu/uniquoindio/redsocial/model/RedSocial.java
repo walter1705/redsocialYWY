@@ -249,8 +249,21 @@ public class RedSocial implements IRedSocial {
         return false;
     }
 
+    @Override
+    public boolean actualizarProducto(Producto productoSeleccionado, Producto productoField) {
+        Producto productoEncontrado = encontrarProducto(productoSeleccionado.getId());
 
+        if (productoEncontrado != null) {
+            productoEncontrado.setNombre(productoField.getNombre());
+            productoEncontrado.setEstadoProducto(productoField.getEstadoProducto());
+            productoEncontrado.setDescripcion(productoField.getDescripcion());
+            productoEncontrado.setPrecio(productoField.getPrecio());
+            productoEncontrado.setImagen(productoField.getImagen());
+            return true;
+        }
 
+        return false;
+    }
 
 
 
