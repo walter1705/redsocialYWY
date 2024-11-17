@@ -2,7 +2,6 @@ package co.edu.uniquoindio.redsocial.factory;
 
 
 import co.edu.uniquoindio.redsocial.model.*;
-import co.edu.uniquoindio.redsocial.proxy.RedSocialProxy;
 import co.edu.uniquoindio.redsocial.service.IModelFactoryService;
 import co.edu.uniquoindio.redsocial.utils.DataUtil;
 
@@ -13,12 +12,10 @@ public class ModelFactory implements IModelFactoryService {
     private static ModelFactory modelFactory;
     private RedSocial redSocial;
     private Logger logger;
-    private RedSocialProxy proxy;
 
     private ModelFactory() {
         redSocial = DataUtil.inicializarDatosPrueba();;
         logger = new Logger();
-        proxy = new RedSocialProxy(redSocial);
     }
 
     public static ModelFactory getInstance() {
@@ -26,9 +23,7 @@ public class ModelFactory implements IModelFactoryService {
         return modelFactory;
     }
 
-    public void setUsuarioLogeado(Vendedor vendedor) {
-        proxy.setUsuarioAutenticado(vendedor);
-    }
+
 
 
     @Override
@@ -82,4 +77,36 @@ public class ModelFactory implements IModelFactoryService {
     public boolean actualizarProducto(Producto productoSeleccionado, Producto productoField) {
         return redSocial.actualizarProducto(productoSeleccionado, productoField);
     }
+
+    @Override
+    public void addLike(Producto productoSeleccionadoPublicado) {
+        redSocial.addLikeProducto(productoSeleccionadoPublicado);
+    }
+
+    @Override
+    public void removeLike(Producto productoSeleccionadoPublicado) {
+        redSocial.removeLikeProducto(productoSeleccionadoPublicado);
+    }
+
+    @Override
+    public int getLikesProducto(Producto productoSeleccionadoPublicado) {
+        return redSocial.getLikesProducto(productoSeleccionadoPublicado);
+    }
+
+    @Override
+    public List<String> getComentariosProducto(Producto productoSeleccionadoPublicado) {
+        return redSocial.getComentariosProducto(productoSeleccionadoPublicado);
+    }
+
+    @Override
+    public List<Producto> getProductosPublicados() {
+        return redSocial.getProductosPublicados();
+    }
+
+    @Override
+    public void agregarComentarioProducto(Producto productoSeleccionadoPublicado, String text) {
+        redSocial.agregarComentarioProducto(productoSeleccionadoPublicado, text);
+    }
+
+
 }

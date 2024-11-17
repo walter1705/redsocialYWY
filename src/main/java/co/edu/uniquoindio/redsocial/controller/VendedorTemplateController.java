@@ -24,4 +24,30 @@ public class VendedorTemplateController {
     public boolean actualizarProducto(Producto productoSeleccionado, Producto productoField) {
         return modelFactory.actualizarProducto(productoSeleccionado, productoField);
     }
+
+    public void addLike(Producto productoSeleccionadoPublicado) {
+        modelFactory.addLike(productoSeleccionadoPublicado);
+    }
+
+    public void removeLike(Producto productoSeleccionadoPublicado) {
+        modelFactory.removeLike(productoSeleccionadoPublicado);
+    }
+
+
+    public int getLikes(Producto productoSeleccionadoPublicado) {
+        return modelFactory.getLikesProducto(productoSeleccionadoPublicado);
+    }
+
+    public List<String> getComentariosProducto(Producto productoSeleccionadoPublicado) {
+        return modelFactory.getComentariosProducto(productoSeleccionadoPublicado);
+    }
+
+    public List<Producto> getProductosPublicados() {
+        return modelFactory.getProductosPublicados();
+    }
+
+
+    public void agregarComentarioProducto(Producto productoSeleccionadoPublicado, String text) {
+        modelFactory.agregarComentarioProducto(productoSeleccionadoPublicado, text); // TODO Agregar el usuario que lo hace
+    }
 }

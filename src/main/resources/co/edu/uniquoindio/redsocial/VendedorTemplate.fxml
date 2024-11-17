@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
@@ -14,7 +15,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="rootPane" prefHeight="815.0" prefWidth="1037.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquoindio.redsocial.viewController.VendedorTemplateViewController">
    <children>
@@ -77,8 +78,14 @@
                                           <Label fx:id="likeCounter" layoutX="188.0" layoutY="661.0" text="0" />
                                           <ToggleButton fx:id="bttnLike" layoutX="77.0" layoutY="656.0" mnemonicParsing="false" onAction="#onBttnLike" text="Like" />
                                           <Label layoutX="103.0" layoutY="183.0" text="Comentarios" />
-                                          <VBox layoutX="6.0" layoutY="211.0" prefHeight="485.0" prefWidth="261.0" />
                                           <ImageView fx:id="imageViewListProductos" fitHeight="163.0" fitWidth="248.0" layoutX="13.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
+                                          <ListView fx:id="listViewMensajes" layoutX="14.0" layoutY="201.0" prefHeight="297.0" prefWidth="247.0" />
+                                          <TextField fx:id="txtMensajesTo" layoutX="15.0" layoutY="506.0" prefHeight="47.0" prefWidth="186.0" promptText="Comentario">
+                                             <font>
+                                                <Font size="10.0" />
+                                             </font>
+                                          </TextField>
+                                          <Button fx:id="bttnEnviarMensaje" layoutX="210.0" layoutY="510.0" mnemonicParsing="false" onAction="#onEnviarMensaje" prefHeight="39.0" prefWidth="52.0" text="-&gt;" />
                                        </children>
                                     </AnchorPane>
                                 </items>

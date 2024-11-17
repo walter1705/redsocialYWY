@@ -28,4 +28,18 @@ public interface IModelFactoryService {
     List<Producto> getProductos();
 
     boolean actualizarProducto(Producto productoSeleccionado, Producto productoField);
+
+    void addLike(Producto productoSeleccionadoPublicado);
+
+    void removeLike(Producto productoSeleccionadoPublicado);
+
+
+    int getLikesProducto(Producto productoSeleccionadoPublicado);
+
+    List<String> getComentariosProducto(Producto productoSeleccionadoPublicado);
+
+    List<Producto> getProductosPublicados();
+
+
+    void agregarComentarioProducto(Producto productoSeleccionadoPublicado, String text);
 }

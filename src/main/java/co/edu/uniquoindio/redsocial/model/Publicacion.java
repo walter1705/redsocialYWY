@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Publicacion {
     private int like;
-    private List<Comentario> listaComentarios = new ArrayList<>();
+    private List<String> listaComentarios = new ArrayList<>();
     //private int dislike;
 
     public int getLike() {
@@ -16,11 +16,22 @@ public class Publicacion {
         this.like = like;
     }
 
-    public List<Comentario> getListaComentarios() {
+    public List<String> getListaComentarios() {
         return listaComentarios;
     }
 
-    public void setListaComentarios(List<Comentario> listaComentarios) {
+    public void setListaComentarios(List<String> listaComentarios) {
         this.listaComentarios = listaComentarios;
+    }
+
+
+    public void addLike() {
+        this.like++;
+    }
+
+    public void removeLike() {
+        if (this.like > 0) {
+            this.like--;
+        }
     }
 }

@@ -5,6 +5,7 @@ import co.edu.uniquoindio.redsocial.model.Usuario;
 import co.edu.uniquoindio.redsocial.model.Vendedor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 public interface IRedSocial {
     boolean eliminarUsuario(String username);
@@ -22,4 +23,17 @@ public interface IRedSocial {
 
 
     boolean actualizarProducto(Producto productoSeleccionado, Producto productoField);
+
+    void addLikeProducto(Producto productoSeleccionadoPublicado);
+
+    void removeLikeProducto(Producto productoSeleccionadoPublicado);
+
+    int getLikesProducto(Producto productoSeleccionadoPublicado);
+
+    List<String> getComentariosProducto(Producto productoSeleccionadoPublicado);
+
+    List<Producto> getProductosPublicados();
+
+    void agregarComentarioProducto(Producto productoSeleccionadoPublicado, String text);
+
 }

@@ -35,6 +35,8 @@ public class VendedorTemplateViewController {
     public Vendedor vendedorAsociado;
     Producto productoSeleccionado, productoSeleccionadoPublicado;
     private String pathUsuarioImagenProducto;
+    ObservableList<String> listaMensajes = FXCollections.observableArrayList();
+
 
     @FXML
     private AnchorPane rootPane;
@@ -47,6 +49,9 @@ public class VendedorTemplateViewController {
 
     @FXML
     private ImageView ImageViewProductCrud;
+
+    @FXML
+    private Button bttnEnviarMensaje;
 
     @FXML
     private Button bttnActualizarProducto;
@@ -71,6 +76,9 @@ public class VendedorTemplateViewController {
 
     @FXML
     private Label likeCounter;
+
+    @FXML
+    private ListView<String> listViewMensajes;
 
     @FXML
     private TableView<Vendedor> tableViewListaContactos;
@@ -123,6 +131,10 @@ public class VendedorTemplateViewController {
 
     @FXML
     private TextField txtPrecioProducto;
+
+    @FXML
+    private TextField txtMensajesTo;
+
     //CRUD
     @FXML
     void onImagenProductoPath(ActionEvent event) {
@@ -186,22 +198,19 @@ public class VendedorTemplateViewController {
         }
     }
 
+    @FXML
+    void onEliminarProducto(ActionEvent event) {
+
+    }
+
     private void actualizarProductosMuro() {
         listaProductos.forEach(producto -> {
             if (producto.getEstadoProducto().equals(EstadoProducto.PUBLICADO)) listaProductosPublicados.add(producto);
+            else listaProductosPublicados.remove(producto);
         });
     }
 
-    private void limpiarCampos() {
-        txtDescripcionProducto.setText("");
-        txtPrecioProducto.setText("");
-        txtNombreProducto.setText("");
-        txtCategoriaProducto.setText("");
-        ImageViewProductCrud.setImage(null);
-        pathUsuarioImagenProducto = null;
-        comboBoxEstado.setValue(null);
 
-    }
 
     private void refrescarTablas() {
         tableViewListaContactos.refresh();
@@ -221,54 +230,36 @@ public class VendedorTemplateViewController {
                 && pathUsuarioImagenProducto!=null;
     }
 
-    private boolean esDouble(String text) {
-        String patron = "^-?\\d+(\\.\\d+)?$";
-        if (!text.matches(patron)) {
-            ViewControllerUtil.mostrarMensaje(TITULO_SOLO_NUMEROS, HEADER, BODY_SOLO_NUMEROS, Alert.AlertType.WARNING);
-            return false;
-        }
 
-        return true;
-    }
-
-    private Producto crearProducto() {
-        return Producto.builder()
-                .descripcion(txtDescripcionProducto.getText())
-                .id(generarIdProducto())
-                .estadoProducto(comboBoxEstado.getValue())
-                .fechaPublicacion(LocalDate.now())
-                .categoria(txtCategoriaProducto.getText())
-                .nombre(txtNombreProducto.getText())
-                .precio(Double.parseDouble(txtPrecioProducto.getText()))
-                .imagen(pathUsuarioImagenProducto)
-                .vendedorAsociado(vendedorAsociado)
-                .publicacion(crearPublicacion())
-                .build();
-    }
-
-    private Publicacion crearPublicacion() {
-        return new Publicacion();
-    }
-
-    private String generarIdProducto() {
-        return vendedorTemplateController.generarIdProducto();
-    }
-
-    @FXML
-    void onEliminarProducto(ActionEvent event) {
-
-    }
 
     //interacciones red social
     @FXML
     void onBttnLike(ActionEvent event) {
+        if (productoSeleccionado != null) {
+            if (bttnLike.isSelected()) {
+                vendedorTemplateController.addLike(productoSeleccionadoPublicado);
+            } else {
+                vendedorTemplateController.removeLike(productoSeleccionadoPublicado);
+            }
+            likeCounter.setText(String.valueOf(vendedorTemplateController.getLikes(productoSeleccionadoPublicado)));
+        } else {
+            ViewControllerUtil.mostrarMensaje(ERROR, HEADER,BODY_SELECCIONA_PRODUCTO_ANTES_QUE_LIKE, Alert.AlertType.WARNING);
+        }
+    }
 
+    @FXML
+    void onEnviarMensaje(ActionEvent event) {
+        if (txtMensajesTo.getText() != null) {
+            vendedorTemplateController.agregarComentarioProducto(productoSeleccionadoPublicado, txtMensajesTo.getText());
+            listaMensajes.add(txtMensajesTo.getText());
+        } else {
+            ViewControllerUtil.mostrarMensaje(TITULO_MENSAJE_VACIO, HEADER,BODY_MENSAJE_VACIO, Alert.AlertType.WARNING);
+        }
     }
-    public AnchorPane getView() {
-        return rootPane;
-    }
+    //TODO TABLA DE MURO ES GLOBAL <----------------------------------------------------------------------------------
 
     public void updateView() {
+        //TODO
     }
 
 
@@ -277,6 +268,7 @@ public class VendedorTemplateViewController {
         comboBoxEstado.getItems().addAll(EstadoProducto.values());
         tableViewProductosCRUD.setItems(listaProductos);
         tableViewPublicados.setItems(listaProductosPublicados);
+        listViewMensajes.setItems(listaMensajes);
         initView();
     }
 
@@ -294,6 +286,22 @@ public class VendedorTemplateViewController {
                 mostrarInformacionProducto(productoSeleccionado);
             }
         });
+
+        tableViewPublicados.getSelectionModel().selectedItemProperty().addListener((obs, oldSelection, newSelection) -> {
+            productoSeleccionadoPublicado = newSelection;
+            if (productoSeleccionadoPublicado != null) {
+                mostrarInformacionProductoMuro(productoSeleccionadoPublicado);
+            }
+        });
+    }
+    //MURO
+    private void mostrarInformacionProductoMuro(Producto productoSeleccionadoPublicado) {
+        if (productoSeleccionadoPublicado != null) {
+            likeCounter.setText(String.valueOf(vendedorTemplateController.getLikes(productoSeleccionadoPublicado)));
+            String validPath = "file:" + productoSeleccionadoPublicado.getImagen().replace("\\", "/");
+            imageViewListProductos.setImage(new Image(validPath));
+            listaMensajes.setAll(vendedorTemplateController.getComentariosProducto(productoSeleccionadoPublicado));
+        }
     }
 
     private void mostrarInformacionProducto(Producto producto) {
@@ -327,10 +335,56 @@ public class VendedorTemplateViewController {
                 +" "+cellData.getValue().getApellido()));
     }
 
+    private void limpiarCampos() {
+        txtDescripcionProducto.setText("");
+        txtPrecioProducto.setText("");
+        txtNombreProducto.setText("");
+        txtCategoriaProducto.setText("");
+        ImageViewProductCrud.setImage(null);
+        pathUsuarioImagenProducto = null;
+        comboBoxEstado.setValue(null);
+    }
+
+    private Producto crearProducto() {
+        return Producto.builder()
+                .descripcion(txtDescripcionProducto.getText())
+                .id(generarIdProducto())
+                .estadoProducto(comboBoxEstado.getValue())
+                .fechaPublicacion(LocalDate.now())
+                .categoria(txtCategoriaProducto.getText())
+                .nombre(txtNombreProducto.getText())
+                .precio(Double.parseDouble(txtPrecioProducto.getText()))
+                .imagen(pathUsuarioImagenProducto)
+                .vendedorAsociado(vendedorAsociado)
+                .publicacion(crearPublicacion())
+                .build();
+    }
+
+    private boolean esDouble(String text) {
+        String patron = "^-?\\d+(\\.\\d+)?$";
+        if (!text.matches(patron)) {
+            ViewControllerUtil.mostrarMensaje(TITULO_SOLO_NUMEROS, HEADER, BODY_SOLO_NUMEROS, Alert.AlertType.WARNING);
+            return false;
+        }
+
+        return true;
+    }
+
     private void obtenerProductos() {
-        listaProductos.addAll(vendedorTemplateController.getProductos());
+        listaProductos.addAll(vendedorTemplateController.getProductos()); //TODO segun el vendedor que inicie sesion
+        listaProductosPublicados.addAll(vendedorTemplateController.getProductosPublicados());
         actualizarProductosMuro();
     }
 
+    public AnchorPane getView() {
+        return rootPane;
+    }
 
+    private Publicacion crearPublicacion() {
+        return new Publicacion();
+    }
+
+    private String generarIdProducto() {
+        return vendedorTemplateController.generarIdProducto();
+    }
 }

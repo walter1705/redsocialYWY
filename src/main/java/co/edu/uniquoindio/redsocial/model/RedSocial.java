@@ -265,7 +265,37 @@ public class RedSocial implements IRedSocial {
         return false;
     }
 
+    @Override
+    public void addLikeProducto(Producto productoSeleccionadoPublicado) {
+        Producto productoEncontrado = encontrarProducto(productoSeleccionadoPublicado.getId());
+        productoEncontrado.getPublicacionAsociado().addLike();
+    }
 
+    @Override
+    public void removeLikeProducto(Producto productoSeleccionadoPublicado) {
+        Producto productoEncontrado = encontrarProducto(productoSeleccionadoPublicado.getId());
+        productoEncontrado.getPublicacionAsociado().removeLike();
+    }
+
+    @Override
+    public int getLikesProducto(Producto productoSeleccionadoPublicado) {
+        return encontrarProducto(productoSeleccionadoPublicado.getId()).getPublicacionAsociado().getLike();
+    }
+
+    @Override
+    public List<String> getComentariosProducto(Producto productoSeleccionadoPublicado) {
+        return encontrarProducto(productoSeleccionadoPublicado.getId()).getPublicacionAsociado().getListaComentarios();
+    }
+
+    @Override
+    public List<Producto> getProductosPublicados() {
+        return listaProductos.stream().filter(n -> n.getEstadoProducto().equals(EstadoProducto.PUBLICADO)).toList();
+    }
+
+    @Override
+    public void agregarComentarioProducto(Producto productoSeleccionadoPublicado, String text) {
+        encontrarProducto(productoSeleccionadoPublicado.getId()).getPublicacionAsociado().getListaComentarios().add(text);
+    }
 
 
     public String getNombre() {

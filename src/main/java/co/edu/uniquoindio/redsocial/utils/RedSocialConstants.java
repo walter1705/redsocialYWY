@@ -63,4 +63,9 @@ public class RedSocialConstants {
     public static final String BODY_PRODUCTO_NO_SELECCIONADO = "Debes seleccionar un producto para actualizarlo. ";
     public static final String TITULO_SOLO_NUMEROS = "Solo se permite numeros.";
     public static final String BODY_SOLO_NUMEROS = "Solo se permite numeros en el campo del precio del producto.";
+    public static final String ERROR = "Error. ";
+    public static final String BODY_SELECCIONA_PRODUCTO_ANTES_QUE_LIKE = "Por favor selecciona un producto antes de dar like.";
+    public static final String TITULO_MENSAJE_VACIO = "Mensaje vacio.";
+    public static final String BODY_MENSAJE_VACIO = "No se puede enviar un mensaje vacío.";
+
 }
