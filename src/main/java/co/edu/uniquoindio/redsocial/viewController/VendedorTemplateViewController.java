@@ -72,6 +72,9 @@ public class VendedorTemplateViewController {
     private Button bttnImagenProductoCrud;
 
     @FXML
+    private Button bttnEnviarMensajePriv;
+
+    @FXML
     private ToggleButton bttnLike;
 
     @FXML
@@ -85,6 +88,10 @@ public class VendedorTemplateViewController {
 
     @FXML
     private ListView<String> listViewMensajes;
+
+    @FXML
+    private ListView<?> listViewMensajesContactos;
+
 
     @FXML
     private TableView<Vendedor> tableViewListaContactos;
@@ -141,6 +148,9 @@ public class VendedorTemplateViewController {
     @FXML
     private TextField txtMensajesTo;
 
+    @FXML
+    private TextArea txtMensajesContactos;
+
     //CRUD
     @FXML
     void onImagenProductoPath(ActionEvent event) {
@@ -172,7 +182,7 @@ public class VendedorTemplateViewController {
                 boolean productoActualizado = vendedorTemplateController.actualizarProducto(productoSeleccionado, productoField);
                 if (productoActualizado) {
                     limpiarCampos();
-                    actualizarProductosMuro();
+                    redsocialAppViewController.actualizarProductosMuro(productoField);
                     refrescarTablas();
                     ViewControllerUtil.mostrarMensaje(TITULO_PRODUCTO_ACTUALIZADO, HEADER, BODY_PRODUCTO_ACTUALIZADO, Alert.AlertType.INFORMATION);
                 } else {
@@ -193,7 +203,7 @@ public class VendedorTemplateViewController {
             boolean productoAgregado = vendedorTemplateController.agregarProducto(producto, vendedorAsociado);
             if (productoAgregado) {
                 listaProductos.add(producto);
-                actualizarProductosMuro();
+                redsocialAppViewController.actualizarProductosMuro(producto);
                 limpiarCampos();
                 refrescarTablas();
                 ViewControllerUtil.mostrarMensaje(TITULO_PRODUCTO_AGREGADO, HEADER, BODY_PRODUCTO_AGREGADO, Alert.AlertType.INFORMATION);
@@ -208,16 +218,7 @@ public class VendedorTemplateViewController {
 
     }
 
-    private void actualizarProductosMuro() {
-        listaProductos.forEach(producto -> {
-            if (producto.getEstadoProducto() == EstadoProducto.PUBLICADO
-                    && !RedsocialAppViewController.getProductosPublicados().contains(producto)) {
-               RedsocialAppViewController.getProductosPublicados().add(producto);
-            } else if (producto.getEstadoProducto() != EstadoProducto.PUBLICADO) {
-                RedsocialAppViewController.getProductosPublicados().remove(producto);
-            }
-        });
-    }
+
 
 
 
@@ -284,11 +285,16 @@ public class VendedorTemplateViewController {
             ViewControllerUtil.mostrarMensaje(TITULO_CAMPOS_INCOMPLETOS, HEADER, BODY_SELECCIONAR_PRODUCTO, Alert.AlertType.WARNING);
         }
     }
-    //TODO TABLA DE MURO ES GLOBAL <----------------------------------------------------------------------------------
+
+    @FXML
+    void onEnviarMensajePriv(ActionEvent event) {
+        //TODO
+    }
+
+
 
     public void updateView() {
         listaProductos.addAll(vendedorTemplateController.getProductosVendedor(vendedorAsociado));
-        actualizarProductosMuro();
     }
 
 
@@ -305,7 +311,6 @@ public class VendedorTemplateViewController {
         initDataBinding();
         obtenerProductos();
         listenerSelection();
-        actualizarProductosMuro();
     }
 
     private void listenerSelection() {

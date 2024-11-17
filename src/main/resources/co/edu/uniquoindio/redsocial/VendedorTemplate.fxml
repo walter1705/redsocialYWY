@@ -10,6 +10,7 @@
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToggleButton?>
 <?import javafx.scene.image.Image?>
@@ -27,11 +28,7 @@
                      <children>
                         <SplitPane dividerPositions="0.4632731958762886" prefHeight="789.0" prefWidth="1037.0">
                           <items>
-                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-                                 <children>
-                                    <Label layoutX="210.0" layoutY="14.0" text="Mensajes" />
-                                 </children>
-                              </AnchorPane>
+                            <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                                  <children>
                                     <Label layoutX="249.0" layoutY="14.0" text="Contactos" />
@@ -40,6 +37,14 @@
                                         <TableColumn fx:id="tcViewListaContactos" prefWidth="524.6666564941406" text="Nombre" />
                                       </columns>
                                     </TableView>
+                                    <ListView fx:id="listViewMensajesContactos" layoutX="13.0" layoutY="432.0" prefHeight="200.0" prefWidth="524.0" />
+                                    <Label layoutX="251.0" layoutY="393.0" text="Mensajes" />
+                                    <TextArea fx:id="txtMensajesContactos" layoutX="14.0" layoutY="643.0" prefHeight="42.0" prefWidth="438.0">
+                                       <font>
+                                          <Font size="10.0" />
+                                       </font>
+                                    </TextArea>
+                                    <Button fx:id="bttnEnviarMensajePriv" layoutX="472.0" layoutY="651.0" mnemonicParsing="false" onAction="#onEnviarMensajePriv" text="Enviar" />
                                  </children>
                               </AnchorPane>
                           </items>

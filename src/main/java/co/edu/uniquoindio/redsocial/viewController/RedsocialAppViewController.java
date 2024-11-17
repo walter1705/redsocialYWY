@@ -2,6 +2,7 @@ package co.edu.uniquoindio.redsocial.viewController;
 
 import co.edu.uniquoindio.redsocial.StartRedSocial;
 import co.edu.uniquoindio.redsocial.controller.RedsocialAppController;
+import co.edu.uniquoindio.redsocial.model.EstadoProducto;
 import co.edu.uniquoindio.redsocial.model.Producto;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -30,10 +31,23 @@ public class RedsocialAppViewController {
 
     public RedsocialAppViewController() {
         controller = this;
-        productosPublicados.addAll(redsocialAppController.getProductoPublicados());
+        productosPublicados.setAll(redsocialAppController.getProductoPublicados());
     }
 
 
+    public void actualizarProductosMuro(Producto producto1) {
+        if (producto1.getEstadoProducto().equals(EstadoProducto.PUBLICADO)) {
+            productosPublicados.add(producto1);
+        }
+        productosPublicados.forEach(producto -> {
+            if (producto.getEstadoProducto() == EstadoProducto.PUBLICADO
+                    && !RedsocialAppViewController.getProductosPublicados().contains(producto)) {
+                RedsocialAppViewController.getProductosPublicados().add(producto);
+            } else if (producto.getEstadoProducto() != EstadoProducto.PUBLICADO) {
+                RedsocialAppViewController.getProductosPublicados().remove(producto);
+            }
+        });
+    }
 
     public static RedsocialAppViewController getController() {
         if (controller == null) {

@@ -45,6 +45,8 @@ public class VendedoresViewController {
         return vendedoresViewController;
     }
 
+
+
     @FXML
     private ResourceBundle resources;
 
@@ -327,6 +329,7 @@ public class VendedoresViewController {
                 break;
             }
         }
+        tabManagerVendedorTemplate.eliminarTab(vendedor);
 
         if (tabToRemove != null) {
             redSocialAppViewController.mainTab.getTabPane().getTabs().remove(tabToRemove);

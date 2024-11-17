@@ -21,6 +21,10 @@ public class TabManagerVendedorTemplate {
         return instance;
     }
 
+    public void eliminarTab(Vendedor vendedor) {
+        tabs.remove(vendedor);
+    }
+
     public void agregarTab(Vendedor vendedor, Tab tab) {
         tabs.put(vendedor, tab);
     }
