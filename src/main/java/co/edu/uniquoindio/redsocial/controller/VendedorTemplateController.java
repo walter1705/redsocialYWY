@@ -2,6 +2,7 @@ package co.edu.uniquoindio.redsocial.controller;
 
 import co.edu.uniquoindio.redsocial.factory.ModelFactory;
 import co.edu.uniquoindio.redsocial.model.Producto;
+import co.edu.uniquoindio.redsocial.model.Vendedor;
 
 import java.util.List;
 
@@ -9,8 +10,8 @@ public class VendedorTemplateController {
     ModelFactory modelFactory = ModelFactory.getInstance();
 
 
-    public boolean agregarProducto(Producto producto) {
-        return modelFactory.agregarProducto(producto);
+    public boolean agregarProducto(Producto producto, Vendedor vendedor) {
+        return modelFactory.agregarProducto(producto, vendedor);
     }
 
     public String generarIdProducto() {
@@ -25,12 +26,12 @@ public class VendedorTemplateController {
         return modelFactory.actualizarProducto(productoSeleccionado, productoField);
     }
 
-    public void addLike(Producto productoSeleccionadoPublicado) {
-        modelFactory.addLike(productoSeleccionadoPublicado);
+    public void addLike(Producto productoSeleccionadoPublicado, Vendedor vendedor) {
+        modelFactory.addLike(productoSeleccionadoPublicado, vendedor);
     }
 
-    public void removeLike(Producto productoSeleccionadoPublicado) {
-        modelFactory.removeLike(productoSeleccionadoPublicado);
+    public void removeLike(Producto productoSeleccionadoPublicado, Vendedor vendedor) {
+        modelFactory.removeLike(productoSeleccionadoPublicado, vendedor);
     }
 
 
@@ -49,5 +50,13 @@ public class VendedorTemplateController {
 
     public void agregarComentarioProducto(Producto productoSeleccionadoPublicado, String text) {
         modelFactory.agregarComentarioProducto(productoSeleccionadoPublicado, text); // TODO Agregar el usuario que lo hace
+    }
+
+    public boolean usuarioDioLike(Producto productoSeleccionadoPublicado, Vendedor vendedorAsociado) {
+        return modelFactory.usuarioDioLike(productoSeleccionadoPublicado, vendedorAsociado);
+    }
+
+    public List<Producto> getProductosVendedor(Vendedor vendedor) {
+        return modelFactory.getProductosVendedor(vendedor);
     }
 }

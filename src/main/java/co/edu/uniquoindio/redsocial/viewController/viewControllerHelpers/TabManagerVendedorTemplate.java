@@ -1,6 +1,7 @@
 package co.edu.uniquoindio.redsocial.viewController.viewControllerHelpers;
 
 import co.edu.uniquoindio.redsocial.model.Vendedor;
+import co.edu.uniquoindio.redsocial.viewController.VendedorTemplateViewController;
 import javafx.scene.control.Tab;
 
 import java.util.Collection;
@@ -34,5 +35,16 @@ public class TabManagerVendedorTemplate {
 
     public boolean hasTab(Vendedor vendedor) {
         return tabs.containsKey(vendedor);
+    }
+
+    public void actualizarTab(Vendedor vendedorseleccionado, Vendedor vendedor) {
+        Tab tab = getTab(vendedorseleccionado);
+        if (tab != null) {
+            tabs.remove(vendedorseleccionado, tab);
+            tabs.put(vendedor, tab);
+            tab.setText(vendedor.getUsuarioAsociado().getUsername());
+        } else {
+            System.out.println("No se puede agregar el tab");
+        }
     }
 }

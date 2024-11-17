@@ -196,10 +196,10 @@ public class VendedoresViewController {
                 AnchorPane vendedorContent = loader.load();
 
                 VendedorTemplateViewController vendedorController = loader.getController();
-                vendedorController.vendedorAsociado = vendedor;
+                vendedorController.setVendedorAsociado(vendedor);
                 vendedorController.updateView();
 
-                Tab nuevoTab = new Tab(vendedor.getNombre(), vendedorContent);
+                Tab nuevoTab = new Tab(vendedor.getUsuarioAsociado().getUsername(), vendedorContent);
                 redSocialAppViewController.mainTab.getTabPane().getTabs().add(nuevoTab);
 
                 tabManagerVendedorTemplate.agregarTab(vendedor, nuevoTab);
@@ -217,7 +217,7 @@ public class VendedoresViewController {
             boolean vendedorActualizado = vendedoresController.actualizarVendedor(vendedorSelecionado.getId(),
                     vendedorSelecionado.getUsuarioAsociado().getUsername() ,vendedor);
             if (vendedorActualizado) {
-                actualizarVendedorListaObserver(vendedor);
+                tabManagerVendedorTemplate.actualizarTab(vendedorSelecionado, vendedor);
                 limpiarCampos();
                 refrescarTabla();
                 mostrarMensaje(TITULO_USUVENDEDOR_ACTUALIZADO, HEADER, BODY_USUVENDEDOR_ACTUALIZADO, Alert.AlertType.INFORMATION);
@@ -229,19 +229,6 @@ public class VendedoresViewController {
             mostrarMensaje(TITULO_CAMPOS_NO_SELECIONADO, HEADER, BODY_CAMPOS_NO_SELECIONADO, Alert.AlertType.INFORMATION);
         }} else {
             mostrarMensaje(TITULOVENDEDOR_NO_SELECCIONADO, HEADER, BODYVENDEDOR_NO_SELECCIONADO, Alert.AlertType.ERROR);
-        }
-    }
-
-    private void actualizarVendedorListaObserver(Vendedor vendedor) {
-        for (int i = 0; i < listaVendedores.size(); i++) {
-            if (listaVendedores.get(i).getId().equals(vendedorSelecionado.getId()) ||
-                    listaVendedores.get(i).getUsuarioAsociado().getUsername()
-                            .equals(vendedorSelecionado.getUsuarioAsociado().getUsername()) &&
-                            !listaVendedores.get(i).getId().isBlank() &&
-                            !listaVendedores.get(i).getUsuarioAsociado().getUsername().isBlank()) {
-                listaVendedores.set(i, vendedor);
-                break;
-            }
         }
     }
 
@@ -269,7 +256,7 @@ public class VendedoresViewController {
 
     private Vendedor crearVendedor() {
         Vendedor vendedor = new VendedorBuilder()
-                .nombre(txtNombreUsuario.getText())
+                .nombre(txtNombreVendedor.getText())
                 .apellido(txtApellidoVendedor.getText())
                 .email(txtEmailVendedor.getText())
                 .id(txtIdVendedor.getText())

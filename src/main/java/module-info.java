@@ -7,6 +7,7 @@ module co.edu.uniquoindio.redsocial.redsocial {
     requires pdfua;
     requires layout;
     requires kernel;
+    requires org.bouncycastle.provider;
 
     opens co.edu.uniquoindio.redsocial to javafx.fxml;
     exports co.edu.uniquoindio.redsocial;

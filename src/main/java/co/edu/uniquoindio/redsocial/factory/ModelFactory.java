@@ -59,8 +59,8 @@ public class ModelFactory implements IModelFactoryService {
     }
 
     @Override
-    public boolean agregarProducto(Producto producto) {
-        return redSocial.agregarProducto(producto);
+    public boolean agregarProducto(Producto producto, Vendedor vendedor) {
+        return redSocial.agregarProducto(producto, vendedor);
     }
 
     @Override
@@ -79,13 +79,13 @@ public class ModelFactory implements IModelFactoryService {
     }
 
     @Override
-    public void addLike(Producto productoSeleccionadoPublicado) {
-        redSocial.addLikeProducto(productoSeleccionadoPublicado);
+    public boolean addLike(Producto productoSeleccionadoPublicado, Vendedor vendedor) {
+        return redSocial.addLikeProducto(productoSeleccionadoPublicado, vendedor);
     }
 
     @Override
-    public void removeLike(Producto productoSeleccionadoPublicado) {
-        redSocial.removeLikeProducto(productoSeleccionadoPublicado);
+    public boolean  removeLike(Producto productoSeleccionadoPublicado, Vendedor vendedor) {
+        return redSocial.removeLikeProducto(productoSeleccionadoPublicado, vendedor);
     }
 
     @Override
@@ -106,6 +106,16 @@ public class ModelFactory implements IModelFactoryService {
     @Override
     public void agregarComentarioProducto(Producto productoSeleccionadoPublicado, String text) {
         redSocial.agregarComentarioProducto(productoSeleccionadoPublicado, text);
+    }
+
+    @Override
+    public boolean usuarioDioLike(Producto productoSeleccionadoPublicado, Vendedor vendedorAsociado) {
+        return redSocial.usuarioDioLike(productoSeleccionadoPublicado, vendedorAsociado);
+    }
+
+    @Override
+    public List<Producto> getProductosVendedor(Vendedor vendedor) {
+        return redSocial.getProductosVendedor(vendedor);
     }
 
 

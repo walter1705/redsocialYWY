@@ -21,7 +21,7 @@ public interface IModelFactoryService {
 
     String cantProductosFechas(LocalDate d1, LocalDate d2);
 
-    boolean agregarProducto(Producto producto);
+    boolean agregarProducto(Producto producto, Vendedor vendedor);
 
     String generarIdProducto();
 
@@ -29,9 +29,9 @@ public interface IModelFactoryService {
 
     boolean actualizarProducto(Producto productoSeleccionado, Producto productoField);
 
-    void addLike(Producto productoSeleccionadoPublicado);
+    boolean addLike(Producto productoSeleccionadoPublicado, Vendedor vendedor);
 
-    void removeLike(Producto productoSeleccionadoPublicado);
+    boolean removeLike(Producto productoSeleccionadoPublicado, Vendedor vendedor);
 
 
     int getLikesProducto(Producto productoSeleccionadoPublicado);
@@ -42,4 +42,8 @@ public interface IModelFactoryService {
 
 
     void agregarComentarioProducto(Producto productoSeleccionadoPublicado, String text);
+
+    boolean usuarioDioLike(Producto productoSeleccionadoPublicado, Vendedor vendedorAsociado);
+
+    List<Producto> getProductosVendedor(Vendedor vendedor);
 }

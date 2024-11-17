@@ -2,9 +2,12 @@ package co.edu.uniquoindio.redsocial.model;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class Publicacion {
     private int like;
+    private List<Vendedor> likeRegistrado = new ArrayList<>();
     private List<String> listaComentarios = new ArrayList<>();
     //private int dislike;
 
@@ -25,13 +28,31 @@ public class Publicacion {
     }
 
 
-    public void addLike() {
+    public boolean addLike(Vendedor vendedor) {
+        for (Vendedor value : likeRegistrado) {
+            if (Objects.equals(value.getId(), vendedor.getId())) {
+                return false;
+            }
+        }
         this.like++;
+        likeRegistrado.add(vendedor);
+        return true;
+
     }
 
-    public void removeLike() {
-        if (this.like > 0) {
-            this.like--;
+    public boolean removeLike(Vendedor vendedor) {
+        for (Vendedor value : likeRegistrado) {
+            if (Objects.equals(value.getId(), vendedor.getId())) {
+                likeRegistrado.remove(value);
+                this.like--;
+                return true;
+            }
         }
+
+        return false;
+    }
+
+    public boolean dioLike(Vendedor vendedorAsociado) {
+        return likeRegistrado.contains(vendedorAsociado);
     }
 }

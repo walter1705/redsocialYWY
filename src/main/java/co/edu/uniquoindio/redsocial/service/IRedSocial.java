@@ -19,14 +19,14 @@ public interface IRedSocial {
     String cantProductosFechas(LocalDate v1, LocalDate v2);
     //CRUD PRODUCTO
     Producto encontrarProducto(String id);
-    boolean agregarProducto(Producto producto);
+    boolean agregarProducto(Producto producto, Vendedor vendedor);
 
 
     boolean actualizarProducto(Producto productoSeleccionado, Producto productoField);
 
-    void addLikeProducto(Producto productoSeleccionadoPublicado);
+    boolean addLikeProducto(Producto productoSeleccionadoPublicado, Vendedor vendedor);
 
-    void removeLikeProducto(Producto productoSeleccionadoPublicado);
+    boolean removeLikeProducto(Producto productoSeleccionadoPublicado, Vendedor vendedor);
 
     int getLikesProducto(Producto productoSeleccionadoPublicado);
 
@@ -36,4 +36,7 @@ public interface IRedSocial {
 
     void agregarComentarioProducto(Producto productoSeleccionadoPublicado, String text);
 
+    boolean usuarioDioLike(Producto productoSeleccionadoPublicado, Vendedor vendedorAsociado);
+
+    List<Producto> getProductosVendedor(Vendedor vendedor);
 }

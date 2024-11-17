@@ -240,9 +240,10 @@ public class RedSocial implements IRedSocial {
     }
 
     @Override
-    public boolean agregarProducto(Producto producto) {
+    public boolean agregarProducto(Producto producto, Vendedor vendedor) {
         Producto productoEncontrado = encontrarProducto(producto.getId());
         if (productoEncontrado == null) {
+            vendedor.agregarProducto(producto);
             agregarRedSocial(producto);
             return true;
         }
@@ -266,15 +267,15 @@ public class RedSocial implements IRedSocial {
     }
 
     @Override
-    public void addLikeProducto(Producto productoSeleccionadoPublicado) {
+    public boolean addLikeProducto(Producto productoSeleccionadoPublicado, Vendedor vendedor) {
         Producto productoEncontrado = encontrarProducto(productoSeleccionadoPublicado.getId());
-        productoEncontrado.getPublicacionAsociado().addLike();
+        return productoEncontrado.getPublicacionAsociado().addLike(vendedor);
     }
 
     @Override
-    public void removeLikeProducto(Producto productoSeleccionadoPublicado) {
+    public boolean removeLikeProducto(Producto productoSeleccionadoPublicado, Vendedor vendedor) {
         Producto productoEncontrado = encontrarProducto(productoSeleccionadoPublicado.getId());
-        productoEncontrado.getPublicacionAsociado().removeLike();
+        return productoEncontrado.getPublicacionAsociado().removeLike(vendedor);
     }
 
     @Override
@@ -297,6 +298,15 @@ public class RedSocial implements IRedSocial {
         encontrarProducto(productoSeleccionadoPublicado.getId()).getPublicacionAsociado().getListaComentarios().add(text);
     }
 
+    @Override
+    public boolean usuarioDioLike(Producto productoSeleccionadoPublicado, Vendedor vendedorAsociado) {
+        return encontrarProducto(productoSeleccionadoPublicado.getId()).getPublicacionAsociado().dioLike(vendedorAsociado);
+    }
+
+    @Override
+    public List<Producto> getProductosVendedor(Vendedor vendedor) {
+        return obtenerVendedor(vendedor.getId()).getProductosAsociados();
+    }
 
     public String getNombre() {
         return nombre;

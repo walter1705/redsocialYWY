@@ -1,6 +1,10 @@
 package co.edu.uniquoindio.redsocial.viewController;
 
 import co.edu.uniquoindio.redsocial.StartRedSocial;
+import co.edu.uniquoindio.redsocial.controller.RedsocialAppController;
+import co.edu.uniquoindio.redsocial.model.Producto;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.scene.control.TabPane;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -16,10 +20,20 @@ import java.io.IOException;
 import java.util.Objects;
 
 public class RedsocialAppViewController {
+    RedsocialAppController redsocialAppController = new RedsocialAppController();
     private static RedsocialAppViewController controller;
+    private static final ObservableList<Producto> productosPublicados = FXCollections.observableArrayList();
+
+    public static ObservableList<Producto> getProductosPublicados() {
+        return productosPublicados;
+    }
+
     public RedsocialAppViewController() {
         controller = this;
+        productosPublicados.addAll(redsocialAppController.getProductoPublicados());
     }
+
+
 
     public static RedsocialAppViewController getController() {
         if (controller == null) {

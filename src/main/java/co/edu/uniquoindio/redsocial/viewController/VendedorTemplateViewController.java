@@ -29,14 +29,20 @@ import javax.swing.text.View;
 import static co.edu.uniquoindio.redsocial.utils.RedSocialConstants.*;
 
 public class VendedorTemplateViewController {
+    RedsocialAppViewController redsocialAppViewController = RedsocialAppViewController.getController();
     VendedorTemplateController vendedorTemplateController = new VendedorTemplateController();
-    ObservableList<Producto> listaProductos = FXCollections.observableArrayList();
-    ObservableList<Producto> listaProductosPublicados = FXCollections.observableArrayList();
     public Vendedor vendedorAsociado;
+    ObservableList<Producto> listaProductos = FXCollections.observableArrayList();
+    //ObservableList<Producto> listaProductosPublicados = FXCollections.observableArrayList();
+
     Producto productoSeleccionado, productoSeleccionadoPublicado;
     private String pathUsuarioImagenProducto;
     ObservableList<String> listaMensajes = FXCollections.observableArrayList();
 
+
+    public void setVendedorAsociado(Vendedor vendedorAsociado) {
+        this.vendedorAsociado = vendedorAsociado;
+    }
 
     @FXML
     private AnchorPane rootPane;
@@ -165,7 +171,6 @@ public class VendedorTemplateViewController {
                 Producto productoField = crearProducto();
                 boolean productoActualizado = vendedorTemplateController.actualizarProducto(productoSeleccionado, productoField);
                 if (productoActualizado) {
-                    // TO DOactualizarProductoListObser TODO HACER ACTUALIZAR AQUI Y ACTUALIZAR TAB EN VENDEDORES
                     limpiarCampos();
                     actualizarProductosMuro();
                     refrescarTablas();
@@ -185,7 +190,7 @@ public class VendedorTemplateViewController {
     void onCrearProducto(ActionEvent event) {
         if (datosTxtProducto()) {
             Producto producto = crearProducto();
-            boolean productoAgregado = vendedorTemplateController.agregarProducto(producto);
+            boolean productoAgregado = vendedorTemplateController.agregarProducto(producto, vendedorAsociado);
             if (productoAgregado) {
                 listaProductos.add(producto);
                 actualizarProductosMuro();
@@ -205,8 +210,12 @@ public class VendedorTemplateViewController {
 
     private void actualizarProductosMuro() {
         listaProductos.forEach(producto -> {
-            if (producto.getEstadoProducto().equals(EstadoProducto.PUBLICADO)) listaProductosPublicados.add(producto);
-            else listaProductosPublicados.remove(producto);
+            if (producto.getEstadoProducto() == EstadoProducto.PUBLICADO
+                    && !RedsocialAppViewController.getProductosPublicados().contains(producto)) {
+               RedsocialAppViewController.getProductosPublicados().add(producto);
+            } else if (producto.getEstadoProducto() != EstadoProducto.PUBLICADO) {
+                RedsocialAppViewController.getProductosPublicados().remove(producto);
+            }
         });
     }
 
@@ -235,31 +244,51 @@ public class VendedorTemplateViewController {
     //interacciones red social
     @FXML
     void onBttnLike(ActionEvent event) {
-        if (productoSeleccionado != null) {
+        if (productoSeleccionadoPublicado != null) {
+            boolean usuarioYaLeDioLike = vendedorTemplateController.usuarioDioLike(productoSeleccionadoPublicado, vendedorAsociado);
             if (bttnLike.isSelected()) {
-                vendedorTemplateController.addLike(productoSeleccionadoPublicado);
+                if (!usuarioYaLeDioLike) {
+                    vendedorTemplateController.addLike(productoSeleccionadoPublicado, vendedorAsociado);
+                    bttnLike.setText("Liked");
+                }
             } else {
-                vendedorTemplateController.removeLike(productoSeleccionadoPublicado);
+                if (usuarioYaLeDioLike) {
+                    vendedorTemplateController.removeLike(productoSeleccionadoPublicado, vendedorAsociado);
+                    bttnLike.setText("Like");
+                }
             }
+            RedsocialAppViewController.getProductosPublicados().set(
+                    RedsocialAppViewController.getProductosPublicados().indexOf(productoSeleccionadoPublicado),
+                    productoSeleccionadoPublicado
+            );
             likeCounter.setText(String.valueOf(vendedorTemplateController.getLikes(productoSeleccionadoPublicado)));
         } else {
-            ViewControllerUtil.mostrarMensaje(ERROR, HEADER,BODY_SELECCIONA_PRODUCTO_ANTES_QUE_LIKE, Alert.AlertType.WARNING);
+            bttnLike.setSelected(false);
+            ViewControllerUtil.mostrarMensaje(ERROR, HEADER, BODY_SELECCIONA_PRODUCTO_ANTES_QUE_LIKE, Alert.AlertType.WARNING);
         }
     }
 
     @FXML
     void onEnviarMensaje(ActionEvent event) {
-        if (txtMensajesTo.getText() != null) {
-            vendedorTemplateController.agregarComentarioProducto(productoSeleccionadoPublicado, txtMensajesTo.getText());
-            listaMensajes.add(txtMensajesTo.getText());
+        if (productoSeleccionadoPublicado!=null) {
+            if (txtMensajesTo.getText() != null) {
+                String mensaje = vendedorAsociado.getUsuarioAsociado().getUsername()+": "+txtMensajesTo.getText();
+                vendedorTemplateController.agregarComentarioProducto(productoSeleccionadoPublicado, mensaje);
+                listaMensajes.add(mensaje);
+                txtMensajesTo.setText(null);
+            } else {
+                txtMensajesTo.setText(null);
+                ViewControllerUtil.mostrarMensaje(TITULO_MENSAJE_VACIO, HEADER, BODY_MENSAJE_VACIO, Alert.AlertType.WARNING);
+            }
         } else {
-            ViewControllerUtil.mostrarMensaje(TITULO_MENSAJE_VACIO, HEADER,BODY_MENSAJE_VACIO, Alert.AlertType.WARNING);
+            ViewControllerUtil.mostrarMensaje(TITULO_CAMPOS_INCOMPLETOS, HEADER, BODY_SELECCIONAR_PRODUCTO, Alert.AlertType.WARNING);
         }
     }
     //TODO TABLA DE MURO ES GLOBAL <----------------------------------------------------------------------------------
 
     public void updateView() {
-        //TODO
+        listaProductos.addAll(vendedorTemplateController.getProductosVendedor(vendedorAsociado));
+        actualizarProductosMuro();
     }
 
 
@@ -267,7 +296,7 @@ public class VendedorTemplateViewController {
     void initialize() {
         comboBoxEstado.getItems().addAll(EstadoProducto.values());
         tableViewProductosCRUD.setItems(listaProductos);
-        tableViewPublicados.setItems(listaProductosPublicados);
+        tableViewPublicados.setItems(RedsocialAppViewController.getProductosPublicados());
         listViewMensajes.setItems(listaMensajes);
         initView();
     }
@@ -371,9 +400,7 @@ public class VendedorTemplateViewController {
     }
 
     private void obtenerProductos() {
-        listaProductos.addAll(vendedorTemplateController.getProductos()); //TODO segun el vendedor que inicie sesion
-        listaProductosPublicados.addAll(vendedorTemplateController.getProductosPublicados());
-        actualizarProductosMuro();
+
     }
 
     public AnchorPane getView() {
