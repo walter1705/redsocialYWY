@@ -2,20 +2,34 @@ package co.edu.uniquoindio.redsocial.factory;
 
 
 import co.edu.uniquoindio.redsocial.model.*;
+import co.edu.uniquoindio.redsocial.proxy.LoginProxy;
+import co.edu.uniquoindio.redsocial.proxy.LoginService;
+import co.edu.uniquoindio.redsocial.service.ILoginService;
 import co.edu.uniquoindio.redsocial.service.IModelFactoryService;
 import co.edu.uniquoindio.redsocial.utils.DataUtil;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public class ModelFactory implements IModelFactoryService {
     private static ModelFactory modelFactory;
     private RedSocial redSocial;
     private Logger logger;
+    private LoginProxy loginProxy;
+    private LoginService loginService;
 
     private ModelFactory() {
         redSocial = DataUtil.inicializarDatosPrueba();;
         logger = new Logger();
+        loginService = new LoginService();
+        loginProxy = new LoginProxy(loginService);
+        loginService.setUsuarios(obtenerDiccionarioVendedoresUser());
+
+    }
+
+    public Map<String, String> obtenerDiccionarioVendedoresUser() {
+        return redSocial.obtenerDiccionarioVendedoresUser();
     }
 
     public static ModelFactory getInstance() {

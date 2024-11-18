@@ -6,6 +6,7 @@ import co.edu.uniquoindio.redsocial.model.Vendedor;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
 
 public interface IRedSocial {
     boolean eliminarUsuario(String username);
@@ -39,4 +40,6 @@ public interface IRedSocial {
     boolean usuarioDioLike(Producto productoSeleccionadoPublicado, Vendedor vendedorAsociado);
 
     List<Producto> getProductosVendedor(Vendedor vendedor);
+
+    Map<String, String> obtenerDiccionarioVendedoresUser();
 }

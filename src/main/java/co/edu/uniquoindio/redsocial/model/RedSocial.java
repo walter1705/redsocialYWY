@@ -4,7 +4,9 @@ import co.edu.uniquoindio.redsocial.service.IRedSocial;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public class RedSocial implements IRedSocial {
@@ -306,6 +308,16 @@ public class RedSocial implements IRedSocial {
     @Override
     public List<Producto> getProductosVendedor(Vendedor vendedor) {
         return obtenerVendedor(vendedor.getId()).getProductosAsociados();
+    }
+
+    @Override
+    public Map<String, String> obtenerDiccionarioVendedoresUser() {
+        Map<String, String> diccionario = new HashMap<>();
+        listaUsuarios.forEach( user -> {
+            diccionario.put(user.getUsername(), user.getPassword());
+                });
+
+        return diccionario;
     }
 
     public String getNombre() {
