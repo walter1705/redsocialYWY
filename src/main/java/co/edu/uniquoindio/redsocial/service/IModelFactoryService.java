@@ -13,6 +13,7 @@ import java.util.Map;
 public interface IModelFactoryService {
     List<Vendedor> obtenerVendedores();
 
+
     boolean agregarVendedor(Vendedor vendedor);
 
     boolean actualizarVendedor(String id, String username, Vendedor vendedor);

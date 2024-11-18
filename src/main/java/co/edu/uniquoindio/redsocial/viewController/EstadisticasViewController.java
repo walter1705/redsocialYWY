@@ -33,6 +33,11 @@ public class EstadisticasViewController {
     private Button bttnExportar;
 
     @FXML
+    private Button bttnDirectoryExport;
+
+
+
+    @FXML
     private RadioButton cantContactosEachVendedor;
 
     @FXML
@@ -93,6 +98,11 @@ public class EstadisticasViewController {
     private ChoiceBox<Vendedor> vendedor2ChoiceBoxMsjEnviados;
 
     @FXML
+    void onDirectoryExport(ActionEvent event) {
+
+    }
+
+    @FXML
     void OnCantProductosEachVendedor(ActionEvent event) {
 
     }
@@ -101,11 +111,7 @@ public class EstadisticasViewController {
     void onCantContactosEachVendedor(ActionEvent event) {
 
     }
-
-
-
-
-
+    
     @FXML
     void onExportarLog(ActionEvent event) {
 

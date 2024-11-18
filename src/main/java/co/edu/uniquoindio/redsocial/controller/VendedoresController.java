@@ -1,6 +1,7 @@
 package co.edu.uniquoindio.redsocial.controller;
 
 import co.edu.uniquoindio.redsocial.factory.ModelFactory;
+import co.edu.uniquoindio.redsocial.model.Persona;
 import co.edu.uniquoindio.redsocial.model.Vendedor;
 
 import java.util.List;
@@ -25,5 +26,9 @@ public class VendedoresController {
 
     public boolean eliminarVendedor(Vendedor vendedorSelecionado) {
         return modelFactory.eliminarVendedor(vendedorSelecionado);
+    }
+
+    public Persona getUsuarioOnSession() {
+        return modelFactory.getUsuarioOnSession();
     }
 }

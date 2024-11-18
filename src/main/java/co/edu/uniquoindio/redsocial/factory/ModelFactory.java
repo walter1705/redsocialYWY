@@ -54,8 +54,13 @@ public class ModelFactory implements IModelFactoryService {
     @Override
     public boolean agregarVendedor(Vendedor vendedor) {
         boolean si = redSocial.crearVendedor(vendedor);
+        agregarVendedorChat(vendedor);
         if (si) loginService.setUsuarios(obtenerDiccionarioVendedoresUser());
         return si;
+    }
+
+    private void agregarVendedorChat(Vendedor vendedor) {
+
     }
 
     @Override

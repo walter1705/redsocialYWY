@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import co.edu.uniquoindio.redsocial.controller.VendedorTemplateController;
+import co.edu.uniquoindio.redsocial.model.Administrador;
+import co.edu.uniquoindio.redsocial.model.Persona;
 import co.edu.uniquoindio.redsocial.model.Usuario;
 import co.edu.uniquoindio.redsocial.model.Vendedor;
 import co.edu.uniquoindio.redsocial.controller.VendedoresController;
@@ -122,6 +124,7 @@ public class VendedoresViewController {
         redSocialAppViewController = RedsocialAppViewController.getController();
         initView();
         loadViewsAfterLogin();
+        configurarPermisos();
     }
 
     public void loadViewsAfterLogin() {
@@ -346,6 +349,57 @@ public class VendedoresViewController {
             tabManagerVendedorTemplate.eliminarTab(vendedor);
             redSocialAppViewController.mainTab.getTabPane().getTabs().remove(tabToRemove);
         }
+    }
+
+    private void configurarPermisos() {
+        Persona usuarioEnSesion = vendedoresController.getUsuarioOnSession();
+        
+        if (usuarioEnSesion != null) {
+            if (usuarioEnSesion instanceof Administrador) {
+                habilitarTodosLosControles();
+            } else if (usuarioEnSesion instanceof Vendedor) {
+                Vendedor vendedorEnSesion = (Vendedor) usuarioEnSesion;
+                if (vendedorSelecionado != null && vendedorSelecionado.equals(vendedorEnSesion)) {
+                    habilitarTodosLosControles();
+                } else {
+                    limitarAccesoOtrosVendedores();
+                }
+            }
+        } else {
+            //limitarAccesoOtrosVendedores();
+            System.out.printf("USUARIO NULL LOGIN");
+
+        }    }
+
+    private void limitarAccesoOtrosVendedores() {
+        btnActualizar.setDisable(true);
+        btnAgregar.setDisable(true);
+        btnEliminar.setDisable(true);
+
+        txtNombreVendedor.setDisable(true);
+        txtApellidoVendedor.setDisable(true);
+        txtEmailVendedor.setDisable(true);
+        txtIdVendedor.setDisable(true);
+        txtDireccionVendedor.setDisable(true);
+        txtNombreUsuario.setDisable(true);
+        txtContrasenaUsuario.setDisable(true);
+        tableVendedor.setDisable(true);
+    }
+
+    private void habilitarTodosLosControles() {
+        btnActualizar.setDisable(false);
+        btnAgregar.setDisable(false);
+        btnEliminar.setDisable(false);
+
+        txtNombreVendedor.setDisable(false);
+        txtApellidoVendedor.setDisable(false);
+        txtEmailVendedor.setDisable(false);
+        txtIdVendedor.setDisable(false);
+        txtDireccionVendedor.setDisable(false);
+        txtNombreUsuario.setDisable(false);
+        txtContrasenaUsuario.setDisable(false);
+
+        tableVendedor.setDisable(false);
     }
 
     private void limpiarCampos() {
