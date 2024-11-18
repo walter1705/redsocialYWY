@@ -6,6 +6,7 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 import co.edu.uniquoindio.redsocial.StartRedSocial;
+import co.edu.uniquoindio.redsocial.controller.LoginAuthController;
 import co.edu.uniquoindio.redsocial.factory.ModelFactory;
 import co.edu.uniquoindio.redsocial.model.Usuario;
 import javafx.event.ActionEvent;
@@ -22,12 +23,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 public class LoginAuthViewController {
-
-
-    ModelFactory modelFactory;
-    public LoginAuthViewController(){
-        modelFactory = ModelFactory.getInstance();
-    }
+    LoginAuthController loginAuthController = new LoginAuthController();
 
     @FXML
     private ResourceBundle resources;
@@ -67,20 +63,13 @@ public class LoginAuthViewController {
     }
 
     private void validateLogin() throws IOException {
-        boolean centi = false;
-        for(Usuario usuario : modelFactory.getUsuarios()) {
-            if (usuario.getUsername().equals(IntroducirUsuarioTextField.getText()) &&
-                    usuario.getPassword().equals(IntroducirContrasenaTextField.getText())) {
-
-                centi = true;
-                Stage currentStage = (Stage) IngresarButton.getScene().getWindow();
-                currentStage.close();
-
-                changeSceneToRedSocialApp(new Stage());
-                break;
-            }
-        }
-        if (!centi) {
+        String username = IntroducirUsuarioTextField.getText();
+        String password = IntroducirContrasenaTextField.getText() ;
+        if (loginAuthController.login(username, password)) {
+            Stage currentStage = (Stage) IngresarButton.getScene().getWindow();
+            currentStage.close();
+            changeSceneToRedSocialApp(new Stage());
+            } else {
             textLabellogin.setText("Usuario o contraseña incorrecta.");
         }
     }
@@ -108,5 +97,4 @@ public class LoginAuthViewController {
     @FXML
     void initialize() {
     }
-
-}
+    }

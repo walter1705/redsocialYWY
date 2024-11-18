@@ -1,6 +1,7 @@
 package co.edu.uniquoindio.redsocial.service;
 
 
+import co.edu.uniquoindio.redsocial.model.Persona;
 import co.edu.uniquoindio.redsocial.model.Producto;
 import co.edu.uniquoindio.redsocial.model.Usuario;
 import co.edu.uniquoindio.redsocial.model.Vendedor;
@@ -48,5 +49,9 @@ public interface IModelFactoryService {
 
     List<Producto> getProductosVendedor(Vendedor vendedor);
 
-    Map<String, String> obtenerDiccionarioVendedoresUser();
+    Map<String, Persona> obtenerDiccionarioVendedoresUser();
+
+    Persona getUsuarioOnSession();
+
+    boolean login(String username, String password);
 }

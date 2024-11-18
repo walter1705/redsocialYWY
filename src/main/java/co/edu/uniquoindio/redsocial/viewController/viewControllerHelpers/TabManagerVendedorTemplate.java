@@ -4,13 +4,12 @@ import co.edu.uniquoindio.redsocial.model.Vendedor;
 import co.edu.uniquoindio.redsocial.viewController.VendedorTemplateViewController;
 import javafx.scene.control.Tab;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class TabManagerVendedorTemplate {
     private static TabManagerVendedorTemplate instance;
     private final Map<Vendedor, Tab> tabs = new HashMap<>();
+    private List<VendedorTemplateViewController> controllers = new ArrayList<>();
 
     private TabManagerVendedorTemplate() {}
 
@@ -51,4 +50,10 @@ public class TabManagerVendedorTemplate {
             System.out.println("No se puede agregar el tab");
         }
     }
+
+    public List<VendedorTemplateViewController> getControllers() {
+        return controllers;
+    }
+
+
 }

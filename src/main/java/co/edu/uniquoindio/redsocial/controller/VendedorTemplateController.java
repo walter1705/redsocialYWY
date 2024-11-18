@@ -1,6 +1,7 @@
 package co.edu.uniquoindio.redsocial.controller;
 
 import co.edu.uniquoindio.redsocial.factory.ModelFactory;
+import co.edu.uniquoindio.redsocial.model.Persona;
 import co.edu.uniquoindio.redsocial.model.Producto;
 import co.edu.uniquoindio.redsocial.model.Vendedor;
 
@@ -58,5 +59,9 @@ public class VendedorTemplateController {
 
     public List<Producto> getProductosVendedor(Vendedor vendedor) {
         return modelFactory.getProductosVendedor(vendedor);
+    }
+
+    public Persona getUsuarioOnSession() {
+        return modelFactory.getUsuarioOnSession();
     }
 }

@@ -2,8 +2,11 @@ package co.edu.uniquoindio.redsocial.viewController;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
+import co.edu.uniquoindio.redsocial.controller.VendedorTemplateController;
 import co.edu.uniquoindio.redsocial.model.Usuario;
 import co.edu.uniquoindio.redsocial.model.Vendedor;
 import co.edu.uniquoindio.redsocial.controller.VendedoresController;
@@ -28,6 +31,7 @@ public class VendedoresViewController {
     ObservableList<Vendedor> listaVendedores;
 
     TabManagerVendedorTemplate tabManagerVendedorTemplate = TabManagerVendedorTemplate.getInstance();
+    List<VendedorTemplateViewController> vendedorTemplateViewControllers = tabManagerVendedorTemplate.getControllers();
 
     Vendedor vendedorSelecionado;
 
@@ -116,17 +120,18 @@ public class VendedoresViewController {
         tabManagerVendedorTemplate = TabManagerVendedorTemplate.getInstance();
 
         redSocialAppViewController = RedsocialAppViewController.getController();
-
         initView();
         loadViewsAfterLogin();
     }
 
     public void loadViewsAfterLogin() {
-
         for (Tab tab : tabManagerVendedorTemplate.getTabs()) {
             if (!redSocialAppViewController.TabPane.getTabs().contains(tab)) {
                 redSocialAppViewController.TabPane.getTabs().add(tab);
             }
+        }
+        for (VendedorTemplateViewController controller : vendedorTemplateViewControllers) {
+            controller.onShow();
         }
 
     }
@@ -152,6 +157,7 @@ public class VendedoresViewController {
                 mostrarInformacionVendedor(vendedorSelecionado);
             }
         });
+
     }
 
     private void mostrarInformacionVendedor(Vendedor vendedorSelecionado) {
@@ -200,7 +206,7 @@ public class VendedoresViewController {
                 VendedorTemplateViewController vendedorController = loader.getController();
                 vendedorController.setVendedorAsociado(vendedor);
                 vendedorController.updateView();
-
+                vendedorTemplateViewControllers.add(vendedorController);
                 Tab nuevoTab = new Tab(vendedor.getUsuarioAsociado().getUsername(), vendedorContent);
                 redSocialAppViewController.mainTab.getTabPane().getTabs().add(nuevoTab);
 
@@ -325,13 +331,19 @@ public class VendedoresViewController {
         Tab tabToRemove = null;
         for (Tab tab : redSocialAppViewController.mainTab.getTabPane().getTabs()) {
             if (vendedor.getUsuarioAsociado().getUsername().equals(tab.getText())) {
+
                 tabToRemove = tab;
                 break;
             }
         }
-        tabManagerVendedorTemplate.eliminarTab(vendedor);
+
+        vendedorTemplateViewControllers.forEach(n -> {
+            if (n.vendedorAsociado == vendedor) vendedorTemplateViewControllers.remove(n);
+        });
+
 
         if (tabToRemove != null) {
+            tabManagerVendedorTemplate.eliminarTab(vendedor);
             redSocialAppViewController.mainTab.getTabPane().getTabs().remove(tabToRemove);
         }
     }

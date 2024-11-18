@@ -6,10 +6,7 @@ import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 import co.edu.uniquoindio.redsocial.controller.VendedorTemplateController;
-import co.edu.uniquoindio.redsocial.model.EstadoProducto;
-import co.edu.uniquoindio.redsocial.model.Producto;
-import co.edu.uniquoindio.redsocial.model.Publicacion;
-import co.edu.uniquoindio.redsocial.model.Vendedor;
+import co.edu.uniquoindio.redsocial.model.*;
 import co.edu.uniquoindio.redsocial.viewController.viewControllerHelpers.ViewControllerUtil;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -23,8 +20,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
-import javax.swing.text.View;
 
 import static co.edu.uniquoindio.redsocial.utils.RedSocialConstants.*;
 
@@ -292,6 +287,62 @@ public class VendedorTemplateViewController {
     }
 
 
+    private void configurarPermisos() {
+        Persona persona = vendedorTemplateController.getUsuarioOnSession();
+        if (persona != null) {
+            if (persona instanceof Administrador) {
+                habilitarTodosLosControles();
+            } else if (persona instanceof Vendedor) {
+                Vendedor vendedorEnSesion = (Vendedor) persona;
+                if (vendedorAsociado != null && vendedorAsociado.equals(vendedorEnSesion)) {
+                    habilitarTodosLosControles();
+                } else {
+                    limitarAccesoOtrosVendedores();
+                }
+            } 
+        } else {
+            deshabilitarTodosLosControles();
+        }
+    }
+
+    private void limitarAccesoOtrosVendedores() {
+        bttnActualizarProducto.setDisable(true);
+        bttnCrearProducto.setDisable(true);
+        bttnEliminarProducto.setDisable(true);
+        bttnImagenProductoCrud.setDisable(true);
+        bttnEnviarMensajePriv.setDisable(true);
+        comboBoxEstado.setDisable(true);
+        txtDescripcionProducto.setDisable(true);
+        txtPrecioProducto.setDisable(true);
+        txtNombreProducto.setDisable(true);
+        txtCategoriaProducto.setDisable(true);
+        txtMensajesContactos.setDisable(true);
+        tableViewProductosCRUD.setDisable(true);
+    }
+
+    private void habilitarTodosLosControles() {
+        bttnEnviarMensaje.setDisable(false);
+        bttnActualizarProducto.setDisable(false);
+        bttnCrearProducto.setDisable(false);
+        bttnEliminarProducto.setDisable(false);
+        bttnImagenProductoCrud.setDisable(false);
+        bttnEnviarMensajePriv.setDisable(false);
+        bttnLike.setDisable(false);
+        comboBoxEstado.setDisable(false);
+        txtDescripcionProducto.setDisable(false);
+        txtPrecioProducto.setDisable(false);
+        txtNombreProducto.setDisable(false);
+        txtCategoriaProducto.setDisable(false);
+        txtMensajesTo.setDisable(false);
+        txtMensajesContactos.setDisable(false);
+        tableViewProductosCRUD.setDisable(false);
+        tableViewPublicados.setDisable(false);
+        tableViewListaContactos.setDisable(false);
+    }
+
+    private void deshabilitarTodosLosControles() {
+        bttnEliminarProducto.setDisable(true);
+    }
 
     public void updateView() {
         listaProductos.addAll(vendedorTemplateController.getProductosVendedor(vendedorAsociado));
@@ -305,6 +356,7 @@ public class VendedorTemplateViewController {
         tableViewPublicados.setItems(RedsocialAppViewController.getProductosPublicados());
         listViewMensajes.setItems(listaMensajes);
         initView();
+        configurarPermisos();
     }
 
     private void initView() {
@@ -405,7 +457,6 @@ public class VendedorTemplateViewController {
     }
 
     private void obtenerProductos() {
-
     }
 
     public AnchorPane getView() {
@@ -418,5 +469,9 @@ public class VendedorTemplateViewController {
 
     private String generarIdProducto() {
         return vendedorTemplateController.generarIdProducto();
+    }
+
+    public void onShow() {
+        configurarPermisos();
     }
 }

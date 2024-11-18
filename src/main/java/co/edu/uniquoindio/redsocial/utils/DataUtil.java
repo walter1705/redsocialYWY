@@ -21,6 +21,7 @@ public class DataUtil {
                 .password("admin")
                 .build();
         administrador.setUsuarioAsociado(usuarioAdmin);
+        usuarioAdmin.setAdministradorAsociado(administrador);
         redSocial.agregarRedSocial(administrador);
         redSocial.agregarRedSocial(usuarioAdmin);
         return redSocial;

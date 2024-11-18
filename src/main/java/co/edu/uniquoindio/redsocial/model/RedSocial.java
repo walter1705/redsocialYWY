@@ -7,13 +7,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class RedSocial implements IRedSocial {
     private String nombre;
     private List<Usuario> listaUsuarios = new ArrayList<>();
     private List<Vendedor> listaVendedores = new ArrayList<>();
-    private List<Administrador> listaAdministradores = new ArrayList<>();
+    private List<Administrador> listaAdministradores = new ArrayList<>(1);
     private List<Producto> listaProductos = new ArrayList<>();
 
     //Metodo agregar Usuario
@@ -311,12 +310,14 @@ public class RedSocial implements IRedSocial {
     }
 
     @Override
-    public Map<String, String> obtenerDiccionarioVendedoresUser() {
-        Map<String, String> diccionario = new HashMap<>();
-        listaUsuarios.forEach( user -> {
-            diccionario.put(user.getUsername(), user.getPassword());
+    public Map<String, Persona> obtenerDiccionarioVendedoresUser() {
+        Map<String, Persona> diccionario = new HashMap<>();
+        listaVendedores.forEach( vendedor -> {
+            diccionario.put(vendedor.getUsuarioAsociado().getUsername(), vendedor);
                 });
-
+        listaAdministradores.forEach( administrador -> {
+            diccionario.put(administrador.getUsuarioAsociado().getUsername(), administrador);
+        });
         return diccionario;
     }
 

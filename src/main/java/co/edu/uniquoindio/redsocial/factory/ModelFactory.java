@@ -4,7 +4,6 @@ package co.edu.uniquoindio.redsocial.factory;
 import co.edu.uniquoindio.redsocial.model.*;
 import co.edu.uniquoindio.redsocial.proxy.LoginProxy;
 import co.edu.uniquoindio.redsocial.proxy.LoginService;
-import co.edu.uniquoindio.redsocial.service.ILoginService;
 import co.edu.uniquoindio.redsocial.service.IModelFactoryService;
 import co.edu.uniquoindio.redsocial.utils.DataUtil;
 
@@ -25,20 +24,27 @@ public class ModelFactory implements IModelFactoryService {
         loginService = new LoginService();
         loginProxy = new LoginProxy(loginService);
         loginService.setUsuarios(obtenerDiccionarioVendedoresUser());
-
     }
 
-    public Map<String, String> obtenerDiccionarioVendedoresUser() {
+    public Map<String, Persona> obtenerDiccionarioVendedoresUser() {
         return redSocial.obtenerDiccionarioVendedoresUser();
     }
+
+    @Override
+    public Persona getUsuarioOnSession() {
+        return loginService.getPersonaOnSesion();
+    }
+
+    @Override
+    public boolean login(String username, String password) {
+        return loginProxy.login(username, password);
+    }
+
 
     public static ModelFactory getInstance() {
         if (modelFactory==null)  modelFactory = new ModelFactory();
         return modelFactory;
     }
-
-
-
 
     @Override
     public List<Vendedor> obtenerVendedores() {
@@ -47,20 +53,24 @@ public class ModelFactory implements IModelFactoryService {
 
     @Override
     public boolean agregarVendedor(Vendedor vendedor) {
-        return redSocial.crearVendedor(vendedor);
+        boolean si = redSocial.crearVendedor(vendedor);
+        if (si) loginService.setUsuarios(obtenerDiccionarioVendedoresUser());
+        return si;
     }
 
     @Override
     public boolean actualizarVendedor(String id, String username, Vendedor vendedor) {
-        return redSocial.actualizarVendedor(id, username, vendedor);
+        boolean si = redSocial.actualizarVendedor(id, username, vendedor);
+        if (si) loginService.setUsuarios(obtenerDiccionarioVendedoresUser());
+        return si;
     }
 
     @Override
     public boolean eliminarVendedor(Vendedor vendedor) {
-        return redSocial.eliminarVendedor(vendedor.getId());
+        boolean si = redSocial.eliminarVendedor(vendedor.getId());;
+        if (si) loginService.setUsuarios(obtenerDiccionarioVendedoresUser());
+        return si;
     }
-
-
 
     @Override
     public List<Usuario> getUsuarios() {
