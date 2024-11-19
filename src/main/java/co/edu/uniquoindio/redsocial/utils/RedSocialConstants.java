@@ -68,5 +68,6 @@ public class RedSocialConstants {
     public static final String TITULO_MENSAJE_VACIO = "Mensaje vacio.";
     public static final String BODY_MENSAJE_VACIO = "No se puede enviar un mensaje vacío.";
     public static final String BODY_SELECCIONAR_PRODUCTO = "Se tiene que seleccionar un producto antes de comentar. ";
+    public static final String BODY_TIPONOESPECIFICADO = "Tiene que seleccionar al menos una opcion a exportar.";
 
 }

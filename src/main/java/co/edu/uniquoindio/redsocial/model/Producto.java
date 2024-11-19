@@ -110,4 +110,17 @@ public class Producto {
     public void setPrecio(double precio) {
         this.precio = precio;
     }
+
+    @Override
+    public String toString() {
+        return String.format(
+                "Producto{id='%s', nombre='%s', precio=%.2f, categoria='%s', estado='%s', fechaPublicacion='%s'}",
+                id,
+                nombre,
+                precio,
+                categoria,
+                estadoProducto != null ? estadoProducto.name() : "N/A",
+                fechaPublicacion != null ? fechaPublicacion : "N/A"
+        );
+    }
 }

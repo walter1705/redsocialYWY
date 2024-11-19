@@ -55,4 +55,8 @@ public interface IModelFactoryService {
     Persona getUsuarioOnSession();
 
     boolean login(String username, String password);
+
+    List<Producto> getTop3MostLikedProducts();
+
+    void exportarEstadisticas(ILoggerStrategy logger, String directory, String log, Usuario usuario);
 }

@@ -3,10 +3,7 @@ package co.edu.uniquoindio.redsocial.model;
 import co.edu.uniquoindio.redsocial.service.IRedSocial;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class RedSocial implements IRedSocial {
     private String nombre;
@@ -319,6 +316,12 @@ public class RedSocial implements IRedSocial {
             diccionario.put(administrador.getUsuarioAsociado().getUsername(), administrador);
         });
         return diccionario;
+    }
+
+    @Override
+    public List<Producto> getTop3MostLikedProducts() {
+        listaProductos.sort((p1, p2) -> Integer.compare(p2.getPublicacionAsociado().getLike(), p1.getPublicacionAsociado().getLike()));
+        return listaProductos.subList(0, Math.min(3, listaProductos.size()));
     }
 
     public String getNombre() {

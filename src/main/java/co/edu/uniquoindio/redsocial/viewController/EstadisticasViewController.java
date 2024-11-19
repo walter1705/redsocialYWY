@@ -1,16 +1,26 @@
 package co.edu.uniquoindio.redsocial.viewController;
 
-import java.net.URL;
+import java.io.File;
 import java.time.LocalDate;
-import java.util.ResourceBundle;
+import java.util.List;
 
 import co.edu.uniquoindio.redsocial.controller.EstadisticasController;
+import co.edu.uniquoindio.redsocial.model.Persona;
+import co.edu.uniquoindio.redsocial.model.Producto;
+import co.edu.uniquoindio.redsocial.model.Usuario;
 import co.edu.uniquoindio.redsocial.model.Vendedor;
+import co.edu.uniquoindio.redsocial.service.ILoggerStrategy;
+import co.edu.uniquoindio.redsocial.strategy.PdfLoggerStrategy;
+import co.edu.uniquoindio.redsocial.strategy.TxtLoggerStrategy;
 import co.edu.uniquoindio.redsocial.viewController.viewControllerHelpers.ViewControllerUtil;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.chart.BarChart;
 import javafx.scene.control.*;
+import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 import javafx.util.StringConverter;
 
 import static co.edu.uniquoindio.redsocial.utils.RedSocialConstants.*;
@@ -18,27 +28,35 @@ import static co.edu.uniquoindio.redsocial.utils.RedSocialConstants.*;
 public class EstadisticasViewController {
     VendedoresViewController vendedoresViewController = VendedoresViewController.getInstance();
     EstadisticasController estadisticasController = new EstadisticasController();
+    ObservableList<Producto> listaProductosMostLiked = FXCollections.observableArrayList();
+
+    String var1, var2, var3, directory;
+    ILoggerStrategy logger;
+
+    @FXML
+    private Button bttnDirectory;
+
+    @FXML
+    private TableColumn<Producto, String> tcCategoriaMeGusta;
+
+    @FXML
+    private TableColumn<Producto, String> tcDescripcionMeGusta;
+
+    @FXML
+    private TableColumn<Producto, String> tcEstadoMeGusta;
+
+    @FXML
+    private TableColumn<Producto, String> tcNombreMeGusta;
+
+    @FXML
+    private TableColumn<Producto, String> tcLikesMeGusta;
 
 
     @FXML
-    private ResourceBundle resources;
-
-    @FXML
-    private URL location;
-
-    @FXML
-    private BarChart<?, ?> barChartContactosVendedores;
+    private TableColumn<Producto, String> tcPrecioMeGusta;
 
     @FXML
     private Button bttnExportar;
-
-    @FXML
-    private Button bttnDirectoryExport;
-
-
-
-    @FXML
-    private RadioButton cantContactosEachVendedor;
 
     @FXML
     private RadioButton cantMensajesDosVendedores;
@@ -50,10 +68,7 @@ public class EstadisticasViewController {
     private RadioButton cantProductosEachVendeor;
 
     @FXML
-    private ChoiceBox<?> choiceBoxFormatoLog;
-
-    @FXML
-    private ChoiceBox<?> choiceBoxProductsByVendedor;
+    private ChoiceBox<String> choiceBoxFormatoLog;
 
     @FXML
     private DatePicker datePickerFinalReq;
@@ -77,7 +92,7 @@ public class EstadisticasViewController {
     private ScrollPane scrollPane;
 
     @FXML
-    private TableView<?> tableViewProductosMostLiked;
+    private TableView<Producto> tableViewProductosMostLiked;
 
     @FXML
     private TextArea textAreaFechaDeterminada;
@@ -97,39 +112,121 @@ public class EstadisticasViewController {
     @FXML
     private ChoiceBox<Vendedor> vendedor2ChoiceBoxMsjEnviados;
 
-    @FXML
-    void onDirectoryExport(ActionEvent event) {
-
-    }
 
     @FXML
-    void OnCantProductosEachVendedor(ActionEvent event) {
-
+    void onDirectory(ActionEvent event) {
+        seleccionarDirectorio(new Stage());
     }
 
-    @FXML
-    void onCantContactosEachVendedor(ActionEvent event) {
+    public void seleccionarDirectorio(Stage stage) {
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Seleccionar directorio");
 
+
+        File selectedDirectory = directoryChooser.showDialog(stage);
+
+        if (selectedDirectory != null) {
+            directory = selectedDirectory.getAbsolutePath();
+            System.out.println("Directorio seleccionado: " + selectedDirectory.getAbsolutePath());
+        } else {
+            System.out.println("No se seleccionó ningún directorio.");
+        }
     }
-    
+
     @FXML
     void onExportarLog(ActionEvent event) {
+        String log = traerLogsValidos();
+        Usuario usuario = estadisticasController.getPersonaOnSession().getUsuarioAsociado();
+        if (directory != null) {
+            if (logger != null) {
+                if (log != null) {
+                    estadisticasController.exportarEstadisticas(logger, directory, log, usuario);
+                } else {
+                    ViewControllerUtil.mostrarMensaje(TITULO_CAMPOS_INCOMPLETOS, HEADER, BODY_TIPONOESPECIFICADO, Alert.AlertType.ERROR);
+                }
+            } else {
+                //mensaje todo
+            }
+        } else {} //todo
 
+    }//
+
+    private String traerLogsValidos() {
+        String log = "";
+        if (var1!=null) log+=var1;
+        if (var2!=null) log+=var2;
+        if (var3!=null) log+=var3;
+        return !log.isEmpty() ?  log : null;
     }
 
     @FXML
     void onTopDiezMostLike(ActionEvent event) {
+        top10MostLiked();
+    }
 
+    private void top10MostLiked() {
+        if (topDiezMostLike.isSelected()) {
+            listaProductosMostLiked.setAll(estadisticasController.getTop3MostLikedProducts());
+            asignarDatosVar3();
+        } else {
+            var3 = null;
+            listaProductosMostLiked.clear();
+        }
+    }
+
+    private void asignarDatosVar3() {
+
+        String saltoDeLinea = System.lineSeparator();
+        var3 = "Top 3 productos con mas likes: "+ saltoDeLinea;
+        listaProductosMostLiked.forEach(producto -> {
+            var3 += producto.toString()+saltoDeLinea;
+        });
+        var3+=saltoDeLinea;
+    }
+
+    private void inicializarEstadisticas3() {
     }
 
     @FXML
     void initialize() {
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        dataBinding();
         inicializarEstadisticas1();
+        inicializarButtons();
     }
+
+    private void dataBinding() {
+        tcCategoriaMeGusta.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCategoria()));
+        tcDescripcionMeGusta.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescripcion()));
+        tcEstadoMeGusta.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEstadoProducto().name()));
+        tcNombreMeGusta.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
+        tcPrecioMeGusta.setCellValueFactory(cellData -> new SimpleStringProperty(Double.toString(cellData.getValue().getPrecio())));
+        tcLikesMeGusta.setCellValueFactory(cellData ->
+                new SimpleStringProperty(Integer.toString(cellData.getValue().getPublicacionAsociado().getLike())));
+    }
+
+    private void inicializarButtons() {
+        choiceBoxFormatoLog.setItems(FXCollections.observableArrayList("pdf", "txt"));
+
+        choiceBoxFormatoLog.setOnAction(event -> {
+            String seleccion = choiceBoxFormatoLog.getValue();
+            switch (seleccion) {
+                case "txt":
+                    logger = new TxtLoggerStrategy();
+                    break;
+                case "pdf":
+                    logger = new PdfLoggerStrategy();
+                    break;
+                default:
+                    System.out.println("Formato desconocido");
+                    break;
+            }
+        });
+        tableViewProductosMostLiked.setItems(listaProductosMostLiked);
+    }
+
     //ESTADISTICAS 1 METHODS
     private void inicializarEstadisticas1() {
-        // Configura el StringConverter para mostrar solo el nombre de usuario en la ChoiceBox
         StringConverter<Vendedor> vendedorStringConverter = new StringConverter<>() {
             @Override
             public String toString(Vendedor vendedor) {
@@ -172,6 +269,8 @@ public class EstadisticasViewController {
                 limpiarBotonesCantidadMensajes();
                 return false;
             }
+        } else {
+            var1 = null;
         }
         return true;
     }
@@ -181,7 +280,7 @@ public class EstadisticasViewController {
     @FXML
     void onCantMensajesDosVendedores(ActionEvent event) {
         if(verificarBotonCantidadMensajes()) {
-            //controllerClassGetMensajesEach(v1, v2)
+            //controllerClassGetMensajesEach(v1, v2);
             //vendedor1ChoiceBoxMsjEnviados.getValue().getMuroAsociado().getListaMensajes().size(); //TODO
         }
     }
@@ -204,12 +303,12 @@ public class EstadisticasViewController {
 
     private boolean verificaronCantProductorFecha() {
         if (datePickerInicialReq.getValue()==null ||
-                vendedor2ChoiceBoxMsjEnviados.getValue()==null) {
+                datePickerFinalReq.getValue()==null) {
             ViewControllerUtil.mostrarMensaje(TITULO_NO_SE_SELECCIONA_UNO, HEADER, BODY_NO_SE_SELECCIONA_UNO, Alert.AlertType.INFORMATION);
             cantProductorFecha.setSelected(false);
             limpiarDatePickerReq();
             return false;
-        } else if (datePickerInicialReq.getValue().isBefore(datePickerFinalReq.getValue())) {
+        } else if (datePickerInicialReq.getValue().isAfter(datePickerFinalReq.getValue())) {
             ViewControllerUtil.mostrarMensaje(TITULO_NO_SE_SELECCIONA_UNO, HEADER, BODY_NO_DESPUES, Alert.AlertType.WARNING);
             cantProductorFecha.setSelected(false);
             limpiarDatePickerReq();
@@ -217,8 +316,5 @@ public class EstadisticasViewController {
         }
         return true;
     }
-
-
-
 }
 

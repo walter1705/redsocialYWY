@@ -16,7 +16,7 @@ public class TxtLoggerStrategy implements ILoggerStrategy {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(path+"txt"))) {
             writer.write(titulo + "\n");
             writer.write(fecha);
-            writer.write("Reporte realizado por:" + usuario.getUsername() + "\n");
+            writer.write("Reporte realizado por: " + usuario.getUsername() + "\n");
             writer.write("Información del reporte: \n");
             writer.write(data);
             System.out.println("Archivo TXT generado en: " + path);
@@ -38,4 +38,6 @@ public class TxtLoggerStrategy implements ILoggerStrategy {
 
         return withoutExtension.replace(extension, "");
     }
+
+
 }

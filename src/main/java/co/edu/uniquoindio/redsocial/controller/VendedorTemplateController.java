@@ -50,7 +50,7 @@ public class VendedorTemplateController {
 
 
     public void agregarComentarioProducto(Producto productoSeleccionadoPublicado, String text) {
-        modelFactory.agregarComentarioProducto(productoSeleccionadoPublicado, text); // TODO Agregar el usuario que lo hace
+        modelFactory.agregarComentarioProducto(productoSeleccionadoPublicado, text);
     }
 
     public boolean usuarioDioLike(Producto productoSeleccionadoPublicado, Vendedor vendedorAsociado) {

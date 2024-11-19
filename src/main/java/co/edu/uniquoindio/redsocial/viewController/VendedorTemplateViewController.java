@@ -268,7 +268,7 @@ public class VendedorTemplateViewController {
     void onEnviarMensaje(ActionEvent event) {
         if (productoSeleccionadoPublicado!=null) {
             if (txtMensajesTo.getText() != null) {
-                String mensaje = vendedorAsociado.getUsuarioAsociado().getUsername()+": "+txtMensajesTo.getText();
+                String mensaje = vendedorTemplateController.getUsuarioOnSession()+": "+txtMensajesTo.getText();
                 vendedorTemplateController.agregarComentarioProducto(productoSeleccionadoPublicado, mensaje);
                 listaMensajes.add(mensaje);
                 txtMensajesTo.setText(null);
@@ -356,7 +356,12 @@ public class VendedorTemplateViewController {
         tableViewPublicados.setItems(RedsocialAppViewController.getProductosPublicados());
         listViewMensajes.setItems(listaMensajes);
         initView();
+        cargarMensajesMuro();
         configurarPermisos();
+    }
+
+    private void cargarMensajesMuro() {
+        //listaMensajes.ge;
     }
 
     private void initView() {

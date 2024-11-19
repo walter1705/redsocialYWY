@@ -43,4 +43,6 @@ public interface IRedSocial {
     List<Producto> getProductosVendedor(Vendedor vendedor);
 
     Map<String, Persona> obtenerDiccionarioVendedoresUser();
+
+    List<Producto> getTop3MostLikedProducts();
 }

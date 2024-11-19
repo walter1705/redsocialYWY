@@ -1,5 +1,6 @@
-package co.edu.uniquoindio.redsocial.model;
+package co.edu.uniquoindio.redsocial.strategy;
 
+import co.edu.uniquoindio.redsocial.model.Usuario;
 import co.edu.uniquoindio.redsocial.service.ILoggerStrategy;
 
 import java.io.File;

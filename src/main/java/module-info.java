@@ -8,6 +8,7 @@ module co.edu.uniquoindio.redsocial.redsocial {
     requires layout;
     requires kernel;
     requires org.bouncycastle.provider;
+    requires org.slf4j;
 
     opens co.edu.uniquoindio.redsocial to javafx.fxml;
     exports co.edu.uniquoindio.redsocial;
@@ -23,4 +24,8 @@ module co.edu.uniquoindio.redsocial.redsocial {
     exports co.edu.uniquoindio.redsocial.model.builder;
     opens co.edu.uniquoindio.redsocial.mediator;
     exports co.edu.uniquoindio.redsocial.mediator;
+    opens co.edu.uniquoindio.redsocial.service;
+    exports co.edu.uniquoindio.redsocial.service;
+    exports co.edu.uniquoindio.redsocial.strategy;
+    opens co.edu.uniquoindio.redsocial.strategy;
 }

@@ -67,4 +67,6 @@ public class ProductoBuilder {
     public Producto build() {
         return new Producto(nombre, imagen, categoria, estadoProducto, precio, vendedorAsociado, fechaPublicacion, id , descripcion, publicacion);
     }
+
+
 }

@@ -1,8 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.chart.BarChart?>
-<?import javafx.scene.chart.CategoryAxis?>
-<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
@@ -16,14 +13,12 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="scrollPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="2400.0" prefWidth="1037.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquoindio.redsocial.viewController.EstadisticasViewController">
+<ScrollPane fx:id="scrollPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="715.0" prefWidth="1037.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="co.edu.uniquoindio.redsocial.viewController.EstadisticasViewController">
   <content>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="2400.0" prefWidth="1037.0">
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="1450.0" prefWidth="1037.0">
          <children>
             <Separator layoutY="2375.0" prefHeight="0.5" prefWidth="1037.0" />
-            <Separator layoutY="1301.0" prefHeight="0.0" prefWidth="1037.0" />
-            <Separator layoutY="1705.0" prefHeight="0.0" prefWidth="1037.0" />
-            <Separator layoutY="935.0" prefHeight="0.0" prefWidth="1037.0" />
+            <Separator layoutY="755.0" prefHeight="12.0" prefWidth="1037.0" />
             <AnchorPane prefHeight="383.0" prefWidth="1029.0">
                <children>
                   <RadioButton fx:id="cantMensajesDosVendedores" layoutX="30.0" layoutY="38.0" mnemonicParsing="false" onAction="#onCantMensajesDosVendedores" text="Cantidad de mensajes enviados entre 2 vendedores" />
@@ -38,53 +33,38 @@
                   <Separator layoutX="-286.0" layoutY="384.0" prefHeight="0.0" prefWidth="1320.0" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutY="387.0" prefHeight="548.0" prefWidth="1037.0">
+            <AnchorPane layoutY="387.0" prefHeight="393.0" prefWidth="1037.0">
                <children>
                   <RadioButton fx:id="cantProductorFecha" layoutX="14.0" layoutY="33.0" mnemonicParsing="false" onAction="#onCantProductorFecha" text="Cantidad de productos publicados entre determinada fecha " />
                   <DatePicker fx:id="datePickerInicialReq" layoutX="222.0" layoutY="132.0" promptText="Inicio" />
                   <DatePicker fx:id="datePickerFinalReq" layoutX="585.0" layoutY="132.0" promptText="Fin" />
                   <Label fx:id="labelFechaInicialProductosReq" layoutX="277.0" layoutY="98.0" text="Fecha inicial" />
                   <Label fx:id="labelFechaFinalProductosReq" layoutX="644.0" layoutY="98.0" text="Fecha final" />
-                  <TextArea fx:id="textAreaFechaDeterminada" layoutX="385.0" layoutY="237.0" prefHeight="45.0" prefWidth="200.0" />
+                  <TextArea fx:id="textAreaFechaDeterminada" layoutX="397.0" layoutY="251.0" prefHeight="45.0" prefWidth="200.0" />
                </children>
             </AnchorPane>
-            <AnchorPane layoutY="935.0" prefHeight="367.0" prefWidth="1037.0">
+            <AnchorPane layoutY="759.0" prefHeight="481.0" prefWidth="1037.0">
                <children>
-                  <RadioButton fx:id="cantProductosEachVendeor" layoutX="14.0" layoutY="26.0" mnemonicParsing="false" onAction="#OnCantProductosEachVendedor" text="Cantidad de productos publicados por un vendedor en especifico" />
-                  <ChoiceBox fx:id="choiceBoxProductsByVendedor" layoutX="401.0" layoutY="85.0" prefWidth="150.0" />
-                  <TextArea fx:id="textAreaProductsByVendedor" layoutX="376.0" layoutY="155.0" prefHeight="57.0" prefWidth="200.0" />
-               </children>
-            </AnchorPane>
-            <AnchorPane layoutY="1301.0" prefHeight="404.0" prefWidth="1037.0">
-               <children>
-                  <RadioButton fx:id="cantContactosEachVendedor" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onCantContactosEachVendedor" text="Cantidad de contactos por cada vendedor" />
-                  <BarChart fx:id="barChartContactosVendedores" layoutX="58.0" layoutY="46.0" prefHeight="333.0" prefWidth="893.0">
-                    <xAxis>
-                      <CategoryAxis side="BOTTOM" />
-                    </xAxis>
-                    <yAxis>
-                      <NumberAxis minorTickCount="1" side="LEFT" upperBound="10.0" />
-                    </yAxis>
-                  </BarChart>
-               </children>
-            </AnchorPane>
-            <AnchorPane layoutY="1707.0" prefHeight="494.0" prefWidth="1037.0">
-               <children>
-                  <RadioButton fx:id="topDiezMostLike" layoutX="14.0" layoutY="14.0" mnemonicParsing="false" onAction="#onTopDiezMostLike" text="Top 10 de los productos con más me gusta." />
-                  <TableView fx:id="tableViewProductosMostLiked" layoutX="40.0" layoutY="56.0" prefHeight="398.0" prefWidth="936.0">
+                  <RadioButton fx:id="topDiezMostLike" layoutX="14.0" layoutY="31.0" mnemonicParsing="false" onAction="#onTopDiezMostLike" text="Top 3 de los productos con más me gusta." />
+                  <TableView fx:id="tableViewProductosMostLiked" layoutX="51.0" layoutY="76.0" prefHeight="359.0" prefWidth="936.0">
                     <columns>
-                      <TableColumn prefWidth="75.0" text="C1" />
-                      <TableColumn prefWidth="75.0" text="C2" />
+                      <TableColumn fx:id="tcNombreMeGusta" prefWidth="202.66665649414062" text="Nombre" />
+                      <TableColumn fx:id="tcPrecioMeGusta" prefWidth="133.3332977294922" text="Precio" />
+                        <TableColumn fx:id="tcCategoriaMeGusta" prefWidth="159.3333740234375" text="Categoria" />
+                        <TableColumn fx:id="tcDescripcionMeGusta" prefWidth="186.00006103515625" text="Descripcion" />
+                        <TableColumn fx:id="tcEstadoMeGusta" prefWidth="181.333251953125" text="Estado" />
+                        <TableColumn fx:id="tcLikesMeGusta" prefWidth="70.0" text="Likes" />
                     </columns>
                   </TableView>
                </children>
             </AnchorPane>
-            <AnchorPane layoutX="-2.0" layoutY="2221.0" prefHeight="155.0" prefWidth="1037.0">
+            <AnchorPane layoutY="1266.0" prefHeight="177.0" prefWidth="1037.0">
                <children>
                   <Separator prefHeight="0.0" prefWidth="1037.0" />
                   <Button fx:id="bttnExportar" layoutX="730.0" layoutY="65.0" mnemonicParsing="false" onAction="#onExportarLog" text="EXPORTAR" />
                   <ChoiceBox fx:id="choiceBoxFormatoLog" layoutX="403.0" layoutY="65.0" prefWidth="150.0" />
                   <Label fx:id="labelFormatoExportar" layoutX="58.0" layoutY="69.0" text="Elige el formato que desee exportar estadisticas" />
+                  <Button fx:id="bttnDirectory" layoutX="627.0" layoutY="65.0" mnemonicParsing="false" onAction="#onDirectory" text="..." />
                </children>
             </AnchorPane>
          </children></AnchorPane>

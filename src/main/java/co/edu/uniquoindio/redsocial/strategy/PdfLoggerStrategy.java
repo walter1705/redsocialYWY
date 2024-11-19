@@ -21,7 +21,7 @@ public class PdfLoggerStrategy implements ILoggerStrategy {
             Document document = new Document(pdfDoc);
             document.add(new Paragraph(titulo));
             document.add(new Paragraph(fecha));
-            document.add(new Paragraph("Reporte realizado por:" + usuario.getUsername()));
+            document.add(new Paragraph("Reporte realizado por: " + usuario.getUsername()));
             document.add(new Paragraph("Información del reporte: "));
             document.add(new Paragraph(data));
             document.close();

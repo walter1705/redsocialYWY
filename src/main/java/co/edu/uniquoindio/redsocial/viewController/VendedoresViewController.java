@@ -146,7 +146,15 @@ public class VendedoresViewController {
         obtenerVendedores();
         tableVendedor.getItems().clear();
         tableVendedor.setItems(listaVendedores);
+        cargarVendedores();
         listenerSelection();
+    }
+
+    private void cargarVendedores() {
+        List<Vendedor>vendedors= vendedoresController.obtenerVendedores();
+        vendedors.forEach(vendedor -> {
+            agregarTabVendedor(vendedor);
+        });
     }
 
     private void obtenerVendedores() {
