@@ -3,14 +3,12 @@ package co.edu.uniquoindio.redsocial.viewController;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import co.edu.uniquoindio.redsocial.controller.VendedorTemplateController;
-import co.edu.uniquoindio.redsocial.model.Administrador;
-import co.edu.uniquoindio.redsocial.model.Persona;
-import co.edu.uniquoindio.redsocial.model.Usuario;
-import co.edu.uniquoindio.redsocial.model.Vendedor;
+import co.edu.uniquoindio.redsocial.model.*;
 import co.edu.uniquoindio.redsocial.controller.VendedoresController;
 import co.edu.uniquoindio.redsocial.model.builder.UsuarioBuilder;
 import co.edu.uniquoindio.redsocial.model.builder.VendedorBuilder;
@@ -348,9 +346,16 @@ public class VendedoresViewController {
             }
         }
 
-        vendedorTemplateViewControllers.forEach(n -> {
-            if (n.vendedorAsociado == vendedor) vendedorTemplateViewControllers.remove(n);
-        });
+        // Eliminamos el producto asociado con el vendedor
+        RedsocialAppViewController.getProductosPublicados().removeIf(producto -> producto.getVendedorAsociado() == vendedor);
+
+        Iterator<VendedorTemplateViewController> iterator = vendedorTemplateViewControllers.iterator();
+        while (iterator.hasNext()) {
+            VendedorTemplateViewController n = iterator.next();
+            if (n.vendedorAsociado == vendedor) {
+                iterator.remove(); // Esto es seguro
+            }
+        }
 
 
         if (tabToRemove != null) {
