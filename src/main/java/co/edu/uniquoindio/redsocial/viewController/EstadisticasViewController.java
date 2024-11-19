@@ -29,7 +29,7 @@ public class EstadisticasViewController {
     VendedoresViewController vendedoresViewController = VendedoresViewController.getInstance();
     EstadisticasController estadisticasController = new EstadisticasController();
     ObservableList<Producto> listaProductosMostLiked = FXCollections.observableArrayList();
-
+    ObservableList<Producto> listaProductosFecha = FXCollections.observableArrayList();
     String var1, var2, var3, directory;
     ILoggerStrategy logger;
 
@@ -174,15 +174,7 @@ public class EstadisticasViewController {
         }
     }
 
-    private void asignarDatosVar3() {
 
-        String saltoDeLinea = System.lineSeparator();
-        var3 = "Top 3 productos con mas likes: "+ saltoDeLinea;
-        listaProductosMostLiked.forEach(producto -> {
-            var3 += producto.toString()+saltoDeLinea;
-        });
-        var3+=saltoDeLinea;
-    }
 
     private void inicializarEstadisticas3() {
     }
@@ -288,12 +280,41 @@ public class EstadisticasViewController {
     //ESTADISTICAS 2 METHODS
     @FXML
     void onCantProductorFecha(ActionEvent event) {
-        if(verificaronCantProductorFecha()) {
-            LocalDate d1 = datePickerInicialReq.getValue();
-            LocalDate d2 = datePickerFinalReq.getValue();
-            String cantidad = estadisticasController.cantProductosFechas(d1, d2);
-            textAreaFechaDeterminada.setText(cantidad);
+        if (cantProductorFecha.isSelected()) {
+            if (verificaronCantProductorFecha()) {
+                LocalDate d1 = datePickerInicialReq.getValue();
+                LocalDate d2 = datePickerFinalReq.getValue();
+                String cantidad = estadisticasController.cantProductosFechas(d1, d2);
+                listaProductosFecha.setAll(estadisticasController.getCantProductosFechas(d1, d2));
+                asignarDatosVar2();
+                textAreaFechaDeterminada.setText(cantidad);
+            }
+        } else {
+            var2 = null;
+            textAreaFechaDeterminada.setText("");
         }
+
+    }
+    private void asignarDatosVar3() {
+
+        String saltoDeLinea = System.lineSeparator();
+        var3 = "Top 3 productos con mas likes: "+ saltoDeLinea;
+        listaProductosMostLiked.forEach(producto -> {
+            var3 += producto.toString()+saltoDeLinea;
+        });
+        var3+=saltoDeLinea;
+    }
+
+    private void asignarDatosVar2() {
+        String saltoDeLinea = System.lineSeparator();
+        var2 = "La cantidad de productos publicados entre "+datePickerInicialReq.getValue().toString()
+                +" y "+datePickerFinalReq.getValue().toString() +" fueron : "+ saltoDeLinea;
+
+        listaProductosFecha.forEach(producto -> {
+            var2 += producto.toString()+saltoDeLinea;
+        });
+        var2+=saltoDeLinea;
+
     }
 
     private void limpiarDatePickerReq() {

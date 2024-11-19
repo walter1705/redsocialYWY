@@ -19,6 +19,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -42,14 +43,14 @@ public class RedsocialAppViewController {
         if (producto1.getEstadoProducto().equals(EstadoProducto.PUBLICADO)) {
             productosPublicados.add(producto1);
         }
-        productosPublicados.forEach(producto -> {
-            if (producto.getEstadoProducto() == EstadoProducto.PUBLICADO
-                    && !RedsocialAppViewController.getProductosPublicados().contains(producto)) {
-                RedsocialAppViewController.getProductosPublicados().add(producto);
-            } else if (producto.getEstadoProducto() != EstadoProducto.PUBLICADO) {
-                RedsocialAppViewController.getProductosPublicados().remove(producto);
+        List<Producto> productosActualizados = new ArrayList<>();
+        for (Producto producto : productosPublicados) {
+            if (producto.getEstadoProducto() == EstadoProducto.PUBLICADO) {
+                productosActualizados.add(producto);
             }
-        });
+        }
+        productosPublicados.clear();
+        productosPublicados.setAll(productosActualizados);
     }
 
     public static RedsocialAppViewController getController() {

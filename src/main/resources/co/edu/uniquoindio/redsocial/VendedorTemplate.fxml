@@ -65,10 +65,11 @@
                                        <children>
                                           <TableView fx:id="tableViewPublicados" layoutX="14.0" layoutY="40.0" prefHeight="705.0" prefWidth="707.0">
                                             <columns>
-                                                <TableColumn fx:id="tcProductNombreMuro" prefWidth="205.33331203460693" text="Nombre" />
-                                                <TableColumn fx:id="tcProductPrecioMuro" prefWidth="110.00003051757812" text="Precio" />
+                                                <TableColumn fx:id="tcVenededorProducto" prefWidth="108.66664791107178" text="Vendedor" />
+                                                <TableColumn fx:id="tcProductNombreMuro" prefWidth="168.00000762939453" text="Nombre" />
+                                                <TableColumn fx:id="tcProductPrecioMuro" prefWidth="115.33331298828125" text="Precio" />
                                                 <TableColumn fx:id="tcProductCategoriaMuro" prefWidth="146.66668701171875" text="Categoria" />
-                                                <TableColumn fx:id="tcProductDescripcionMuro" prefWidth="244.66668701171875" text="Descripcion" />
+                                                <TableColumn fx:id="tcProductDescripcionMuro" prefWidth="164.66668701171875" text="Descripcion" />
                                             </columns>
                                           </TableView>
                                           <Label layoutX="306.0" layoutY="14.0" text="Productos publicados" />

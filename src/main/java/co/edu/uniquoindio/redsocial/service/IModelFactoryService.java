@@ -59,4 +59,6 @@ public interface IModelFactoryService {
     List<Producto> getTop3MostLikedProducts();
 
     void exportarEstadisticas(ILoggerStrategy logger, String directory, String log, Usuario usuario);
+
+    List<Producto> getCantProductosFechas(LocalDate d1, LocalDate d2);
 }

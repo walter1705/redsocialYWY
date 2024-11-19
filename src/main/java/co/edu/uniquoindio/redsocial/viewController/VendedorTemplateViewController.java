@@ -129,6 +129,9 @@ public class VendedorTemplateViewController {
     private TableColumn<Producto, String> tcProductPrecioMuro;
 
     @FXML
+    private TableColumn<Producto, String> tcVenededorProducto;
+
+    @FXML
     private TextField txtCategoriaProducto;
 
     @FXML
@@ -268,7 +271,8 @@ public class VendedorTemplateViewController {
     void onEnviarMensaje(ActionEvent event) {
         if (productoSeleccionadoPublicado!=null) {
             if (txtMensajesTo.getText() != null) {
-                String mensaje = vendedorTemplateController.getUsuarioOnSession()+": "+txtMensajesTo.getText();
+                String mensaje = vendedorTemplateController.getUsuarioOnSession().getUsuarioAsociado().getUsername()
+                        +": "+txtMensajesTo.getText();
                 vendedorTemplateController.agregarComentarioProducto(productoSeleccionadoPublicado, mensaje);
                 listaMensajes.add(mensaje);
                 txtMensajesTo.setText(null);
@@ -418,6 +422,7 @@ public class VendedorTemplateViewController {
         tcEstadoProductoPro.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getEstadoProducto().name()));
         //TABLE PRODUCTOS PUBLICADOS
         tcProductNombreMuro.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
+        tcVenededorProducto.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getVendedorAsociado().getUsuarioAsociado().getUsername()));
         tcProductDescripcionMuro.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getDescripcion()));
         tcProductCategoriaMuro.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getCategoria()));
         tcProductPrecioMuro.setCellValueFactory(cellData -> new SimpleStringProperty(Double.toString(cellData.getValue().getPrecio())));

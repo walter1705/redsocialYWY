@@ -29,4 +29,8 @@ public class EstadisticasController {
     public Persona getPersonaOnSession() {
         return modelFactory.getUsuarioOnSession();
     }
+
+    public List<Producto> getCantProductosFechas(LocalDate d1, LocalDate d2) {
+        return modelFactory.getCantProductosFechas(d1, d2);
+    }
 }

@@ -45,4 +45,6 @@ public interface IRedSocial {
     Map<String, Persona> obtenerDiccionarioVendedoresUser();
 
     List<Producto> getTop3MostLikedProducts();
+
+    List<Producto> getCantProductosFechas(LocalDate d1, LocalDate d2);
 }

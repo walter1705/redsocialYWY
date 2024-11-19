@@ -1,6 +1,5 @@
 package co.edu.uniquoindio.redsocial.model;
 
-import co.edu.uniquoindio.redsocial.mediator.ChatMediator;
 import co.edu.uniquoindio.redsocial.model.builder.VendedorBuilder;
 
 import java.util.ArrayList;

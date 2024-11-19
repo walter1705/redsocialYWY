@@ -47,7 +47,7 @@ public class RedSocialConstants {
     public static final String TITULO_NO_SE_SELECCIONA_EL_MISMO = "Mismo elemento seleccionado.";
     public static final String BODY_NO_SE_SELECCIONA_EL_MISMO = "Se tienen que seleccionar vendedores diferentes.";
     public static final String TITULO_NO_SE_SELECCIONA_UNO = "Campos incompletos.  ";
-    public static final String BODY_NO_SE_SELECCIONA_UNO = "Se tiene que seleccionar dos vendedores.";
+    public static final String BODY_NO_SE_SELECCIONA_UNO = "Se tiene que seleccionar fechas.";
 
     public static final String BODY_NO_DESPUES = "Selecciona las fechas correctamente";
     public static final String BODY_PATH_PRODUCTO_NOT_SELECTED = "No se ha selecionado la imagen del producto";

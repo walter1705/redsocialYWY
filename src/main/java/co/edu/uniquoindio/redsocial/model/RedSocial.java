@@ -324,6 +324,13 @@ public class RedSocial implements IRedSocial {
         return listaProductos.subList(0, Math.min(3, listaProductos.size()));
     }
 
+    @Override
+    public List<Producto> getCantProductosFechas(LocalDate d1, LocalDate d2) {
+        return listaProductos.stream().filter(f->
+            f.getFechaPublicacion().isAfter(d1) && f.getFechaPublicacion().isBefore(d2)
+         ).toList();
+    }
+
     public String getNombre() {
         return nombre;
     }

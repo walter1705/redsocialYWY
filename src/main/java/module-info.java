@@ -22,8 +22,6 @@ module co.edu.uniquoindio.redsocial.redsocial {
     exports co.edu.uniquoindio.redsocial.utils;
     opens co.edu.uniquoindio.redsocial.model.builder;
     exports co.edu.uniquoindio.redsocial.model.builder;
-    opens co.edu.uniquoindio.redsocial.mediator;
-    exports co.edu.uniquoindio.redsocial.mediator;
     opens co.edu.uniquoindio.redsocial.service;
     exports co.edu.uniquoindio.redsocial.service;
     exports co.edu.uniquoindio.redsocial.strategy;

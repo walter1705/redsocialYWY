@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 public class ModelFactory implements IModelFactoryService {
-    private static final org.slf4j.Logger log = LoggerFactory.getLogger(ModelFactory.class);
+    //private static final org.slf4j.Logger log = LoggerFactory.getLogger(ModelFactory.class);
     private static ModelFactory modelFactory;
     private RedSocial redSocial;
     private Logger logger;
@@ -53,6 +53,11 @@ public class ModelFactory implements IModelFactoryService {
     public void exportarEstadisticas(ILoggerStrategy logger, String directory, String log, Usuario usuario) {
         this.logger.setStrategy(logger);
         this.logger.logDatos(log, directory, "", usuario);
+    }
+
+    @Override
+    public List<Producto> getCantProductosFechas(LocalDate d1, LocalDate d2) {
+        return redSocial.getCantProductosFechas(d1, d2);
     }
 
 
