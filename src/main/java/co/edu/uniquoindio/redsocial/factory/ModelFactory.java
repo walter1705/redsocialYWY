@@ -1,6 +1,5 @@
 package co.edu.uniquoindio.redsocial.factory;
 
-
 import co.edu.uniquoindio.redsocial.model.*;
 import co.edu.uniquoindio.redsocial.proxy.LoginProxy;
 import co.edu.uniquoindio.redsocial.proxy.LoginService;
@@ -8,14 +7,11 @@ import co.edu.uniquoindio.redsocial.service.ILoggerStrategy;
 import co.edu.uniquoindio.redsocial.service.IModelFactoryService;
 import co.edu.uniquoindio.redsocial.strategy.Logger;
 import co.edu.uniquoindio.redsocial.utils.DataUtil;
-import org.slf4j.LoggerFactory;
-
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
 public class ModelFactory implements IModelFactoryService {
-    //private static final org.slf4j.Logger log = LoggerFactory.getLogger(ModelFactory.class);
     private static ModelFactory modelFactory;
     private RedSocial redSocial;
     private Logger logger;
@@ -166,6 +162,4 @@ public class ModelFactory implements IModelFactoryService {
     public List<Producto> getProductosVendedor(Vendedor vendedor) {
         return redSocial.getProductosVendedor(vendedor);
     }
-
-
 }

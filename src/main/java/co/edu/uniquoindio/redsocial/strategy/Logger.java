@@ -8,7 +8,6 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Logger {
-    //Implementar la logica de exportacion de archivos
     private ILoggerStrategy strategy;
 
     public void setStrategy(ILoggerStrategy strategy) {
@@ -32,17 +31,5 @@ public class Logger {
         LocalDate fechaHoy = LocalDate.now();
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("dd/MM/yyyy");
         return "Fecha: " + fechaHoy.format(formato);
-    }
-
-    private static String conseguirNombreUnico(String path) {
-        File file = new File(path);
-        int count = 1;
-
-        while (file.exists()) {
-            String newFileName = path+ "_" + count;
-            file = new File(newFileName);
-            count++;
-        }
-        return file.getPath();
     }
 }

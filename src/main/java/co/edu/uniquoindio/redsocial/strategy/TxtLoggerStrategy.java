@@ -38,6 +38,4 @@ public class TxtLoggerStrategy implements ILoggerStrategy {
 
         return withoutExtension.replace(extension, "");
     }
-
-
 }

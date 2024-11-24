@@ -2,17 +2,15 @@ package co.edu.uniquoindio.redsocial.viewController;
 
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import co.edu.uniquoindio.redsocial.controller.VendedorTemplateController;
 import co.edu.uniquoindio.redsocial.model.*;
 import co.edu.uniquoindio.redsocial.controller.VendedoresController;
 import co.edu.uniquoindio.redsocial.model.builder.UsuarioBuilder;
 import co.edu.uniquoindio.redsocial.model.builder.VendedorBuilder;
 import co.edu.uniquoindio.redsocial.viewController.viewControllerHelpers.TabManagerVendedorTemplate;
+import co.edu.uniquoindio.redsocial.viewController.viewControllerHelpers.ViewControllerUtil;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -26,13 +24,10 @@ import static co.edu.uniquoindio.redsocial.utils.RedSocialConstants.*;
 
 public class VendedoresViewController {
     RedsocialAppViewController redSocialAppViewController;
-
     VendedoresController vendedoresController;
     ObservableList<Vendedor> listaVendedores;
-
     TabManagerVendedorTemplate tabManagerVendedorTemplate = TabManagerVendedorTemplate.getInstance();
     List<VendedorTemplateViewController> vendedorTemplateViewControllers = tabManagerVendedorTemplate.getControllers();
-
     Vendedor vendedorSelecionado;
 
     private static VendedoresViewController vendedoresViewController;
@@ -150,9 +145,7 @@ public class VendedoresViewController {
 
     private void cargarVendedores() {
         List<Vendedor>vendedors= vendedoresController.obtenerVendedores();
-        vendedors.forEach(vendedor -> {
-            agregarTabVendedor(vendedor);
-        });
+        vendedors.forEach(this::agregarTabVendedor);
     }
 
     private void obtenerVendedores() {
@@ -191,15 +184,15 @@ public class VendedoresViewController {
                     limpiarCampos();
                     refrescarTabla();
                     agregarTabVendedor(vendedor);
-                    mostrarMensaje(TITULO_USUVENDEDOR_AGREGADO, HEADER, BODY_USUVENDEDOR_AGREGADO, Alert.AlertType.INFORMATION);
+                    ViewControllerUtil.mostrarMensaje(TITULO_USUVENDEDOR_AGREGADO, HEADER, BODY_USUVENDEDOR_AGREGADO, Alert.AlertType.INFORMATION);
                 } else {
-                    mostrarMensaje(TITULO_USUVENDEDOR_NO_AGREGADO, HEADER, BODY_USUVENDEDOR_NO_AGREGADO, Alert.AlertType.ERROR);
+                    ViewControllerUtil.mostrarMensaje(TITULO_USUVENDEDOR_NO_AGREGADO, HEADER, BODY_USUVENDEDOR_NO_AGREGADO, Alert.AlertType.ERROR);
                 }
             } else {
-                mostrarMensaje(TITULO_CAMPOS_INCOMPLETOS, HEADER, BODY_CAMPOS_INCOMPLETOS, Alert.AlertType.INFORMATION);
+                ViewControllerUtil.mostrarMensaje(TITULO_CAMPOS_INCOMPLETOS, HEADER, BODY_CAMPOS_INCOMPLETOS, Alert.AlertType.INFORMATION);
             }
         } else {
-            mostrarMensaje(TITULO_LIMITE_VENDEDORES, HEADER, BODY_LIMITE_VENDEDORES, Alert.AlertType.INFORMATION);
+            ViewControllerUtil.mostrarMensaje(TITULO_LIMITE_VENDEDORES, HEADER, BODY_LIMITE_VENDEDORES, Alert.AlertType.INFORMATION);
         }
     }
 
@@ -237,15 +230,15 @@ public class VendedoresViewController {
                 tabManagerVendedorTemplate.actualizarTab(vendedorSelecionado, vendedor);
                 limpiarCampos();
                 refrescarTabla();
-                mostrarMensaje(TITULO_USUVENDEDOR_ACTUALIZADO, HEADER, BODY_USUVENDEDOR_ACTUALIZADO, Alert.AlertType.INFORMATION);
+                ViewControllerUtil.mostrarMensaje(TITULO_USUVENDEDOR_ACTUALIZADO, HEADER, BODY_USUVENDEDOR_ACTUALIZADO, Alert.AlertType.INFORMATION);
             } else {
-                mostrarMensaje(TITULO_USUVENDEDOR_NO_ACTUALIZADO, HEADER, BODY_USUVENDEDOR_NO_ACTUALIZADO, Alert.AlertType.ERROR);
-                mostrarMensaje(TITULO_USUVENDEDOR_NO_ACTUALIZADO, HEADER, BODY_USUVENDEDOR_NO_ACTUALIZADO, Alert.AlertType.ERROR);
+                ViewControllerUtil.mostrarMensaje(TITULO_USUVENDEDOR_NO_ACTUALIZADO, HEADER, BODY_USUVENDEDOR_NO_ACTUALIZADO, Alert.AlertType.ERROR);
+                ViewControllerUtil.mostrarMensaje(TITULO_USUVENDEDOR_NO_ACTUALIZADO, HEADER, BODY_USUVENDEDOR_NO_ACTUALIZADO, Alert.AlertType.ERROR);
             }
         } else {
-            mostrarMensaje(TITULO_CAMPOS_NO_SELECIONADO, HEADER, BODY_CAMPOS_NO_SELECIONADO, Alert.AlertType.INFORMATION);
+            ViewControllerUtil.mostrarMensaje(TITULO_CAMPOS_NO_SELECIONADO, HEADER, BODY_CAMPOS_NO_SELECIONADO, Alert.AlertType.INFORMATION);
         }} else {
-            mostrarMensaje(TITULOVENDEDOR_NO_SELECCIONADO, HEADER, BODYVENDEDOR_NO_SELECCIONADO, Alert.AlertType.ERROR);
+            ViewControllerUtil.mostrarMensaje(TITULOVENDEDOR_NO_SELECCIONADO, HEADER, BODYVENDEDOR_NO_SELECCIONADO, Alert.AlertType.ERROR);
         }
     }
 
@@ -263,13 +256,7 @@ public class VendedoresViewController {
                 && !vendedor.getUsuarioAsociado().getPassword().isBlank();
     }
 
-    private void mostrarMensaje(String titulo, String header, String contenido, Alert.AlertType alertType) {
-        Alert aler = new Alert(alertType);
-        aler.setTitle(titulo);
-        aler.setHeaderText(header);
-        aler.setContentText(contenido);
-        aler.showAndWait();
-    }
+
 
     private Vendedor crearVendedor() {
         Vendedor vendedor = new VendedorBuilder()
@@ -288,7 +275,6 @@ public class VendedoresViewController {
         return vendedor;
     }
 
-
     private void initDataBinding() {
         tcNombreVendedor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getNombre()));
         tcApellidoVendedor.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getApellido()));
@@ -298,7 +284,6 @@ public class VendedoresViewController {
         tcNombreUsuario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getUsuarioAsociado().getUsername()));
         tcContrasenaUsuario.setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().getUsuarioAsociado().getPassword()));
     }
-
 
     @FXML
     void onActualizar(ActionEvent event) {
@@ -315,10 +300,6 @@ public class VendedoresViewController {
         eliminarVendedor();
     }
 
-
-
-
-
     private void eliminarVendedor() {
         if (datosValidosVendedor(vendedorSelecionado) && datosValidosUsuario(vendedorSelecionado)) {
             if (vendedoresController.eliminarVendedor(vendedorSelecionado)) {
@@ -327,12 +308,12 @@ public class VendedoresViewController {
                 limpiarCampos();
                 refrescarTabla();
 
-                mostrarMensaje(TITULO_USUVENDEDOR_ELIMINADO, HEADER, BODY_USUVENDEDOR_ELIMINADO, Alert.AlertType.INFORMATION);
+                ViewControllerUtil.mostrarMensaje(TITULO_USUVENDEDOR_ELIMINADO, HEADER, BODY_USUVENDEDOR_ELIMINADO, Alert.AlertType.INFORMATION);
             } else {
-                mostrarMensaje(TITULO_USUVENDEDOR_NO_ELIMNADO, HEADER, BODY_USUVENDEDOR_NO_ELIMINADO, Alert.AlertType.ERROR);
+                ViewControllerUtil.mostrarMensaje(TITULO_USUVENDEDOR_NO_ELIMNADO, HEADER, BODY_USUVENDEDOR_NO_ELIMINADO, Alert.AlertType.ERROR);
             }
         } else{
-                mostrarMensaje(TITULO_CAMPOS_NO_SELECIONADO, HEADER, BODY_CAMPOS_NO_SELECIONADO, Alert.AlertType.INFORMATION);
+            ViewControllerUtil.mostrarMensaje(TITULO_CAMPOS_NO_SELECIONADO, HEADER, BODY_CAMPOS_NO_SELECIONADO, Alert.AlertType.INFORMATION);
             }
     }
 
@@ -345,17 +326,9 @@ public class VendedoresViewController {
                 break;
             }
         }
-
-        // Eliminamos el producto asociado con el vendedor
         RedsocialAppViewController.getProductosPublicados().removeIf(producto -> producto.getVendedorAsociado() == vendedor);
 
-        Iterator<VendedorTemplateViewController> iterator = vendedorTemplateViewControllers.iterator();
-        while (iterator.hasNext()) {
-            VendedorTemplateViewController n = iterator.next();
-            if (n.vendedorAsociado == vendedor) {
-                iterator.remove(); // Esto es seguro
-            }
-        }
+        vendedorTemplateViewControllers.removeIf(n -> n.vendedorAsociado == vendedor);
 
 
         if (tabToRemove != null) {
@@ -370,25 +343,21 @@ public class VendedoresViewController {
         if (usuarioEnSesion != null) {
             if (usuarioEnSesion instanceof Administrador) {
                 habilitarTodosLosControles();
-            } else if (usuarioEnSesion instanceof Vendedor) {
-                Vendedor vendedorEnSesion = (Vendedor) usuarioEnSesion;
+            } else if (usuarioEnSesion instanceof Vendedor vendedorEnSesion) {
                 if (vendedorSelecionado != null && vendedorSelecionado.equals(vendedorEnSesion)) {
                     habilitarTodosLosControles();
                 } else {
                     limitarAccesoOtrosVendedores();
                 }
             }
-        } else {
-            //limitarAccesoOtrosVendedores();
-            System.out.printf("USUARIO NULL LOGIN");
+        }
 
-        }    }
+    }
 
     private void limitarAccesoOtrosVendedores() {
         btnActualizar.setDisable(true);
         btnAgregar.setDisable(true);
         btnEliminar.setDisable(true);
-
         txtNombreVendedor.setDisable(true);
         txtApellidoVendedor.setDisable(true);
         txtEmailVendedor.setDisable(true);
@@ -403,7 +372,6 @@ public class VendedoresViewController {
         btnActualizar.setDisable(false);
         btnAgregar.setDisable(false);
         btnEliminar.setDisable(false);
-
         txtNombreVendedor.setDisable(false);
         txtApellidoVendedor.setDisable(false);
         txtEmailVendedor.setDisable(false);
@@ -411,7 +379,6 @@ public class VendedoresViewController {
         txtDireccionVendedor.setDisable(false);
         txtNombreUsuario.setDisable(false);
         txtContrasenaUsuario.setDisable(false);
-
         tableVendedor.setDisable(false);
     }
 

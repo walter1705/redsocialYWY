@@ -185,6 +185,7 @@ public class EstadisticasViewController {
         dataBinding();
         inicializarEstadisticas1();
         inicializarButtons();
+        textAreaFechaDeterminada.setDisable(true);
     }
 
     private void dataBinding() {

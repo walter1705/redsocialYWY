@@ -28,8 +28,6 @@ public class VendedorTemplateViewController {
     VendedorTemplateController vendedorTemplateController = new VendedorTemplateController();
     public Vendedor vendedorAsociado;
     ObservableList<Producto> listaProductos = FXCollections.observableArrayList();
-    //ObservableList<Producto> listaProductosPublicados = FXCollections.observableArrayList();
-
     Producto productoSeleccionado, productoSeleccionadoPublicado;
     private String pathUsuarioImagenProducto;
     ObservableList<String> listaMensajes = FXCollections.observableArrayList();

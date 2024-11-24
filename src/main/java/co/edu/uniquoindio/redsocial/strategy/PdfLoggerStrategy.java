@@ -30,12 +30,12 @@ public class PdfLoggerStrategy implements ILoggerStrategy {
             throw new RuntimeException(e);
         }
     }
+
     @Override
     public String conseguirNombreUnicoPath(String filePath) {
         Path path = Path.of(filePath+extension);
         String withoutExtension = filePath;
         int contador = 1;
-
         while (path.toFile().exists()) {
             path = Path.of(filePath + "_" + contador+extension);
             withoutExtension = path.toString();
